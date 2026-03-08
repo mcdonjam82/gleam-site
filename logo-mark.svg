@@ -1,54 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" role="img" aria-label="Gleam icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" role="img" aria-label="Gleam">
   <defs>
-
-    <!-- G arc gradient: deep blue → cyan, across the full width of the G -->
-    <linearGradient id="mk-grad-g" x1="4" y1="0" x2="38" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%"   stop-color="#1f3b90"/>
-      <stop offset="100%" stop-color="#07b9fd"/>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f3b90"/>
+      <stop offset="50%" stop-color="#07b9fd"/>
+      <stop offset="100%" stop-color="#7649ec"/>
     </linearGradient>
-
-    <!-- Sparkle glow -->
-    <filter id="mk-glow" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-
-    <!-- Icon drop shadow -->
-    <filter id="mk-shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="1" stdDeviation="2.5" flood-color="#07b9fd" flood-opacity="0.4"/>
-    </filter>
-
   </defs>
-
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- STYLIZED G MARK                                 -->
-  <!-- center (21,26), radius 16, opens at ~1 o'clock  -->
-  <!-- ═══════════════════════════════════════════════ -->
-
-  <!-- G arc + crossbar                                                      -->
-  <!-- M(30,13): on circle r=16 at ~35° from top                            -->
-  <!-- A 16,16 0 1,0 37,26: large arc counterclockwise to 3 o'clock (37,26) -->
-  <!-- L 24,26: crossbar going halfway toward center                         -->
-  <g filter="url(#mk-shadow)">
-    <path
-      d="M 30,13 A 16,16 0 1,0 37,26 L 24,26"
-      stroke="url(#mk-grad-g)"
-      stroke-width="4.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
+  <rect width="48" height="48" rx="12" fill="url(#bg)"/>
+  <g filter="url(#glow)" transform="translate(24,24)">
+    <path d="M0,-12 L2.5,-2.5 L12,0 L2.5,2.5 L0,12 L-2.5,2.5 L-12,0 L-2.5,-2.5 Z" fill="white"/>
+    <circle cx="10" cy="-10" r="2" fill="#07b9fd" opacity="0.9"/>
+    <circle cx="-10" cy="10" r="1.5" fill="#7649ec" opacity="0.8"/>
   </g>
-
-  <!-- 4-pointed sparkle — the "gleam" at the opening of the G              -->
-  <!-- Center (40,10), outer radius 4.5, inner pinch 1.2                    -->
-  <!-- Pure cyan with purple tint glow — premium tech feel                  -->
-  <path
-    d="M 40,5.5 L 41.2,8.8 L 44.5,10 L 41.2,11.2 L 40,14.5 L 38.8,11.2 L 35.5,10 L 38.8,8.8 Z"
-    fill="#07b9fd"
-    filter="url(#mk-glow)"
-  />
-
 </svg>
