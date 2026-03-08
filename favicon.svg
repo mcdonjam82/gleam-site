@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Gleam favicon">
+  <defs>
+
+    <!-- Radial glow behind the star -->
+    <radialGradient id="fv-glow-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#07b9fd" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#07b9fd" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Sparkle glow filter -->
+    <filter id="fv-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- Dark rounded-square background -->
+  <rect width="32" height="32" rx="7" fill="#151327"/>
+
+  <!-- Subtle radial glow behind star -->
+  <ellipse cx="16" cy="16" rx="13" ry="13" fill="url(#fv-glow-bg)"/>
+
+  <!-- 4-pointed star / sparkle — cyan, centered at (16,16)  -->
+  <!-- outer radius 7, inner pinch 2                          -->
+  <path
+    d="M 16,9 L 18,14 L 23,16 L 18,18 L 16,23 L 14,18 L 9,16 L 14,14 Z"
+    fill="#07b9fd"
+    filter="url(#fv-glow)"
+  />
+
+</svg>
