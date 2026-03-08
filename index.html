@@ -5,610 +5,244 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gleam — AI Review Autopilot for Local Businesses</title>
   <meta name="description" content="Gleam automatically responds to every Google review for your business using AI — no dashboards, no logins. Just text message approvals.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://gleamreply.com">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gleamreply.com">
+  <meta property="og:title" content="Gleam — AI Review Autopilot for Local Businesses">
+  <meta property="og:description" content="Gleam automatically responds to every Google review for your business using AI — no dashboards, no logins. Just text message approvals.">
+  <meta property="og:image" content="https://gleamreply.com/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"></noscript>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --deep-blue: #1f3b90;
-      --cyan: #07b9fd;
-      --purple: #7649ec;
-      --dark: #151327;
-      --darker: #0d0b1e;
-      --light: #f1f1f1;
-      --white: #ffffff;
-      --gray: #94a3b8;
-      --gradient: linear-gradient(135deg, var(--deep-blue), var(--purple));
-      --gradient-h: linear-gradient(90deg, var(--deep-blue), var(--cyan));
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --blue:#1f3b90;--cyan:#07b9fd;--purple:#7649ec;
+      --dark:#151327;--darker:#0d0b1e;--gray:#94a3b8;
+      --grad:linear-gradient(135deg,var(--blue),var(--purple));
+      --grad-h:linear-gradient(90deg,var(--blue),var(--cyan));
+      --grad-cp:linear-gradient(90deg,var(--cyan),var(--purple));
     }
+    html{scroll-behavior:smooth}
+    body{font-family:'Roboto',sans-serif;background:var(--darker);color:#fff;line-height:1.8;overflow-x:hidden}
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: var(--darker);
-      color: var(--white);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    /* TOP BAR */
+    .top-bar{height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--purple));position:fixed;top:0;left:0;right:0;z-index:200}
 
     /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 48px;
-      background: rgba(13, 11, 30, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .logo {
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      background: var(--gradient-h);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav-cta {
-      background: var(--gradient-h);
-      color: white;
-      text-decoration: none;
-      padding: 10px 24px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: opacity 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.85; }
+    nav{position:fixed;top:3px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(13,11,30,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .logo{font-size:20px;font-weight:900;letter-spacing:4px;text-transform:uppercase;background:var(--grad-h);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .nav-cta{background:var(--grad-h);color:#fff;text-decoration:none;padding:10px 28px;border-radius:100px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;transition:opacity .2s,box-shadow .25s}
+    .nav-cta:hover{opacity:.88;box-shadow:0 0 24px rgba(7,185,253,.45)}
 
     /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      position: relative;
-      overflow: hidden;
-    }
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:148px 24px 100px;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(31,59,144,.5) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 80% 100%,rgba(118,73,236,.38) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 10% 80%,rgba(7,185,253,.18) 0%,transparent 60%)}
+    .hero-content{position:relative;max-width:880px}
+    .eyebrow{display:inline-block;background:rgba(7,185,253,.12);border:1px solid rgba(7,185,253,.38);color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:8px 22px;border-radius:100px;margin-bottom:36px}
+    h1{font-size:clamp(52px,8vw,88px);font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1.0;margin-bottom:28px;position:relative}
+    h1 span{background:var(--grad-h);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    @keyframes glowPulse{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:.75;transform:scale(1.06)}}
+    .h1-glow{position:absolute;inset:-60px;background:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(7,185,253,.18) 0%,transparent 70%);animation:glowPulse 4.5s ease-in-out infinite;pointer-events:none;z-index:-1;border-radius:50%}
+    .hero-sub{font-size:clamp(16px,2.5vw,20px);color:var(--gray);max-width:580px;margin:0 auto 52px;font-weight:400;line-height:1.8}
+    .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+    .btn-primary{background:var(--grad-h);color:#fff;text-decoration:none;padding:18px 48px;border-radius:100px;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;transition:opacity .2s,transform .25s,box-shadow .3s;display:inline-block;box-shadow:0 4px 28px rgba(7,185,253,.25)}
+    .btn-primary:hover{opacity:.9;transform:translateY(-3px);box-shadow:0 10px 40px rgba(7,185,253,.5)}
+    .btn-secondary{background:transparent;color:#fff;text-decoration:none;padding:18px 48px;border-radius:100px;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;border:1.5px solid rgba(255,255,255,.22);transition:border-color .2s,transform .25s,box-shadow .25s;display:inline-block}
+    .btn-secondary:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 4px 24px rgba(7,185,253,.22)}
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(31,59,144,0.4) 0%, transparent 70%),
-                  radial-gradient(ellipse 60% 50% at 80% 100%, rgba(118,73,236,0.3) 0%, transparent 70%),
-                  radial-gradient(ellipse 50% 40% at 10% 80%, rgba(7,185,253,0.15) 0%, transparent 60%);
-    }
-
-    .hero-content { position: relative; max-width: 820px; }
-
-    .eyebrow {
-      display: inline-block;
-      background: rgba(7,185,253,0.12);
-      border: 1px solid rgba(7,185,253,0.3);
-      color: var(--cyan);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 8px 20px;
-      border-radius: 100px;
-      margin-bottom: 32px;
-    }
-
-    h1 {
-      font-size: clamp(40px, 6vw, 72px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      line-height: 1.05;
-      margin-bottom: 24px;
-    }
-
-    h1 span {
-      background: var(--gradient-h);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: var(--gray);
-      max-width: 560px;
-      margin: 0 auto 48px;
-      font-weight: 400;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: var(--gradient-h);
-      color: white;
-      text-decoration: none;
-      padding: 16px 36px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: opacity 0.2s, transform 0.2s;
-      display: inline-block;
-    }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--white);
-      text-decoration: none;
-      padding: 16px 36px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      border: 1.5px solid rgba(255,255,255,0.2);
-      transition: border-color 0.2s, transform 0.2s;
-      display: inline-block;
-    }
-    .btn-secondary:hover { border-color: var(--cyan); transform: translateY(-2px); }
+    /* HERO REVIEW CARD */
+    @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+    .hero-review{display:inline-flex;flex-direction:column;gap:10px;background:rgba(21,19,39,.88);border:1px solid rgba(7,185,253,.45);border-radius:18px;padding:22px 28px;text-align:left;max-width:420px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 0 36px rgba(7,185,253,.18),0 12px 40px rgba(0,0,0,.45);animation:floatCard 6s ease-in-out infinite}
+    .hero-review-stars{font-size:20px;letter-spacing:3px}
+    .hero-review-text{font-size:14px;color:#e2e8f0;line-height:1.55;font-style:italic}
+    .hero-review-meta{font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .hero-review-meta .meta-label{color:var(--gray)}
+    .hero-review-meta .meta-brand{color:var(--cyan)}
 
     /* STAT BAR */
-    .stat-bar {
-      background: rgba(255,255,255,0.04);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 40px 48px;
-      display: flex;
-      justify-content: center;
-      gap: 80px;
-      flex-wrap: wrap;
-    }
+    .stat-bar{background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:52px 48px;display:flex;justify-content:center;gap:80px;flex-wrap:wrap}
+    .stat{text-align:center}
+    .stat-num{font-size:46px;font-weight:900;background:var(--grad-h);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;letter-spacing:-1px}
+    .stat-label{font-size:13px;color:var(--gray);text-transform:uppercase;letter-spacing:2px;font-weight:500;margin-top:4px}
 
-    .stat { text-align: center; }
-    .stat-num {
-      font-size: 42px;
-      font-weight: 900;
-      background: var(--gradient-h);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      letter-spacing: -1px;
-    }
-    .stat-label {
-      font-size: 13px;
-      color: var(--gray);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 500;
-      margin-top: 4px;
-    }
+    /* SECTION PRIMITIVES */
+    .section{padding:110px 24px;max-width:1100px;margin:0 auto}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;background:var(--grad-cp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;display:inline-block}
+    .section-title{font-size:clamp(30px,4.5vw,52px);font-weight:900;text-transform:uppercase;letter-spacing:1px;line-height:1.07;margin-bottom:20px}
+    .section-sub{font-size:17px;color:var(--gray);max-width:580px;margin-bottom:64px;line-height:1.8}
 
     /* PROBLEM */
-    .section {
-      padding: 100px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .problem-card{background:linear-gradient(135deg,rgba(31,59,144,.14),rgba(118,73,236,.07));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:38px;transition:transform .3s ease,border-color .3s,box-shadow .3s;cursor:default}
+    .problem-card:hover{transform:translateY(-7px);border-color:rgba(7,185,253,.45);box-shadow:0 14px 48px rgba(7,185,253,.16)}
+    .problem-icon{font-size:48px;margin-bottom:22px;display:block}
+    .problem-card h3{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+    .problem-card p{font-size:15px;color:var(--gray);line-height:1.8}
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 16px;
-    }
+    /* WHY IT MATTERS */
+    .why-section{padding:110px 24px;background:rgba(7,185,253,.04);border-top:1px solid rgba(7,185,253,.1);border-bottom:1px solid rgba(7,185,253,.1)}
+    .why-inner{max-width:1100px;margin:0 auto}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:980px;margin:56px auto 0}
+    .stat-card{background:rgba(31,59,144,.18);border:1px solid rgba(31,59,144,.38);border-radius:20px;padding:34px;transition:transform .3s,box-shadow .3s}
+    .stat-card:hover{transform:translateY(-5px);box-shadow:0 10px 36px rgba(31,59,144,.35)}
+    .stat-card-num{font-size:48px;font-weight:900;color:var(--cyan);margin-bottom:12px;line-height:1;letter-spacing:-1px}
+    .stat-card p{color:var(--gray);font-size:15px;line-height:1.8;margin:0}
+    .benefits-grid{max-width:760px;margin:56px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .benefit-item{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.03);border-radius:14px;padding:24px;border:1px solid rgba(255,255,255,.07);transition:border-color .3s}
+    .benefit-item:hover{border-color:rgba(7,185,253,.2)}
+    .benefit-icon{font-size:28px;flex-shrink:0;line-height:1.2}
+    .benefit-title{font-weight:700;color:#fff;margin-bottom:6px;font-size:15px}
+    .benefit-text{color:var(--gray);font-size:14px;line-height:1.8}
 
-    .section-title {
-      font-size: clamp(28px, 4vw, 46px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    .section-sub {
-      font-size: 17px;
-      color: var(--gray);
-      max-width: 560px;
-      margin-bottom: 64px;
-    }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .problem-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 32px;
-    }
-
-    .problem-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .problem-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-
-    .problem-card p {
-      font-size: 15px;
-      color: var(--gray);
-      line-height: 1.6;
-    }
+    /* BACKFILL */
+    .backfill-section{padding:100px 24px}
+    .backfill-inner{max-width:820px;margin:0 auto;text-align:center}
+    .backfill-inner h2{font-size:clamp(26px,4vw,38px);font-weight:900;line-height:1.2;margin-bottom:20px;text-transform:uppercase;letter-spacing:1px}
+    .backfill-inner > p{color:var(--gray);font-size:17px;line-height:1.8;max-width:620px;margin:0 auto 52px}
+    .backfill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px;text-align:left}
+    .backfill-card{background:rgba(31,59,144,.18);border:1px solid rgba(31,59,144,.38);border-radius:16px;padding:22px;transition:transform .3s,box-shadow .3s}
+    .backfill-card:hover{transform:translateY(-5px);box-shadow:0 10px 28px rgba(31,59,144,.32)}
+    .backfill-day{color:#4ade80;font-size:17px;font-weight:700;margin-bottom:10px}
+    .backfill-card p{color:var(--gray);font-size:14px;line-height:1.5;margin:0}
+    .backfill-note{background:rgba(7,185,253,.08);border:1px solid rgba(7,185,253,.22);border-radius:18px;padding:28px;font-size:15px;color:var(--gray);max-width:580px;margin:0 auto;line-height:1.8}
 
     /* HOW IT WORKS */
-    .how-section {
-      padding: 100px 24px;
-      background: rgba(31,59,144,0.08);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .how-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 32px;
-      margin-top: 64px;
-    }
-
-    .step {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .step-num {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--gradient-h);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 900;
-      flex-shrink: 0;
-    }
-
-    .step h3 {
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .step p {
-      font-size: 15px;
-      color: var(--gray);
-      line-height: 1.6;
-    }
+    .how-section{padding:110px 24px;background:rgba(31,59,144,.08);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+    .how-inner{max-width:1100px;margin:0 auto}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:72px;position:relative}
+    .steps::before{content:'';position:absolute;top:36px;left:calc(12.5% + 36px);right:calc(12.5% + 36px);height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));opacity:.35;z-index:0}
+    .step{display:flex;flex-direction:column;gap:16px;padding:0 24px;position:relative;z-index:1}
+    .step-num{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex-shrink:0;box-shadow:0 4px 28px rgba(118,73,236,.35);border:2px solid rgba(7,185,253,.35)}
+    .step h3{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:8px}
+    .step p{font-size:15px;color:var(--gray);line-height:1.8}
 
     /* SMS DEMO */
-    .demo-section {
-      padding: 100px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .demo-section { grid-template-columns: 1fr; gap: 40px; }
-    }
-
-    .demo-text .section-sub { margin-bottom: 0; }
-
-    .sms-mockup {
-      background: #1a1a2e;
-      border-radius: 24px;
-      padding: 32px 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .sms-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .sms-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--gradient-h);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-
-    .sms-name { font-weight: 700; font-size: 14px; }
-    .sms-sub { font-size: 12px; color: var(--gray); }
-
-    .bubble {
-      border-radius: 18px;
-      padding: 12px 16px;
-      margin-bottom: 10px;
-      max-width: 88%;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .bubble-inbound {
-      background: rgba(255,255,255,0.07);
-      border-radius: 18px 18px 18px 4px;
-    }
-
-    .bubble-outbound {
-      background: linear-gradient(135deg, var(--deep-blue), var(--purple));
-      margin-left: auto;
-      border-radius: 18px 18px 4px 18px;
-    }
-
-    .bubble-time {
-      font-size: 11px;
-      color: var(--gray);
-      text-align: center;
-      margin: 8px 0;
-    }
+    .demo-section{padding:110px 24px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .demo-text .section-sub{margin-bottom:0}
+    .phone-frame{background:#0f172a;border-radius:44px;padding:20px 14px 28px;border:2px solid rgba(255,255,255,.1);box-shadow:0 24px 70px rgba(0,0,0,.55),0 0 0 8px rgba(255,255,255,.03)}
+    .phone-notch{width:110px;height:26px;background:#0f172a;border-radius:0 0 18px 18px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;gap:6px}
+    .phone-dot{width:7px;height:7px;background:#334155;border-radius:50%}
+    .phone-dot.cam{width:10px;height:10px;background:#1e293b}
+    .sms-mockup{background:#1a1a2e;border-radius:32px;padding:20px 16px 24px;min-height:300px}
+    .sms-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .sms-avatar{width:42px;height:42px;border-radius:50%;background:var(--grad-h);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .sms-name{font-weight:700;font-size:14px}
+    .sms-sub{font-size:11px;color:var(--gray)}
+    .bubble{border-radius:18px;padding:12px 16px;margin-bottom:10px;max-width:86%;font-size:13px;line-height:1.6;word-break:break-word}
+    .bubble-inbound{background:rgba(255,255,255,.1);border-radius:4px 18px 18px 18px}
+    .bubble-outbound{background:linear-gradient(135deg,var(--blue),var(--purple));margin-left:auto;border-radius:18px 4px 18px 18px}
+    .bubble-time{font-size:11px;color:var(--gray);text-align:center;margin:10px 0;opacity:.65}
 
     /* PRICING */
-    .pricing-section {
-      padding: 100px 24px;
-      background: rgba(118,73,236,0.06);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
+    .pricing-section{padding:110px 24px;background:rgba(118,73,236,.06);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+    .pricing-inner{max-width:920px;margin:0 auto;text-align:center}
+    .pricing-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:28px;margin-top:64px}
+    .pricing-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:46px 38px;text-align:left;position:relative;transition:transform .3s}
+    .pricing-card:hover{transform:translateY(-5px)}
+    .pricing-card.featured{border-color:var(--cyan);background:rgba(7,185,253,.06);box-shadow:0 0 40px rgba(7,185,253,.28),0 12px 40px rgba(0,0,0,.3)}
+    .badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--grad-h);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 20px;border-radius:100px;white-space:nowrap}
+    .plan-name{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:12px}
+    .plan-price{font-size:58px;font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:4px}
+    .plan-price sup{font-size:24px;vertical-align:super}
+    .plan-period{font-size:14px;color:var(--gray);margin-bottom:32px}
+    .plan-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+    .plan-features li{font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6}
+    .plan-features li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+    .plan-cta{display:block;width:100%;background:var(--grad-h);color:#fff;text-decoration:none;padding:16px;border-radius:100px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:opacity .2s,box-shadow .3s;box-shadow:0 4px 22px rgba(7,185,253,.25)}
+    .plan-cta:hover{opacity:.88;box-shadow:0 8px 36px rgba(7,185,253,.5)}
+    .plan-cta-outline{display:block;width:100%;background:transparent;color:#fff;text-decoration:none;padding:15px;border-radius:100px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;text-align:center;border:1.5px solid rgba(255,255,255,.25);transition:border-color .2s,box-shadow .25s}
+    .plan-cta-outline:hover{border-color:var(--cyan);box-shadow:0 4px 20px rgba(7,185,253,.22)}
 
-    .pricing-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .pricing-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 64px;
-    }
-
-    .pricing-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 40px 32px;
-      text-align: left;
-      position: relative;
-    }
-
-    .pricing-card.featured {
-      border-color: var(--cyan);
-      background: rgba(7,185,253,0.05);
-    }
-
-    .badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--gradient-h);
-      color: white;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 16px;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-
-    .plan-name {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 12px;
-    }
-
-    .plan-price {
-      font-size: 52px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .plan-price sup { font-size: 24px; vertical-align: super; }
-    .plan-period { font-size: 14px; color: var(--gray); margin-bottom: 32px; }
-
-    .plan-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .plan-features li {
-      font-size: 14px;
-      color: var(--gray);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .plan-features li::before {
-      content: '✓';
-      color: var(--cyan);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    /* FAQ */
+    .faq-wrap{max-width:780px;margin:0 auto}
+    .faq-item{border-radius:16px;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s}
+    .faq-item:nth-child(odd){background:rgba(31,59,144,.12);border:1px solid rgba(31,59,144,.28)}
+    .faq-item:nth-child(even){background:rgba(118,73,236,.08);border:1px solid rgba(118,73,236,.2)}
+    .faq-item[open]{box-shadow:0 4px 24px rgba(7,185,253,.1)}
+    .faq-item summary{font-weight:700;font-size:16px;color:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:24px 28px;cursor:pointer;user-select:none;-webkit-user-select:none;gap:16px;line-height:1.4}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-icon{color:var(--cyan);font-size:22px;flex-shrink:0;display:inline-block;transition:transform .35s ease;line-height:1;font-style:normal}
+    .faq-item[open] .faq-icon{transform:rotate(45deg)}
+    .faq-body{padding:0 28px;overflow:hidden;max-height:0;transition:max-height .42s ease,padding-bottom .42s ease}
+    .faq-item[open] .faq-body{max-height:800px;padding-bottom:24px}
+    .faq-body p{color:var(--gray);line-height:1.8;margin:0}
 
     /* CTA */
-    .cta-section {
-      padding: 100px 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
+    .cta-section{padding:110px 24px;text-align:center;position:relative;overflow:hidden}
+    .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 80% at 50% 50%,rgba(31,59,144,.42) 0%,transparent 70%)}
+    .cta-inner{position:relative;max-width:660px;margin:0 auto}
+    .cta-inner h2{font-size:clamp(28px,4vw,52px);font-weight:900;text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:20px}
+    .cta-inner > p{color:var(--gray);font-size:17px;margin-bottom:44px;line-height:1.8}
 
-    .cta-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(31,59,144,0.35) 0%, transparent 70%);
-    }
-
-    .cta-inner { position: relative; max-width: 640px; margin: 0 auto; }
-    .cta-inner h2 {
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-    .cta-inner p {
-      color: var(--gray);
-      font-size: 17px;
-      margin-bottom: 40px;
-    }
-
-    /* CONTACT FORM */
-    .form-wrap {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 40px;
-      text-align: left;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 8px;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1.5px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 12px 16px;
-      color: white;
-      font-size: 15px;
-      font-family: 'Roboto', sans-serif;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-      outline: none;
-      border-color: var(--cyan);
-    }
-
-    .form-group select option { background: #1a1a2e; }
-
-    .form-submit {
-      width: 100%;
-      background: var(--gradient-h);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      font-family: 'Roboto', sans-serif;
-      margin-top: 8px;
-    }
-    .form-submit:hover { opacity: 0.85; }
+    /* FORM — glassmorphism */
+    .form-wrap{background:rgba(255,255,255,.055);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.13);border-radius:28px;padding:48px;text-align:left;max-width:520px;margin:0 auto;box-shadow:0 12px 50px rgba(0,0,0,.45)}
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+    .form-group input,.form-group select{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;padding:13px 16px;color:#fff;font-size:15px;font-family:'Roboto',sans-serif;transition:border-color .2s,box-shadow .2s}
+    .form-group input:focus,.form-group select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(7,185,253,.22)}
+    .form-group select option{background:#1a1a2e}
+    .form-submit{width:100%;background:var(--grad-h);color:#fff;border:none;padding:17px;border-radius:100px;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:opacity .2s,box-shadow .3s;font-family:'Roboto',sans-serif;margin-top:10px;box-shadow:0 4px 24px rgba(7,185,253,.28)}
+    .form-submit:hover{opacity:.88;box-shadow:0 8px 36px rgba(7,185,253,.5)}
+    .form-submit:disabled{opacity:.55;cursor:not-allowed}
 
     /* FOOTER */
-    footer {
-      padding: 40px 48px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
+    .gradient-bar{height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--purple))}
+    footer{padding:52px 48px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+    footer .logo{font-size:18px}
+    footer p{font-size:13px;color:var(--gray);line-height:1.8}
+    .footer-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .footer-links a{color:#5e6cd3;text-decoration:none;font-size:13px;transition:color .2s}
+    .footer-links a:hover{color:var(--cyan)}
+    .footer-links span{color:rgba(94,108,211,.5)}
+
+    /* SCROLL ANIMATIONS */
+    .fade-in{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+    .fade-in.visible{opacity:1;transform:none}
+
+    /* RESPONSIVE — tablet */
+    @media(max-width:1024px){
+      .steps{grid-template-columns:repeat(2,1fr);gap:48px}
+      .steps::before{display:none}
+      .backfill-grid{grid-template-columns:repeat(2,1fr)}
+      .stats-grid{grid-template-columns:repeat(3,1fr)}
     }
-
-    footer .logo { font-size: 16px; }
-    footer p { font-size: 13px; color: var(--gray); }
-
-    /* GRADIENT BAR */
-    .gradient-bar {
-      height: 3px;
-      background: var(--gradient-h);
+    /* RESPONSIVE — mobile */
+    @media(max-width:768px){
+      nav{padding:16px 20px}
+      .hero{padding:130px 20px 80px}
+      .hero-review{max-width:100%;text-align:left}
+      .stat-bar{gap:36px;padding:44px 20px}
+      .section{padding:80px 20px}
+      .why-section{padding:80px 20px}
+      .backfill-section{padding:80px 20px}
+      .how-section{padding:80px 20px}
+      .steps{grid-template-columns:1fr;gap:40px}
+      .demo-section{grid-template-columns:1fr;gap:52px;padding:80px 20px}
+      .pricing-section{padding:80px 20px}
+      .cta-section{padding:80px 20px}
+      .form-wrap{padding:32px 24px;border-radius:20px}
+      footer{padding:36px 20px;flex-direction:column;text-align:center}
+      .footer-links{justify-content:center}
+      .stats-grid{grid-template-columns:1fr}
+      .benefits-grid{grid-template-columns:1fr}
+      .backfill-grid{grid-template-columns:1fr}
+      .stat-bar{gap:32px}
     }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .stat-bar { gap: 40px; padding: 40px 24px; }
-      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
-      .demo-section { padding: 60px 24px; }
+    @media(max-width:480px){
+      h1{font-size:clamp(42px,12vw,64px)}
+      .section-title{font-size:clamp(26px,7vw,36px)}
+      .backfill-inner h2{font-size:clamp(24px,7vw,32px)}
+      .pricing-cards{grid-template-columns:1fr}
+      .btn-primary,.btn-secondary{padding:16px 32px;font-size:14px}
     }
   </style>
 </head>
 <body>
+
+  <div class="top-bar"></div>
 
   <!-- NAV -->
   <nav>
@@ -621,30 +255,42 @@
     <div class="hero-bg"></div>
     <div class="hero-content">
       <div class="eyebrow">AI Review Autopilot for Local Businesses</div>
-      <h1>No Review<br>Goes <span>Unanswered.</span><br>Ever.</h1>
+      <h1>
+        <div class="h1-glow"></div>
+        No Review<br>Goes <span>Unanswered.</span><br>Ever.
+      </h1>
       <p class="hero-sub">Gleam monitors your Google reviews and responds automatically using AI — no dashboards, no logins, no effort from your team.</p>
       <div class="hero-actions">
         <a href="#get-started" class="btn-primary">Get Started</a>
         <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+      </div>
+      <div class="hero-review">
+        <div class="hero-review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="hero-review-text">"Dr. Smith was absolutely amazing — so gentle and thorough. Best dental experience I've had."</p>
+        <div class="hero-review-meta">
+          <span class="meta-label">Responded by</span>
+          <span class="meta-brand">Gleam</span>
+          <span class="meta-label">· 2 min ago ✓</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- STAT BAR -->
   <div class="stat-bar">
-    <div class="stat">
+    <div class="stat fade-in">
       <span class="stat-num">5min</span>
       <div class="stat-label">To set up</div>
     </div>
-    <div class="stat">
+    <div class="stat fade-in">
       <span class="stat-num">30m</span>
       <div class="stat-label">Review response time</div>
     </div>
-    <div class="stat">
+    <div class="stat fade-in">
       <span class="stat-num">100%</span>
       <div class="stat-label">Reviews responded to</div>
     </div>
-    <div class="stat">
+    <div class="stat fade-in">
       <span class="stat-num">$49</span>
       <div class="stat-label">Per month</div>
     </div>
@@ -652,145 +298,146 @@
 
   <!-- PROBLEM -->
   <section class="section">
-    <div class="section-label">The Problem</div>
-    <h2 class="section-title">Most Reviews<br>Get Zero Response</h2>
-    <p class="section-sub">Online reviews drive new patients. But most practices don't have time to respond — and unanswered reviews hurt both trust and local search rankings.</p>
+    <div class="section-label fade-in">The Problem</div>
+    <h2 class="section-title fade-in">Most Reviews<br>Get Zero Response</h2>
+    <p class="section-sub fade-in">Online reviews drive new patients. But most practices don't have time to respond — and unanswered reviews hurt both trust and local search rankings.</p>
     <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-icon">⏱️</div>
+      <div class="problem-card fade-in">
+        <span class="problem-icon">⏱️</span>
         <h3>No Time</h3>
         <p>Staff are busy with patients. Writing thoughtful review responses takes time nobody has.</p>
       </div>
-      <div class="problem-card">
-        <div class="problem-icon">😟</div>
+      <div class="problem-card fade-in">
+        <span class="problem-icon">😟</span>
         <h3>Negative Reviews Sit</h3>
         <p>A 1-star review with no response is worse than the review itself. It signals you don't care.</p>
       </div>
-      <div class="problem-card">
-        <div class="problem-icon">📉</div>
+      <div class="problem-card fade-in">
+        <span class="problem-icon">📉</span>
         <h3>SEO Suffers</h3>
         <p>Google rewards practices that actively engage with their reviews. Silence costs you visibility.</p>
       </div>
-      <div class="problem-card">
-        <div class="problem-icon">🔄</div>
+      <div class="problem-card fade-in">
+        <span class="problem-icon">🔄</span>
         <h3>Inconsistency</h3>
         <p>Some reviews get responses, most don't. Patients notice. Your reputation looks patchy.</p>
       </div>
     </div>
   </section>
 
+  <!-- WHY IT MATTERS -->
+  <section class="why-section">
+    <div class="why-inner">
+      <div class="section-label fade-in">Why It Matters</div>
+      <h2 class="section-title fade-in">Responding to Reviews<br>Is Not Optional Anymore</h2>
+      <p class="section-sub fade-in">Patients research you before they book. What they see — and what you say back — decides whether they call your practice or the one down the street.</p>
+      <div class="stats-grid">
+        <div class="stat-card fade-in">
+          <div class="stat-card-num">88%</div>
+          <p>of patients trust online reviews as much as a personal recommendation from a friend or family member.</p>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-card-num">45%</div>
+          <p>of consumers say they're more likely to visit a business that responds to negative reviews — versus ignoring them.</p>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-card-num">+17%</div>
+          <p>average increase in Google local search ranking when a business consistently responds to its reviews within 24 hours.</p>
+        </div>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">🦷</div>
+          <div>
+            <div class="benefit-title">New patients Google you</div>
+            <div class="benefit-text">Before calling, they read your reviews. A practice with thoughtful responses looks professional and trustworthy. One with silence looks absent.</div>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">📍</div>
+          <div>
+            <div class="benefit-title">Google ranks active practices higher</div>
+            <div class="benefit-text">Review response activity is a local SEO signal. Consistent engagement pushes you up the map pack — free traffic every month.</div>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">⭐</div>
+          <div>
+            <div class="benefit-title">Turn critics into advocates</div>
+            <div class="benefit-text">A well-handled negative review — acknowledged, addressed, resolved — often ends with the patient updating to 4 or 5 stars.</div>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">🔒</div>
+          <div>
+            <div class="benefit-title">Protect your reputation 24/7</div>
+            <div class="benefit-text">Reviews come in at all hours. Gleam watches constantly — so no negative review sits unaddressed over a weekend while new patients are reading it.</div>
+          </div>
+        </div>
+        <div class="benefit-item fade-in" style="grid-column:1/-1">
+          <div class="benefit-icon">⏳</div>
+          <div>
+            <div class="benefit-title">Catch up on your review history</div>
+            <div class="benefit-text">Gleam quietly works through your unanswered past reviews — one per day. Over time your entire profile looks engaged, which Google rewards with higher local rankings.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKFILL CALLOUT -->
+  <section class="backfill-section">
+    <div class="backfill-inner">
+      <div class="section-label fade-in">Unique to Gleam</div>
+      <h2 class="fade-in">We Catch Up On Your<br>Past Reviews Too</h2>
+      <p class="fade-in">Most AI review tools only handle new reviews. Gleam goes further — every day, it quietly responds to one of your older unanswered reviews. Over weeks, your entire review history looks engaged and active.</p>
+      <div class="backfill-grid">
+        <div class="backfill-card fade-in">
+          <div class="backfill-day">✓ Day 1</div>
+          <p>Jan 2025 review responded</p>
+        </div>
+        <div class="backfill-card fade-in">
+          <div class="backfill-day">✓ Day 2</div>
+          <p>Mar 2025 review responded</p>
+        </div>
+        <div class="backfill-card fade-in">
+          <div class="backfill-day">✓ Day 3</div>
+          <p>Jun 2025 review responded</p>
+        </div>
+        <div class="backfill-card fade-in">
+          <div class="backfill-day">✓ Day 4</div>
+          <p>Sep 2025 review responded</p>
+        </div>
+      </div>
+      <div class="backfill-note fade-in">
+        💡 <strong style="color:#fff;">The result:</strong> Your Google Business Profile looks like you've been actively managing reviews for years — even if you just signed up today. Google rewards that consistency with higher local rankings.
+      </div>
+    </div>
+  </section>
+
   <!-- HOW IT WORKS -->
-  <section class="section" style="background: rgba(7,185,253,0.04); border-top: 1px solid rgba(7,185,253,0.1); border-bottom: 1px solid rgba(7,185,253,0.1);">
-    <div class="section-label">Why It Matters</div>
-    <h2 class="section-title">Responding to Reviews<br>Is Not Optional Anymore</h2>
-    <p class="section-sub">Patients research you before they book. What they see — and what you say back — decides whether they call your practice or the one down the street.</p>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:24px; max-width:960px; margin:48px auto 0;">
-      <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:16px; padding:28px;">
-        <div style="font-size:36px; font-weight:900; color:#07b9fd; margin-bottom:8px;">88%</div>
-        <p style="color:#94a3b8; font-size:15px; line-height:1.6; margin:0;">of patients trust online reviews as much as a personal recommendation from a friend or family member.</p>
-      </div>
-      <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:16px; padding:28px;">
-        <div style="font-size:36px; font-weight:900; color:#07b9fd; margin-bottom:8px;">45%</div>
-        <p style="color:#94a3b8; font-size:15px; line-height:1.6; margin:0;">of consumers say they're more likely to visit a business that responds to negative reviews — versus ignoring them.</p>
-      </div>
-      <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:16px; padding:28px;">
-        <div style="font-size:36px; font-weight:900; color:#07b9fd; margin-bottom:8px;">+17%</div>
-        <p style="color:#94a3b8; font-size:15px; line-height:1.6; margin:0;">average increase in Google local search ranking when a business consistently responds to its reviews within 24 hours.</p>
-      </div>
-    </div>
-    <div style="max-width:720px; margin:48px auto 0; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-      <div style="display:flex; gap:16px; align-items:flex-start;">
-        <div style="font-size:24px; flex-shrink:0;">🦷</div>
-        <div>
-          <div style="font-weight:700; color:white; margin-bottom:4px;">New patients Google you</div>
-          <div style="color:#94a3b8; font-size:14px; line-height:1.5;">Before calling, they read your reviews. A practice with thoughtful responses looks professional and trustworthy. One with silence looks absent.</div>
-        </div>
-      </div>
-      <div style="display:flex; gap:16px; align-items:flex-start;">
-        <div style="font-size:24px; flex-shrink:0;">📍</div>
-        <div>
-          <div style="font-weight:700; color:white; margin-bottom:4px;">Google ranks active practices higher</div>
-          <div style="color:#94a3b8; font-size:14px; line-height:1.5;">Review response activity is a local SEO signal. Consistent engagement pushes you up the map pack — free traffic every month.</div>
-        </div>
-      </div>
-      <div style="display:flex; gap:16px; align-items:flex-start;">
-        <div style="font-size:24px; flex-shrink:0;">⭐</div>
-        <div>
-          <div style="font-weight:700; color:white; margin-bottom:4px;">Turn critics into advocates</div>
-          <div style="color:#94a3b8; font-size:14px; line-height:1.5;">A well-handled negative review — acknowledged, addressed, resolved — often ends with the patient updating to 4 or 5 stars.</div>
-        </div>
-      </div>
-      <div style="display:flex; gap:16px; align-items:flex-start;">
-        <div style="font-size:24px; flex-shrink:0;">🔒</div>
-        <div>
-          <div style="font-weight:700; color:white; margin-bottom:4px;">Protect your reputation 24/7</div>
-          <div style="color:#94a3b8; font-size:14px; line-height:1.5;">Reviews come in at all hours. Gleam watches constantly — so no negative review sits unaddressed over a weekend while new patients are reading it.</div>
-        </div>
-      </div>
-      <div style="display:flex; gap:16px; align-items:flex-start;">
-        <div style="font-size:24px; flex-shrink:0;">⏳</div>
-        <div>
-          <div style="font-weight:700; color:white; margin-bottom:4px;">Catch up on your review history</div>
-          <div style="color:#94a3b8; font-size:14px; line-height:1.5;">Gleam quietly works through your unanswered past reviews — one per day. Over time your entire profile looks engaged, which Google rewards with higher local rankings.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Backfill Feature Callout -->
-  <section class="section" style="padding:80px 24px;">
-    <div style="max-width:760px; margin:0 auto; text-align:center;">
-      <div class="section-label" style="margin-bottom:16px;">Unique to Gleam</div>
-      <h2 style="font-size:32px; font-weight:900; line-height:1.2; margin-bottom:20px;">We Catch Up On Your<br>Past Reviews Too</h2>
-      <p style="color:#94a3b8; font-size:17px; line-height:1.7; max-width:600px; margin:0 auto 48px;">
-        Most AI review tools only handle new reviews. Gleam goes further — every day, it quietly responds to one of your older unanswered reviews. Over weeks, your entire review history looks engaged and active.
-      </p>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:32px; text-align:left;">
-        <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:14px; padding:20px;">
-          <div style="color:#4ade80; font-size:18px; margin-bottom:8px;">✓ Day 1</div>
-          <div style="color:#94a3b8; font-size:14px;">Jan 2025 review responded</div>
-        </div>
-        <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:14px; padding:20px;">
-          <div style="color:#4ade80; font-size:18px; margin-bottom:8px;">✓ Day 2</div>
-          <div style="color:#94a3b8; font-size:14px;">Mar 2025 review responded</div>
-        </div>
-        <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:14px; padding:20px;">
-          <div style="color:#4ade80; font-size:18px; margin-bottom:8px;">✓ Day 3</div>
-          <div style="color:#94a3b8; font-size:14px;">Jun 2025 review responded</div>
-        </div>
-        <div style="background:rgba(31,59,144,0.15); border:1px solid rgba(31,59,144,0.3); border-radius:14px; padding:20px;">
-          <div style="color:#4ade80; font-size:18px; margin-bottom:8px;">✓ Day 4</div>
-          <div style="color:#94a3b8; font-size:14px;">Sep 2025 review responded</div>
-        </div>
-      </div>
-      <div style="background:rgba(7,185,253,0.08); border:1px solid rgba(7,185,253,0.2); border-radius:16px; padding:24px; font-size:15px; color:#94a3b8; max-width:560px; margin:0 auto;">
-        💡 <strong style="color:white;">The result:</strong> Your Google Business Profile looks like you've been actively managing reviews for years — even if you just signed up today. Google rewards that consistency with higher local rankings.
-      </div>
-    </div>
-  </section>
-
   <section class="how-section" id="how-it-works">
     <div class="how-inner">
-      <div class="section-label">How It Works</div>
-      <h2 class="section-title">Set Up Once.<br>Run Forever.</h2>
-      <p class="section-sub">Gleam handles everything automatically. You only get involved when a negative review needs your personal touch.</p>
+      <div class="section-label fade-in">How It Works</div>
+      <h2 class="section-title fade-in">Set Up Once.<br>Run Forever.</h2>
+      <p class="section-sub fade-in">Gleam handles everything automatically. You only get involved when a negative review needs your personal touch.</p>
       <div class="steps">
-        <div class="step">
+        <div class="step fade-in">
           <div class="step-num">01</div>
           <h3>Connect Your Practice</h3>
           <p>Click one link, sign in with Google, enter your mobile number. Setup takes under 5 minutes — no software to install.</p>
         </div>
-        <div class="step">
+        <div class="step fade-in">
           <div class="step-num">02</div>
           <h3>AI Monitors Reviews</h3>
           <p>Gleam watches your Google reviews around the clock and generates a professional, HIPAA-safe response for each one.</p>
         </div>
-        <div class="step">
+        <div class="step fade-in">
           <div class="step-num">03</div>
           <h3>Positives Auto-Posted</h3>
           <p>4 and 5-star reviews receive an AI response automatically — warm, professional, and on-brand. No action needed.</p>
         </div>
-        <div class="step">
+        <div class="step fade-in">
           <div class="step-num">04</div>
           <h3>You Approve Negatives</h3>
           <p>Low-star reviews get texted to you with a suggested reply. Reply APPROVE and it's posted. Takes 10 seconds.</p>
@@ -802,49 +449,55 @@
   <!-- SMS DEMO -->
   <section class="demo-section">
     <div class="demo-text">
-      <div class="section-label">The Experience</div>
-      <h2 class="section-title">Your Entire<br>Interaction<br>Is A Text</h2>
-      <p class="section-sub">No dashboard to log into. No app to download. Gleam lives in your messages — exactly where you already are.</p>
+      <div class="section-label fade-in">The Experience</div>
+      <h2 class="section-title fade-in">Your Entire<br>Interaction<br>Is A Text</h2>
+      <p class="section-sub fade-in">No dashboard to log into. No app to download. Gleam lives in your messages — exactly where you already are.</p>
     </div>
-    <div class="sms-mockup">
-      <div class="sms-header">
-        <div class="sms-avatar">🦷</div>
-        <div>
-          <div class="sms-name">Gleam</div>
-          <div class="sms-sub">AI Review Assistant</div>
+    <div class="phone-frame fade-in">
+      <div class="phone-notch">
+        <div class="phone-dot cam"></div>
+        <div class="phone-dot"></div>
+      </div>
+      <div class="sms-mockup">
+        <div class="sms-header">
+          <div class="sms-avatar">🦷</div>
+          <div>
+            <div class="sms-name">Gleam</div>
+            <div class="sms-sub">AI Review Assistant</div>
+          </div>
         </div>
+        <div class="bubble-time">New review detected</div>
+        <div class="bubble bubble-inbound">
+          ⭐⭐ New 2-star Google review:<br><br>
+          "Front desk was dismissive and I waited 30 minutes with no explanation."<br><br>
+          Suggested reply:<br>
+          "We're sorry to hear this wasn't the experience you deserved. We'd genuinely welcome the chance to speak with you directly. — Petrie Family Dental"<br><br>
+          Reply APPROVE, EDIT [your text], or IGNORE
+        </div>
+        <div class="bubble-time">Dr. Petrie replied</div>
+        <div class="bubble bubble-outbound">APPROVE</div>
+        <div class="bubble-time">Response posted</div>
+        <div class="bubble bubble-inbound">✅ Response posted to Google.</div>
       </div>
-      <div class="bubble-time">New review detected</div>
-      <div class="bubble bubble-inbound">
-        ⭐⭐ New 2-star Google review:<br><br>
-        "Front desk was dismissive and I waited 30 minutes with no explanation."<br><br>
-        Suggested reply:<br>
-        "We're sorry to hear this wasn't the experience you deserved. We'd genuinely welcome the chance to speak with you directly. — Petrie Family Dental"<br><br>
-        Reply APPROVE, EDIT [your text], or IGNORE
-      </div>
-      <div class="bubble-time">Dr. Petrie replied</div>
-      <div class="bubble bubble-outbound">APPROVE</div>
-      <div class="bubble-time">Response posted</div>
-      <div class="bubble bubble-inbound">✅ Response posted to Google.</div>
     </div>
   </section>
 
   <!-- PRICING -->
   <section class="pricing-section">
     <div class="pricing-inner">
-      <div class="section-label">Pricing</div>
-      <h2 class="section-title">Simple, Affordable,<br>No Surprises</h2>
-      <p class="section-sub" style="margin: 0 auto 0; text-align: center;">No contracts. Cancel anytime. Setup is free.</p>
+      <div class="section-label fade-in">Pricing</div>
+      <h2 class="section-title fade-in">Simple, Affordable,<br>No Surprises</h2>
+      <p class="section-sub fade-in" style="margin:0 auto 0;text-align:center;">No contracts. Cancel anytime. Setup is free.</p>
       <!-- Billing toggle -->
-      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;margin-top:32px;">
         <span id="lbl-monthly" style="font-weight:700;color:#07b9fd;font-size:15px;">Monthly</span>
-        <div id="billing-toggle" onclick="toggleBilling()" style="width:52px;height:28px;background:#1f3b90;border-radius:14px;position:relative;cursor:pointer;transition:background 0.3s;">
-          <div id="toggle-knob" style="width:22px;height:22px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform 0.3s;"></div>
+        <div id="billing-toggle" onclick="toggleBilling()" style="width:52px;height:28px;background:#1f3b90;border-radius:14px;position:relative;cursor:pointer;transition:background .3s;">
+          <div id="toggle-knob" style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .3s;"></div>
         </div>
-        <span id="lbl-annual" style="color:#94a3b8;font-size:15px;">Annual <span style="background:rgba(7,185,253,0.15);color:#07b9fd;padding:2px 8px;border-radius:20px;font-size:12px;margin-left:4px;">2 months free</span></span>
+        <span id="lbl-annual" style="color:#94a3b8;font-size:15px;">Annual <span style="background:rgba(7,185,253,.15);color:#07b9fd;padding:2px 8px;border-radius:20px;font-size:12px;margin-left:4px;">2 months free</span></span>
       </div>
       <div class="pricing-cards">
-        <div class="pricing-card featured">
+        <div class="pricing-card featured fade-in">
           <div class="badge">Most Popular</div>
           <div class="plan-name">Solo Practice</div>
           <div class="plan-price"><sup>$</sup><span id="solo-price">49</span></div>
@@ -860,8 +513,9 @@
             <li>HIPAA-safe response guardrails</li>
             <li>Historical review catch-up (1/day)</li>
           </ul>
+          <a href="#get-started" class="plan-cta">Get Started</a>
         </div>
-        <div class="pricing-card">
+        <div class="pricing-card fade-in">
           <div class="plan-name">Multi-Location</div>
           <div class="plan-price"><sup>$</sup><span id="multi-price">149</span></div>
           <div class="plan-period" id="multi-period">per month, unlimited locations</div>
@@ -874,120 +528,62 @@
             <li>Priority historical catch-up</li>
             <li>Dedicated onboarding support</li>
           </ul>
+          <a href="#get-started" class="plan-cta-outline">Contact Us</a>
         </div>
       </div>
-      <script>
-        var isAnnual = false;
-        function toggleBilling() {
-          isAnnual = !isAnnual;
-          document.getElementById('toggle-knob').style.transform = isAnnual ? 'translateX(24px)' : 'translateX(0)';
-          document.getElementById('billing-toggle').style.background = isAnnual ? '#07b9fd' : '#1f3b90';
-          document.getElementById('lbl-monthly').style.color = isAnnual ? '#94a3b8' : '#07b9fd';
-          document.getElementById('lbl-monthly').style.fontWeight = isAnnual ? '400' : '700';
-          document.getElementById('lbl-annual').style.color = isAnnual ? '#07b9fd' : '#94a3b8';
-          document.getElementById('lbl-annual').style.fontWeight = isAnnual ? '700' : '400';
-          document.getElementById('solo-price').textContent = isAnnual ? '40.83' : '49';
-          document.getElementById('solo-period').textContent = isAnnual ? 'billed $490/year' : 'per month, per location';
-          document.getElementById('multi-price').textContent = isAnnual ? '124' : '149';
-          document.getElementById('multi-period').textContent = isAnnual ? 'billed $1,490/year' : 'per month, unlimited locations';
-          document.getElementById('solo-note').style.display = isAnnual ? 'block' : 'none';
-          document.getElementById('multi-note').style.display = isAnnual ? 'block' : 'none';
-        }
-        // Inject billing into form on submit
-        document.addEventListener('DOMContentLoaded', function() {
-          var form = document.getElementById('contact-form');
-          if (!form) return;
-          form.addEventListener('submit', function() {
-            var b = document.createElement('input');
-            b.type = 'hidden'; b.name = 'billing'; b.value = isAnnual ? 'annual' : 'monthly';
-            form.appendChild(b);
-          }, true);
-        });
-      </script>
     </div>
   </section>
 
-  <!-- CTA -->
-  <!-- FAQ Section -->
-  <section class="section" style="padding:80px 24px;">
-    <div style="max-width:760px; margin:0 auto;">
-      <div class="section-label" style="text-align:center; margin-bottom:16px;">FAQ</div>
-      <h2 class="section-title" style="text-align:center; margin-bottom:56px;">Questions We Get Asked</h2>
+  <!-- FAQ -->
+  <section class="section" style="padding:100px 24px;">
+    <div class="faq-wrap">
+      <div class="section-label fade-in" style="text-align:center;display:block;margin-bottom:16px;">FAQ</div>
+      <h2 class="section-title fade-in" style="text-align:center;margin-bottom:56px;">Questions We Get Asked</h2>
+      <div style="display:flex;flex-direction:column;gap:2px;">
 
-      <div style="display:flex; flex-direction:column; gap:2px;">
-
-        <details style="background:rgba(31,59,144,0.1); border:1px solid rgba(31,59,144,0.25); border-radius:12px; padding:24px; cursor:pointer; margin-bottom:8px;">
-          <summary style="font-weight:700; font-size:17px; color:white; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-            What if the AI says something wrong or embarrassing?
-            <span style="color:#07b9fd; font-size:20px; flex-shrink:0; margin-left:16px;">+</span>
-          </summary>
-          <p style="color:#94a3b8; margin-top:16px; line-height:1.7; margin-bottom:0;">
-            For 4 and 5-star reviews, Gleam posts responses automatically — but only after generating something professional, warm, and appropriate. The responses are deliberately crafted: no medical claims, no specific treatment references, no patient information — nothing that could create a liability or embarrass your practice. If a review contains no text (just a star rating), Gleam writes a brief, gracious acknowledgment rather than trying to be clever about nothing. We've spent considerable effort on the AI prompt to ensure responses feel human, stay safe, and reflect well on the practice. And for negative reviews, <strong style="color:white;">you always approve before anything is posted</strong> — Gleam texts you the AI draft, and waits for your explicit "APPROVE" before it touches Google. You stay in control of anything sensitive.
-          </p>
+        <details class="faq-item fade-in">
+          <summary>What if the AI says something wrong or embarrassing?<span class="faq-icon">+</span></summary>
+          <div class="faq-body"><p>For 4 and 5-star reviews, Gleam posts responses automatically — but only after generating something professional, warm, and appropriate. The responses are deliberately crafted: no medical claims, no specific treatment references, no patient information — nothing that could create a liability or embarrass your practice. If a review contains no text (just a star rating), Gleam writes a brief, gracious acknowledgment rather than trying to be clever about nothing. We've spent considerable effort on the AI prompt to ensure responses feel human, stay safe, and reflect well on the practice. And for negative reviews, <strong style="color:#fff;">you always approve before anything is posted</strong> — Gleam texts you the AI draft, and waits for your explicit "APPROVE" before it touches Google. You stay in control of anything sensitive.</p></div>
         </details>
 
-        <details style="background:rgba(31,59,144,0.1); border:1px solid rgba(31,59,144,0.25); border-radius:12px; padding:24px; cursor:pointer; margin-bottom:8px;">
-          <summary style="font-weight:700; font-size:17px; color:white; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-            Can I see what it posts before it goes live?
-            <span style="color:#07b9fd; font-size:20px; flex-shrink:0; margin-left:16px;">+</span>
-          </summary>
-          <p style="color:#94a3b8; margin-top:16px; line-height:1.7; margin-bottom:0;">
-            For negative reviews (1–3 stars), yes — always, without exception. Gleam texts you the AI-generated draft, along with the original review text so you have full context. You reply with one of three commands: <strong style="color:white;">APPROVE</strong> to post as written, <strong style="color:white;">EDIT [your text]</strong> to post a custom response instead, or <strong style="color:white;">IGNORE</strong> to leave it unanswered. Nothing goes live until you act. For positive reviews (4–5 stars), Gleam posts automatically by default — most practices prefer this since it keeps response times fast. But if you'd rather personally review everything before it goes live, we can configure your account to require approval on all reviews. Just mention it when you sign up or contact support.
-          </p>
+        <details class="faq-item fade-in">
+          <summary>Can I see what it posts before it goes live?<span class="faq-icon">+</span></summary>
+          <div class="faq-body"><p>For negative reviews (1–3 stars), yes — always, without exception. Gleam texts you the AI-generated draft, along with the original review text so you have full context. You reply with one of three commands: <strong style="color:#fff;">APPROVE</strong> to post as written, <strong style="color:#fff;">EDIT [your text]</strong> to post a custom response instead, or <strong style="color:#fff;">IGNORE</strong> to leave it unanswered. Nothing goes live until you act. For positive reviews (4–5 stars), Gleam posts automatically by default — most practices prefer this since it keeps response times fast. But if you'd rather personally review everything before it goes live, we can configure your account to require approval on all reviews. Just mention it when you sign up or contact support.</p></div>
         </details>
 
-        <details style="background:rgba(31,59,144,0.1); border:1px solid rgba(31,59,144,0.25); border-radius:12px; padding:24px; cursor:pointer; margin-bottom:8px;">
-          <summary style="font-weight:700; font-size:17px; color:white; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-            Will the responses sound robotic or templated?
-            <span style="color:#07b9fd; font-size:20px; flex-shrink:0; margin-left:16px;">+</span>
-          </summary>
-          <p style="color:#94a3b8; margin-top:16px; line-height:1.7; margin-bottom:0;">
-            No. Gleam uses advanced AI prompted specifically for healthcare practices. Rather than applying a one-size-fits-all template, the AI reads the actual review text and crafts a response that references what the patient said — so if someone praises your front desk staff, the reply acknowledges that specifically. We've tested extensively to eliminate the telltale signs of AI writing: no "Thank you for your wonderful review!" openers on every response, no hollow phrases, no over-enthusiasm. The tone matches your brand voice setting (professional, warm, or friendly). In side-by-side comparisons, most patients rate Gleam responses as more thoughtful than the average human-written reply — because most humans dash off review responses quickly, while Gleam takes its time every single time.
-          </p>
+        <details class="faq-item fade-in">
+          <summary>Will the responses sound robotic or templated?<span class="faq-icon">+</span></summary>
+          <div class="faq-body"><p>No. Gleam uses advanced AI prompted specifically for healthcare practices. Rather than applying a one-size-fits-all template, the AI reads the actual review text and crafts a response that references what the patient said — so if someone praises your front desk staff, the reply acknowledges that specifically. We've tested extensively to eliminate the telltale signs of AI writing: no "Thank you for your wonderful review!" openers on every response, no hollow phrases, no over-enthusiasm. The tone matches your brand voice setting (professional, warm, or friendly). In side-by-side comparisons, most patients rate Gleam responses as more thoughtful than the average human-written reply — because most humans dash off review responses quickly, while Gleam takes its time every single time.</p></div>
         </details>
 
-        <details style="background:rgba(31,59,144,0.1); border:1px solid rgba(31,59,144,0.25); border-radius:12px; padding:24px; cursor:pointer; margin-bottom:8px;">
-          <summary style="font-weight:700; font-size:17px; color:white; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-            Is this HIPAA compliant?
-            <span style="color:#07b9fd; font-size:20px; flex-shrink:0; margin-left:16px;">+</span>
-          </summary>
-          <p style="color:#94a3b8; margin-top:16px; line-height:1.7; margin-bottom:0;">
-            Yes. Gleam is designed from the ground up to be HIPAA-safe for healthcare practices. Here's what that means in practice: Gleam never connects to your practice management software, EHR, scheduling system, or any internal patient data — ever. It only reads text that patients have already chosen to make public on Google. More importantly, our AI is explicitly instructed never to confirm, reference, or acknowledge any treatment details, diagnoses, procedures, or health information in its responses — even if a patient mentions specifics in their review. If a patient writes "Dr. Smith fixed my root canal," the response will thank them warmly without touching the clinical content. Because Gleam only reads and responds to public reviews — never patient records or internal systems — we are not a Business Associate under HIPAA and no BAA is required.
-          </p>
+        <details class="faq-item fade-in">
+          <summary>Is this HIPAA compliant?<span class="faq-icon">+</span></summary>
+          <div class="faq-body"><p>Yes. Gleam is designed from the ground up to be HIPAA-safe for healthcare practices. Here's what that means in practice: Gleam never connects to your practice management software, EHR, scheduling system, or any internal patient data — ever. It only reads text that patients have already chosen to make public on Google. More importantly, our AI is explicitly instructed never to confirm, reference, or acknowledge any treatment details, diagnoses, procedures, or health information in its responses — even if a patient mentions specifics in their review. If a patient writes "Dr. Smith fixed my root canal," the response will thank them warmly without touching the clinical content. Because Gleam only reads and responds to public reviews — never patient records or internal systems — we are not a Business Associate under HIPAA and no BAA is required.</p></div>
         </details>
 
-        <details style="background:rgba(31,59,144,0.1); border:1px solid rgba(31,59,144,0.25); border-radius:12px; padding:24px; cursor:pointer; margin-bottom:8px;">
-          <summary style="font-weight:700; font-size:17px; color:white; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-            What happens if I want to cancel?
-            <span style="color:#07b9fd; font-size:20px; flex-shrink:0; margin-left:16px;">+</span>
-          </summary>
-          <p style="color:#94a3b8; margin-top:16px; line-height:1.7; margin-bottom:0;">
-            Cancel anytime — no long-term contracts, no cancellation fees, no awkward phone calls. You can cancel directly from your billing portal with one click. Your subscription continues through the end of the current billing period, and then stops — you won't be charged again. Everything Gleam has already posted stays on your Google Business Profile permanently. Those responses are yours. We won't delete them, modify them, or remove your Google authorization retroactively. If you ever want to come back, reactivating is instant.
-          </p>
+        <details class="faq-item fade-in">
+          <summary>What happens if I want to cancel?<span class="faq-icon">+</span></summary>
+          <div class="faq-body"><p>Cancel anytime — no long-term contracts, no cancellation fees, no awkward phone calls. You can cancel directly from your billing portal with one click. Your subscription continues through the end of the current billing period, and then stops — you won't be charged again. Everything Gleam has already posted stays on your Google Business Profile permanently. Those responses are yours. We won't delete them, modify them, or remove your Google authorization retroactively. If you ever want to come back, reactivating is instant.</p></div>
         </details>
 
-        <details style="background:rgba(31,59,144,0.1); border:1px solid rgba(31,59,144,0.25); border-radius:12px; padding:24px; cursor:pointer; margin-bottom:8px;">
-          <summary style="font-weight:700; font-size:17px; color:white; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-            How long does setup take?
-            <span style="color:#07b9fd; font-size:20px; flex-shrink:0; margin-left:16px;">+</span>
-          </summary>
-          <p style="color:#94a3b8; margin-top:16px; line-height:1.7; margin-bottom:0;">
-            About 60 seconds — seriously. After completing payment, you'll receive an onboarding email within minutes. It contains a single setup link. Click it, and you'll be guided through two steps: sign in with the Google account connected to your Google Business Profile (this authorizes Gleam to read your reviews and post responses), then enter the mobile number where you want to receive SMS alerts for negative reviews. That's it. No software to install, no IT involvement, no dashboard to configure. Gleam starts monitoring your reviews immediately, and you'll receive a confirmation text once the connection is live. Total time from payment to active: under two minutes for most practices.
-          </p>
+        <details class="faq-item fade-in">
+          <summary>How long does setup take?<span class="faq-icon">+</span></summary>
+          <div class="faq-body"><p>About 60 seconds — seriously. After completing payment, you'll receive an onboarding email within minutes. It contains a single setup link. Click it, and you'll be guided through two steps: sign in with the Google account connected to your Google Business Profile (this authorizes Gleam to read your reviews and post responses), then enter the mobile number where you want to receive SMS alerts for negative reviews. That's it. No software to install, no IT involvement, no dashboard to configure. Gleam starts monitoring your reviews immediately, and you'll receive a confirmation text once the connection is live. Total time from payment to active: under two minutes for most practices.</p></div>
         </details>
 
       </div>
     </div>
   </section>
 
+  <!-- CTA / FORM -->
   <section class="cta-section" id="get-started">
     <div class="cta-bg"></div>
     <div class="cta-inner">
-      <h2>Ready to Put Your Reviews on Autopilot?</h2>
-      <p>We'll set you up personally. No self-serve complexity. Just fill this out and we'll be in touch within 24 hours.</p>
-      <div class="form-wrap" id="contact-form-wrap">
+      <h2 class="fade-in">Ready to Put Your Reviews on Autopilot?</h2>
+      <p class="fade-in">We'll set you up personally. No self-serve complexity. Just fill this out and we'll be in touch within 24 hours.</p>
+      <div class="form-wrap fade-in" id="contact-form-wrap">
         <form id="contact-form">
-          <p style="font-size:12px; color:#5e6cd3; text-align:center; margin-bottom:20px; letter-spacing:1px;">Powered by LucraLab AI</p>
+          <p style="font-size:12px;color:#5e6cd3;text-align:center;margin-bottom:24px;letter-spacing:1px;">Powered by LucraLab AI</p>
           <div class="form-group">
             <label>Your Name</label>
             <input type="text" name="name" placeholder="Dr. Jane Smith" required>
@@ -1012,44 +608,17 @@
               <option>4+ locations</option>
             </select>
           </div>
-          <div class="form-group" style="display:flex; align-items:flex-start; gap:12px; margin-top:8px;">
-            <input type="checkbox" id="consent" name="consent" required style="margin-top:4px; accent-color:#07b9fd; width:16px; height:16px; flex-shrink:0;">
-            <label for="consent" style="font-size:13px; color:#94a3b8; line-height:1.5; cursor:pointer;">
+          <div class="form-group" style="display:flex;align-items:flex-start;gap:12px;margin-top:8px;">
+            <input type="checkbox" id="consent" name="consent" required style="margin-top:4px;accent-color:#07b9fd;width:16px;height:16px;flex-shrink:0;">
+            <label for="consent" style="font-size:13px;color:#94a3b8;line-height:1.6;cursor:pointer;text-transform:none;letter-spacing:0;font-weight:400;">
               I agree to the <a href="/privacy.html" target="_blank" style="color:#07b9fd;">Privacy Policy</a> and <a href="/terms.html" target="_blank" style="color:#07b9fd;">Terms of Service</a>. I consent to being contacted about my Gleam account.
             </label>
           </div>
           <button type="submit" class="form-submit">Get Started →</button>
         </form>
-        <div id="thank-you" style="display:none; text-align:center; padding:24px; color:#07b9fd; font-weight:700; font-size:18px;">
+        <div id="thank-you" style="display:none;text-align:center;padding:36px;color:#07b9fd;font-weight:700;font-size:18px;">
           ✅ Got it! We'll be in touch within 24 hours.
         </div>
-        <script>
-          document.getElementById("contact-form").addEventListener("submit", function(e) {
-            e.preventDefault();
-            var form = this;
-            var btn = form.querySelector("button[type=submit]");
-            btn.textContent = "Setting up your account...";
-            btn.disabled = true;
-            var data = {};
-            new FormData(form).forEach(function(v, k) { data[k] = v; });
-            fetch("https://api.gleamreply.com/signup", {
-              method: "POST",
-              body: JSON.stringify(data),
-              headers: { "Content-Type": "application/json" }
-            }).then(function(r) { return r.json(); })
-            .then(function(d) {
-              if (d.checkout_url) {
-                window.location.href = d.checkout_url;
-              } else {
-                throw new Error("No checkout URL");
-              }
-            }).catch(function() {
-              btn.textContent = "Get Started →";
-              btn.disabled = false;
-              alert("Something went wrong. Please try again or email support@lucralab.com");
-            });
-          });
-        </script>
       </div>
     </div>
   </section>
@@ -1059,16 +628,109 @@
   <footer>
     <div>
       <div class="logo">Gleam</div>
-      <p style="font-size:12px; color:#5e6cd3; margin-top:6px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">A LucraLab Product</p>
+      <p style="font-size:12px;color:#5e6cd3;margin-top:6px;letter-spacing:2px;text-transform:uppercase;font-weight:500;">A LucraLab Product</p>
     </div>
     <p>© 2026 LucraLab. All rights reserved.<br>
-    <a href="https://www.lucralab.com" style="color:#5e6cd3; text-decoration:none; font-size:13px;">lucralab.com</a></p>
-    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-      <a href="/privacy.html" style="color:#5e6cd3; text-decoration:none; font-size:13px;">Privacy Policy</a>
-      <span style="color:#5e6cd3;"> · </span>
-      <a href="/terms.html" style="color:#5e6cd3; text-decoration:none; font-size:13px;">Terms of Service</a>
+      <a href="https://www.lucralab.com" style="color:#5e6cd3;text-decoration:none;font-size:13px;transition:color .2s;" onmouseover="this.style.color='#07b9fd'" onmouseout="this.style.color='#5e6cd3'">lucralab.com</a>
+    </p>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <span> · </span>
+      <a href="/terms.html">Terms of Service</a>
     </div>
   </footer>
 
+  <!-- ALL SCRIPTS — deferred to bottom of body -->
+  <script>
+    // ── Billing toggle ──────────────────────────────────────────
+    var isAnnual = false;
+    function toggleBilling() {
+      isAnnual = !isAnnual;
+      document.getElementById('toggle-knob').style.transform = isAnnual ? 'translateX(24px)' : 'translateX(0)';
+      document.getElementById('billing-toggle').style.background = isAnnual ? '#07b9fd' : '#1f3b90';
+      document.getElementById('lbl-monthly').style.color = isAnnual ? '#94a3b8' : '#07b9fd';
+      document.getElementById('lbl-monthly').style.fontWeight = isAnnual ? '400' : '700';
+      document.getElementById('lbl-annual').style.color = isAnnual ? '#07b9fd' : '#94a3b8';
+      document.getElementById('lbl-annual').style.fontWeight = isAnnual ? '700' : '400';
+      document.getElementById('solo-price').textContent = isAnnual ? '40.83' : '49';
+      document.getElementById('solo-period').textContent = isAnnual ? 'billed $490/year' : 'per month, per location';
+      document.getElementById('multi-price').textContent = isAnnual ? '124' : '149';
+      document.getElementById('multi-period').textContent = isAnnual ? 'billed $1,490/year' : 'per month, unlimited locations';
+      document.getElementById('solo-note').style.display = isAnnual ? 'block' : 'none';
+      document.getElementById('multi-note').style.display = isAnnual ? 'block' : 'none';
+    }
+
+    // ── Form logic ──────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function () {
+      var form = document.getElementById('contact-form');
+      if (!form) return;
+
+      // Inject billing preference on submit
+      form.addEventListener('submit', function () {
+        var b = document.createElement('input');
+        b.type = 'hidden'; b.name = 'billing'; b.value = isAnnual ? 'annual' : 'monthly';
+        form.appendChild(b);
+      }, true);
+
+      // Handle form submission → Stripe checkout
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type=submit]');
+        btn.textContent = 'Setting up your account...';
+        btn.disabled = true;
+        var data = {};
+        new FormData(form).forEach(function (v, k) { data[k] = v; });
+        fetch('https://api.gleamreply.com/signup', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' }
+        }).then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (d.checkout_url) {
+              window.location.href = d.checkout_url;
+            } else {
+              throw new Error('No checkout URL');
+            }
+          }).catch(function () {
+            btn.textContent = 'Get Started →';
+            btn.disabled = false;
+            alert('Something went wrong. Please try again or email info@lucralab.com');
+          });
+      });
+    });
+
+    // ── Scroll-entrance animations (Intersection Observer) ───────
+    (function () {
+      var els = document.querySelectorAll('.fade-in');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+
+    // ── FAQ smooth close animation ───────────────────────────────
+    // CSS handles open (max-height expand); JS handles smooth close
+    document.querySelectorAll('details.faq-item').forEach(function (detail) {
+      detail.addEventListener('click', function (e) {
+        if (!e.target.closest('summary')) return;
+        if (!this.open) return; // let native open happen
+        e.preventDefault();
+        var body = this.querySelector('.faq-body');
+        body.style.maxHeight = '0px';
+        body.style.paddingBottom = '0px';
+        var d = this;
+        setTimeout(function () { d.removeAttribute('open'); body.style.maxHeight = ''; body.style.paddingBottom = ''; }, 420);
+      });
+    });
+  </script>
 </body>
 </html>
