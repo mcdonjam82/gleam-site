@@ -746,12 +746,21 @@
       <div class="section-label">Pricing</div>
       <h2 class="section-title">Simple, Affordable,<br>No Surprises</h2>
       <p class="section-sub" style="margin: 0 auto 0; text-align: center;">No contracts. Cancel anytime. Setup is free.</p>
+      <!-- Billing toggle -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;">
+        <span id="lbl-monthly" style="font-weight:700;color:#07b9fd;font-size:15px;">Monthly</span>
+        <div id="billing-toggle" onclick="toggleBilling()" style="width:52px;height:28px;background:#1f3b90;border-radius:14px;position:relative;cursor:pointer;transition:background 0.3s;">
+          <div id="toggle-knob" style="width:22px;height:22px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform 0.3s;"></div>
+        </div>
+        <span id="lbl-annual" style="color:#94a3b8;font-size:15px;">Annual <span style="background:rgba(7,185,253,0.15);color:#07b9fd;padding:2px 8px;border-radius:20px;font-size:12px;margin-left:4px;">2 months free</span></span>
+      </div>
       <div class="pricing-cards">
         <div class="pricing-card featured">
           <div class="badge">Most Popular</div>
           <div class="plan-name">Solo Practice</div>
-          <div class="plan-price"><sup>$</sup>49</div>
-          <div class="plan-period">per month, per location</div>
+          <div class="plan-price"><sup>$</sup><span id="solo-price">49</span></div>
+          <div class="plan-period" id="solo-period">per month, per location</div>
+          <div id="solo-note" style="display:none;color:#07b9fd;font-size:13px;margin-bottom:8px;">$490/year — save $98</div>
           <ul class="plan-features">
             <li>Google review monitoring (checks every 30 min)</li>
             <li>AI response generation for every review</li>
@@ -764,8 +773,9 @@
         </div>
         <div class="pricing-card">
           <div class="plan-name">Multi-Location</div>
-          <div class="plan-price"><sup>$</sup>149</div>
-          <div class="plan-period">per month, unlimited locations</div>
+          <div class="plan-price"><sup>$</sup><span id="multi-price">149</span></div>
+          <div class="plan-period" id="multi-period">per month, unlimited locations</div>
+          <div id="multi-note" style="display:none;color:#07b9fd;font-size:13px;margin-bottom:8px;">$1,490/year — save $298</div>
           <ul class="plan-features">
             <li>Everything in Solo Practice</li>
             <li>Multiple locations under one account</li>
@@ -775,6 +785,34 @@
           </ul>
         </div>
       </div>
+      <script>
+        var isAnnual = false;
+        function toggleBilling() {
+          isAnnual = !isAnnual;
+          document.getElementById('toggle-knob').style.transform = isAnnual ? 'translateX(24px)' : 'translateX(0)';
+          document.getElementById('billing-toggle').style.background = isAnnual ? '#07b9fd' : '#1f3b90';
+          document.getElementById('lbl-monthly').style.color = isAnnual ? '#94a3b8' : '#07b9fd';
+          document.getElementById('lbl-monthly').style.fontWeight = isAnnual ? '400' : '700';
+          document.getElementById('lbl-annual').style.color = isAnnual ? '#07b9fd' : '#94a3b8';
+          document.getElementById('lbl-annual').style.fontWeight = isAnnual ? '700' : '400';
+          document.getElementById('solo-price').textContent = isAnnual ? '40.83' : '49';
+          document.getElementById('solo-period').textContent = isAnnual ? 'billed $490/year' : 'per month, per location';
+          document.getElementById('multi-price').textContent = isAnnual ? '124' : '149';
+          document.getElementById('multi-period').textContent = isAnnual ? 'billed $1,490/year' : 'per month, unlimited locations';
+          document.getElementById('solo-note').style.display = isAnnual ? 'block' : 'none';
+          document.getElementById('multi-note').style.display = isAnnual ? 'block' : 'none';
+        }
+        // Inject billing into form on submit
+        document.addEventListener('DOMContentLoaded', function() {
+          var form = document.getElementById('contact-form');
+          if (!form) return;
+          form.addEventListener('submit', function() {
+            var b = document.createElement('input');
+            b.type = 'hidden'; b.name = 'billing'; b.value = isAnnual ? 'annual' : 'monthly';
+            form.appendChild(b);
+          }, true);
+        });
+      </script>
     </div>
   </section>
 
