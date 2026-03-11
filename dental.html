@@ -237,6 +237,9 @@
       .backfill-grid{grid-template-columns:1fr}
       .stat-bar{gap:32px}
     }
+    @media(max-width:768px){
+      .new-features-grid{grid-template-columns:1fr !important}
+    }
     @media(max-width:480px){
       h1{font-size:clamp(42px,12vw,64px)}
       .section-title{font-size:clamp(26px,7vw,36px)}
@@ -389,6 +392,20 @@
             <div class="benefit-text">A well-handled negative review — acknowledged and addressed — often ends with the patient updating to 4 or 5 stars. Gleam drafts it; you approve it.</div>
           </div>
         </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="flex-shrink:0;width:36px;height:36px;"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="11" r="5" stroke="#07b9fd" stroke-width="2"/><circle cx="24" cy="11" r="5" stroke="#07b9fd" stroke-width="2"/><path d="M4 30c0-5.523 3.582-10 8-10s8 4.477 8 10" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/><path d="M16 30c0-5.523 3.582-10 8-10s8 4.477 8 10" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div>
+            <div class="benefit-title">Your front desk, hygienists, and assistants drive reviews too</div>
+            <div class="benefit-text">Text Gleam your team's names and numbers. After great appointments, they get a simple nudge to ask patients for a review — during business hours, staggered, and TCPA compliant.</div>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="flex-shrink:0;width:36px;height:36px;"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="24" height="28" rx="3" stroke="#07b9fd" stroke-width="2"/><line x1="11" y1="12" x2="25" y2="12" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="18" x2="21" y2="18" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="24" x2="18" y2="24" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div>
+            <div class="benefit-title">Know your reputation before a patient does</div>
+            <div class="benefit-text">On the 1st of every month, a report lands in your inbox: new reviews, average rating, what patients keep saying, and every response Gleam posted. 30-second read. No dashboard needed.</div>
+          </div>
+        </div>
         <div class="benefit-item fade-in" style="grid-column:1/-1">
           <div class="benefit-icon" style="flex-shrink:0;width:36px;height:36px;"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18A12 12 0 1 1 8 11" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/><polyline points="3,8 8,11 11,6" stroke="#07b9fd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12v6l4 3" stroke="#07b9fd" stroke-width="2" stroke-linecap="round"/></svg></div>
           <div>
@@ -426,6 +443,39 @@
       </div>
       <div class="backfill-note fade-in">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><circle cx="9" cy="9" r="8" stroke="#07b9fd" stroke-width="1.5"/><line x1="9" y1="8" x2="9" y2="13" stroke="#07b9fd" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="5.5" r="1" fill="#07b9fd"/></svg> <strong style="color:#fff;">The result:</strong> Your Google Business Profile looks like you've been actively managing reviews for years — even if you just signed up today. Google rewards that consistency with higher local rankings.
+      </div>
+    </div>
+  </section>
+
+  <!-- STAFF REMINDERS + MONTHLY REPORT -->
+  <section class="section" style="padding:100px 24px;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="section-label fade-in">New</div>
+      <h2 class="section-title fade-in">Get More Reviews.<br>Know Your Reputation.</h2>
+      <p class="section-sub fade-in">Two features that turn Gleam from a response tool into your practice's complete reputation engine — so you outpace other practices in your area.</p>
+      <div class="new-features-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:960px;">
+        <div class="problem-card fade-in" style="border-color:rgba(7,185,253,.22);">
+          <span class="problem-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="14" r="6" stroke="#07b9fd" stroke-width="2.5"/><circle cx="28" cy="14" r="6" stroke="#07b9fd" stroke-width="2.5"/><path d="M4 36c0-6 4-11 10-11s10 5 10 11" stroke="#07b9fd" stroke-width="2.5" stroke-linecap="round"/><path d="M18 36c0-6 4-11 10-11s10 5 10 11" stroke="#07b9fd" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+          <h3>Staff Review Reminders</h3>
+          <p style="color:var(--gray);font-size:15px;line-height:1.8;margin-bottom:18px;">Your front desk, hygienists, and assistants see patients every day. They should be your biggest source of reviews. Text Gleam their names and numbers — they get a simple nudge to ask patients for reviews after great appointments.</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:var(--cyan);font-weight:700;flex-shrink:0;">✓</span> Add staff via text — no app, no login</li>
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:var(--cyan);font-weight:700;flex-shrink:0;">✓</span> Messages sent during practice hours only, staggered</li>
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:var(--cyan);font-weight:700;flex-shrink:0;">✓</span> You write the message — include incentives if you want</li>
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:var(--cyan);font-weight:700;flex-shrink:0;">✓</span> Staff consent required first (TCPA compliant)</li>
+          </ul>
+        </div>
+        <div class="problem-card fade-in" style="border-color:rgba(118,73,236,.22);">
+          <span class="problem-icon"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="28" height="32" rx="4" stroke="#7649ec" stroke-width="2.5"/><line x1="12" y1="14" x2="28" y2="14" stroke="#7649ec" stroke-width="2.5" stroke-linecap="round"/><line x1="12" y1="20" x2="24" y2="20" stroke="#7649ec" stroke-width="2.5" stroke-linecap="round"/><line x1="12" y1="26" x2="20" y2="26" stroke="#7649ec" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+          <h3>Monthly Reputation Report</h3>
+          <p style="color:var(--gray);font-size:15px;line-height:1.8;margin-bottom:18px;">Know your reputation before a patient does. On the 1st of every month, a report lands in your inbox — 30 seconds to read the summary, full breakdown below for when you want it.</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:#7649ec;font-weight:700;flex-shrink:0;">✓</span> New reviews, average rating, response rate</li>
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:#7649ec;font-weight:700;flex-shrink:0;">✓</span> AI analysis: what patients keep saying about your practice</li>
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:#7649ec;font-weight:700;flex-shrink:0;">✓</span> Every review with Gleam's response, so you can spot-check</li>
+            <li style="font-size:14px;color:var(--gray);display:flex;align-items:flex-start;gap:10px;line-height:1.6"><span style="color:#7649ec;font-weight:700;flex-shrink:0;">✓</span> Emailed automatically — no reports to pull yourself</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -503,7 +553,7 @@
       <div class="section-label fade-in">Pricing</div>
       <h2 class="section-title fade-in">Simple, Affordable,<br>No Surprises</h2>
       <p class="section-sub fade-in" style="margin:0 auto 0;text-align:center;">14-day free trial included. No contracts. Cancel anytime.</p>
-      <p class="fade-in" style="text-align:center;font-size:14px;color:#64748b;margin-top:12px;margin-bottom:0;">Unlike Birdeye or Podium — no app, no monthly check-ins, no $300+ price tag. Just texts.</p>
+      <p class="fade-in" style="text-align:center;font-size:14px;color:#64748b;margin-top:12px;margin-bottom:0;">Unlike Birdeye or Podium — no app, no monthly check-ins, no $300+ price tag. Just texts.<br>While other practices in your area ignore their reviews, you'll be the one that always responds.</p>
       <!-- Billing toggle -->
       <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;margin-top:32px;">
         <span id="lbl-monthly" style="font-weight:700;color:#07b9fd;font-size:15px;">Monthly</span>
@@ -520,14 +570,14 @@
           <div class="plan-period" id="solo-period">per month, per location</div>
           <div id="solo-note" style="display:none;color:#07b9fd;font-size:13px;margin-bottom:8px;">$490/year — save $98</div>
           <ul class="plan-features">
-            <li>Google review monitoring (checks every 30 min)</li>
-            <li>AI response generation for every review</li>
-            <li>Auto-posting for 4 and 5-star reviews</li>
-            <li>SMS alerts for low-star reviews</li>
-            <li>One-tap approval via text message</li>
-            <li>Custom brand voice settings</li>
-            <li>HIPAA-safe response guardrails</li>
-            <li>Historical review catch-up (1/day)</li>
+            <li>Every patient review responded to — automatically</li>
+            <li>You approve negative reviews before they go live</li>
+            <li>Staff review reminders for your whole team</li>
+            <li>Monthly reputation report emailed to you</li>
+            <li>Past reviews caught up — one per day</li>
+            <li>Custom brand voice that sounds like your practice</li>
+            <li>HIPAA-safe guardrails — no clinical details, ever</li>
+            <li>No app, no dashboard — everything via text</li>
           </ul>
           <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px;margin-bottom:16px;">✓ Includes 14-day free trial</p>
           <a href="#get-started" class="plan-cta" style="display:block;width:100%;background:linear-gradient(90deg,#1f3b90,#07b9fd);color:#fff;text-decoration:none;padding:16px;border-radius:100px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;text-align:center;margin-top:0;box-shadow:0 4px 22px rgba(7,185,253,.25);">Start Free Trial</a>
@@ -539,9 +589,9 @@
           <div id="multi-note" style="display:none;color:#07b9fd;font-size:13px;margin-bottom:8px;">$1,490/year — save $298</div>
           <ul class="plan-features">
             <li>Everything in Solo Practice</li>
-            <li>Multiple locations under one account</li>
-            <li>Centralized review monitoring</li>
-            <li>Per-location automation settings</li>
+            <li>All locations under one account</li>
+            <li>Per-location voice and automation settings</li>
+            <li>Consolidated monthly report across all locations</li>
             <li>Priority historical catch-up</li>
             <li>Dedicated onboarding support</li>
           </ul>
@@ -665,11 +715,9 @@
       <a href="/" style="text-decoration:none;display:inline-block;">
         <img src="/logo.svg" alt="Gleam" height="28" style="display:block;">
       </a>
-      <p style="font-size:12px;color:#5e6cd3;margin-top:6px;letter-spacing:2px;text-transform:uppercase;font-weight:500;">A LucraLab Product</p>
+      <p style="font-size:12px;color:#5e6cd3;margin-top:6px;letter-spacing:2px;text-transform:uppercase;font-weight:500;">Powered by LucraLab</p>
     </div>
-    <p>© 2026 LucraLab. All rights reserved.<br>
-      <a href="https://www.lucralab.com" style="color:#5e6cd3;text-decoration:none;font-size:13px;transition:color .2s;" onmouseover="this.style.color='#07b9fd'" onmouseout="this.style.color='#5e6cd3'">lucralab.com</a>
-    </p>
+    <p>© 2026 LucraLab. All rights reserved.</p>
     <div class="footer-links">
       <a href="/privacy.html">Privacy Policy</a>
       <span> · </span>
