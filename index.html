@@ -612,8 +612,8 @@
             <li>Priority historical catch-up</li>
             <li>Dedicated onboarding support</li>
           </ul>
-          <a href="mailto:info@lucralab.com" class="plan-cta-outline">Contact Us →</a>
-          <p style="font-size:12px;color:#64748b;text-align:center;margin-top:10px;">Email us to get set up</p>
+          <button type="button" class="plan-cta" onclick="selectPlan('multi')">Start Free Trial →</button>
+          <p style="font-size:12px;color:#64748b;text-align:center;margin-top:10px;">14-day free trial, no commitment</p>
         </div>
       </div>
     </div>
@@ -777,6 +777,16 @@
 
     // ── Form logic ──────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function () {
+      // selectPlan: scroll to form and pre-select plan type
+      window.selectPlan = function(plan) {
+        var locSelect = document.querySelector('select[name="locations"]');
+        if (locSelect && plan === 'multi') {
+          locSelect.value = '2–3 locations';
+        }
+        var formWrap = document.getElementById('contact-form-wrap');
+        if (formWrap) formWrap.scrollIntoView({behavior: 'smooth', block: 'center'});
+      };
+
       var form = document.getElementById('contact-form');
       if (!form) return;
 
