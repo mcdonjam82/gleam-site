@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gleam — Petrie Advanced Dental</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #151327;
+  --cyan: #07b9fd;
+  --purple: #7649ec;
+  --white: #ffffff;
+  --white-60: rgba(255,255,255,0.6);
+  --white-40: rgba(255,255,255,0.4);
+  --white-10: rgba(255,255,255,0.08);
+  --white-05: rgba(255,255,255,0.04);
+}
+
+html, body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow: hidden;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+.deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 120px;
+  opacity: 0; transform: translateX(60px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+.slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+.slide.exit-left { opacity: 0; transform: translateX(-60px); }
+
+.logo {
+  position: fixed; top: 36px; left: 48px; z-index: 100;
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 15px; color: var(--white-60);
+}
+.logo-shape {
+  width: 24px; height: 24px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border-radius: 6px; position: relative;
+}
+.logo-shape::after {
+  content: ''; position: absolute; top: 5px; left: 5px;
+  width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.9); border-radius: 3px;
+}
+
+.counter { position: fixed; bottom: 36px; right: 48px; font-size: 13px; color: var(--white-40); z-index: 100; }
+.nav-hint { position: fixed; bottom: 36px; left: 48px; font-size: 12px; color: var(--white-40); z-index: 100; }
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--purple)); transition: width 0.5s ease; z-index: 200; }
+
+.orb { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+.orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(7,185,253,0.14), transparent 70%); top: -100px; right: -100px; }
+.orb-2 { width: 420px; height: 420px; background: radial-gradient(circle, rgba(118,73,236,0.14), transparent 70%); bottom: -60px; left: 30%; }
+
+.headline { font-size: clamp(30px, 4.3vw, 68px); font-weight: 900; line-height: 1.08; letter-spacing: -1.5px; max-width: 980px; }
+.subline { font-size: clamp(17px, 2vw, 26px); color: var(--cyan); margin-top: 20px; }
+.copy { margin-top: 22px; font-size: clamp(16px, 1.5vw, 21px); color: var(--white-60); max-width: 980px; line-height: 1.6; }
+.copy strong { color: var(--white); }
+.eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--purple); margin-bottom: 18px; font-weight: 700; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 34px; max-width: 1050px; }
+.card {
+  background: var(--white-05); border: 1px solid var(--white-10); border-radius: 16px;
+  padding: 28px;
+}
+.stat-number {
+  font-size: clamp(35px, 4vw, 64px); font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-label { margin-top: 12px; color: var(--white-60); line-height: 1.5; font-size: 15px; }
+
+.list { list-style: none; margin-top: 26px; max-width: 980px; }
+.list li {
+  border-left: 3px solid rgba(7,185,253,0.65); padding-left: 12px; margin-bottom: 12px;
+  font-size: clamp(15px, 1.45vw, 21px); color: var(--white-60); line-height: 1.55;
+}
+.list li strong { color: var(--white); }
+
+.flow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; max-width: 1050px; }
+.flow-card { background: var(--white-05); border: 1px solid var(--white-10); border-radius: 16px; padding: 28px; text-align: center; }
+.flow-icon { font-size: 34px; margin-bottom: 14px; }
+.flow-title { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+.flow-desc { color: var(--white-60); font-size: 14px; line-height: 1.5; }
+
+.monthly-card { margin-top: 22px; max-width: 960px; }
+.metric { display: flex; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--white-10); padding: 10px 0; color: var(--white-60); }
+.metric strong { color: var(--cyan); }
+.topics { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.topic { border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 5px 10px; font-size: 12px; color: var(--white-60); }
+
+.footnote { position: absolute; bottom: 46px; left: 120px; font-size: 11px; color: var(--white-40); max-width: 80vw; }
+
+@media (max-width: 900px) {
+  .slide { padding: 70px 28px; }
+  .grid-3, .flow-grid { grid-template-columns: 1fr; }
+  .footnote { left: 28px; }
+  .nav-hint { display: none; }
+  .logo { top: 18px; left: 24px; }
+  .counter { bottom: 18px; right: 24px; }
+}
+</style>
+</head>
+<body>
+<div class="logo"><div class="logo-shape"></div>LucraLab</div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+<div class="nav-hint">← → to navigate</div>
+
+<div class="deck" id="deck">
+  <div class="slide active" data-slide="1">
+    <div class="orb orb-1"></div><div class="orb orb-2"></div>
+    <div class="eyebrow">✦ GLEAM — AI REVIEW AUTOPILOT</div>
+    <h1 class="headline">Your Reviews Are Costing You Patients</h1>
+    <p class="subline">Dentistry is trust-first. Google decides trust before the first chair visit.</p>
+    <p class="copy"><strong>Pain:</strong> Patients pre-judge clinical quality from reviews. <strong>Dollar:</strong> One unanswered negative review can cost ~22 patients (~$33K+ at $1,500 LTV). <strong>Solution:</strong> Gleam handles monitoring + draft responses so you reply fast by SMS.</p>
+    <div class="footnote">For Petrie Advanced Dental · Confidential · 2026</div>
+  </div>
+
+  <div class="slide" data-slide="2">
+    <h2 class="headline">Why Dentists Need Gleam Specifically</h2>
+    <p class="copy"><strong>Pain:</strong> Dental patients research pain, bedside manner, and billing trust before booking. <strong>Dollar:</strong> Reputation gaps send high-value cases to the 4.5-star office down the road. <strong>Solution:</strong> Consistent review response signals attentiveness, accountability, and professionalism at scale.</p>
+    <ul class="list">
+      <li><strong>Dentistry is one of the most review-researched professions in healthcare.</strong></li>
+      <li><strong>New patients choose trust signals before they meet the dentist.</strong></li>
+      <li><strong>Responding to negative reviews de-risks pain/billing concerns in public view.</strong></li>
+      <li><strong>Practices that respond are perceived as more trustworthy.</strong></li>
+    </ul>
+    <div class="footnote">PatientPop Patient Perspectives Survey (2021) · BrightLocal (2023/2024)</div>
+  </div>
+
+  <div class="slide" data-slide="3">
+    <h2 class="headline">The Silent Revenue Leak</h2>
+    <div class="grid-3">
+      <div class="card"><div class="stat-number">94%</div><div class="stat-label">Use reviews to evaluate dental providers</div></div>
+      <div class="card"><div class="stat-number">72%</div><div class="stat-label">Say reviews are first step finding a new dentist</div></div>
+      <div class="card"><div class="stat-number">$33K+</div><div class="stat-label">Annual risk from one unanswered negative review</div></div>
+    </div>
+    <p class="copy"><strong>Pain:</strong> Reputation damage compounds quietly. <strong>Dollar:</strong> Star gaps and unanswered negatives bleed patient flow. <strong>Solution:</strong> Gleam closes response gaps in minutes, not days.</p>
+    <div class="footnote">PatientPop (2021) · ReviewTrackers Annual Report (2022)</div>
+  </div>
+
+  <div class="slide" data-slide="4">
+    <h2 class="headline">How Gleam Works in 10 Seconds</h2>
+    <p class="copy"><strong>Pain:</strong> Front desk teams are overloaded, so responses slip. <strong>Dollar:</strong> Slow replies hurt trust and local search ranking. <strong>Solution:</strong> Gleam delivers draft + approval via SMS — no app, no dashboard.</p>
+    <div class="flow-grid">
+      <div class="flow-card"><div class="flow-icon">📲</div><div class="flow-title">Review detected</div><div class="flow-desc">Instant text alert when a review lands</div></div>
+      <div class="flow-card"><div class="flow-icon">🤖</div><div class="flow-title">AI draft prepared</div><div class="flow-desc">On-brand response ready to post</div></div>
+      <div class="flow-card"><div class="flow-icon">✅</div><div class="flow-title">Approve by text</div><div class="flow-desc">Reply APPROVE, EDIT, or IGNORE</div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="5">
+    <h2 class="headline">Monthly Reputation Report (Data You Can Act On)</h2>
+    <p class="copy"><strong>Pain:</strong> Most teams can’t see reputation trends clearly month to month. <strong>Dollar:</strong> Missed trend data means missed calls, direction requests, and bookings. <strong>Solution:</strong> Gleam sends a monthly report with star movement, response speed, GBP insights, and theme analysis.</p>
+    <div class="card monthly-card">
+      <div class="metric"><span>⭐ Star rating trend</span><strong>4.8★ average (↑0.2)</strong></div>
+      <div class="metric"><span>💬 Reviews received</span><strong>9 new reviews</strong></div>
+      <div class="metric"><span>✅ Response rate</span><strong>100% within 2 hours</strong></div>
+      <div class="metric"><span>📊 GBP insights</span><strong>587 views · 31 calls · 22 directions</strong></div>
+      <div style="margin-top:6px;color:var(--white-60);font-size:13px;">Top themes:</div>
+      <div class="topics"><span class="topic">Staff friendliness</span><span class="topic">Pain-free experience</span><span class="topic">Easy scheduling</span></div>
+    </div>
+    <div class="footnote">Sample report: https://gleamreply.com/sample-report-dental.html</div>
+  </div>
+
+  <div class="slide" data-slide="6">
+    <h2 class="headline">Industry Intelligence: Underused Growth Lever</h2>
+    <p class="copy"><strong>Pain:</strong> Review response is usually delegated to busy admin staff, then forgotten. <strong>Dollar:</strong> Most offices respond to under 30% of reviews and lose local SEO momentum. <strong>Solution:</strong> Gleam operationalizes full-response behavior across every review.</p>
+    <ul class="list">
+      <li><strong>Recurring dental business YouTube theme:</strong> review response is the #1 underutilized growth lever.</li>
+      <li><strong>Most practices respond to under 30% of Google reviews.</strong></li>
+      <li><strong>Every-review engagement improves local ranking signals.</strong></li>
+      <li><strong>Google reviews appear before your website — they are your first impression.</strong></li>
+    </ul>
+  </div>
+
+  <div class="slide" data-slide="7">
+    <h2 class="headline">Trustworthy Data Behind the Pitch</h2>
+    <ul class="list">
+      <li><strong>94%</strong> of patients use online reviews to evaluate dental providers (PatientPop, 2021).</li>
+      <li><strong>72%</strong> say reviews are first step to finding a new dentist (PatientPop, 2021).</li>
+      <li><strong>88%</strong> would choose providers who respond to reviews (PatientPop, 2021).</li>
+      <li><strong>5–9%</strong> revenue increase per additional star rating (Harvard Business School, Michael Luca, 2016).</li>
+      <li><strong>~22 potential patients lost annually</strong> per unanswered negative review (ReviewTrackers, 2022).</li>
+      <li><strong>81%</strong> use Google to evaluate local businesses (BrightLocal, 2024).</li>
+      <li><strong>Dental practices are top-5 most-reviewed local service categories</strong> (BrightLocal, 2023).</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-slide="8">
+    <h2 class="headline">Start Free Today</h2>
+    <p class="subline" style="margin-top:10px;">$49/month after 14-day free trial</p>
+    <p class="copy"><strong>Pain:</strong> Every day without response coverage risks trust and patient volume. <strong>Dollar:</strong> One lost high-value patient can pay for months of Gleam. <strong>Solution:</strong> Go live in 5 minutes and keep every review answered.</p>
+    <div class="card" style="max-width:500px;margin-top:24px;">
+      <div style="font-size:12px;color:var(--white-40);letter-spacing:2px;text-transform:uppercase;">Your code</div>
+      <div style="font-size:34px;font-weight:900;color:var(--cyan);letter-spacing:5px;">PETRIE</div>
+      <a href="https://gleamreply.com/dental" target="_blank" style="display:inline-block;margin-top:14px;color:var(--cyan);font-weight:700;font-size:24px;text-decoration:none;">gleamreply.com/dental →</a>
+    </div>
+    <div class="footnote">Questions: support@lucralab.com</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  function update() {
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'exit-left');
+      if (i === current) s.classList.add('active');
+      else if (i < current) s.classList.add('exit-left');
+    });
+    counter.textContent = (current + 1) + ' / ' + total;
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  function next() { if (current < total - 1) { current++; update(); } }
+  function prev() { if (current > 0) { current--; update(); } }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (e.clientX < window.innerWidth * 0.2) prev();
+    else next();
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e) {
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(diff) > 50) diff < 0 ? next() : prev();
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>

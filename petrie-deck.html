@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gleam · AI Review Autopilot for Dental Practices</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #151327;
+      --deep-blue: #1f3b90;
+      --cyan: #07b9fd;
+      --purple: #7649ec;
+      --text: #ffffff;
+      --muted: #a0aec0;
+      --white-60: rgba(255,255,255,0.6);
+      --white-40: rgba(255,255,255,0.4);
+      --glass: rgba(25, 22, 47, 0.85);
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    main {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    section {
+      width: 100%;
+    }
+
+    .hero {
+      min-height: 100vh;
+      background: radial-gradient(circle at top right, rgba(7, 185, 253, 0.25), transparent 55%),
+        linear-gradient(180deg, rgba(7, 185, 253, 0.08), rgba(118, 73, 236, 0.2));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(118, 73, 236, 0.25), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 720px;
+      z-index: 1;
+    }
+
+    .hero-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-brand .product-name {
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      color: var(--purple);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .hero-brand .product-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-top {
+      position: absolute;
+      top: 2rem;
+      left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .wordmark {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .wordmark span {
+      font-size: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+    }
+
+    .hero .hero-note {
+      font-size: 1rem;
+      color: var(--muted);
+    }
+
+    .hero .hero-note strong {
+      color: var(--text);
+    }
+
+    .problem-card,
+    .how-it-works,
+    .report-cta,
+    .proof-section,
+    .pricing {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-card::after,
+    .how-it-works::after,
+    .report-cta::after,
+    .proof-section::after,
+    .pricing::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .trust-section,
+    .monthly-report-section,
+    .industry-section {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .trust-section::after,
+    .monthly-report-section::after,
+    .industry-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .trust-list {
+      margin-top: 1rem;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      color: var(--white);
+    }
+
+    .trust-list li {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .trust-list strong {
+      color: var(--cyan);
+      font-size: 1.05rem;
+    }
+
+    .monthly-report-card {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .monthly-report-card h3 {
+      margin-bottom: 0.4rem;
+      font-size: 1.3rem;
+    }
+
+    .report-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+      color: var(--white);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .report-row strong {
+      color: var(--cyan);
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .report-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .topic-chip {
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.9rem;
+    }
+
+    .industry-section p {
+      margin-bottom: 1rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .insight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: 1rem;
+      color: var(--white);
+    }
+
+    .insight-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .insight-list em {
+      color: var(--white-60);
+      font-style: normal;
+    }
+
+    .monthly-report-note,
+    .trust-note,
+    .industry-note {
+      font-size: 0.9rem;
+      color: var(--white-40);
+      margin-top: 1rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .stat-card {
+      padding: 1.6rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stat-number {
+      font-size: clamp(2.4rem, 4vw, 3.3rem);
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .stat-label {
+      margin: 0.7rem 0;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .stat-source {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .step-card {
+      padding: 1.8rem;
+      border-radius: 20px;
+      background: rgba(30, 26, 56, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .step-icon {
+      font-size: 1.6rem;
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .step-copy {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .report-visual {
+      min-height: 180px;
+      border-radius: 16px;
+      background: linear-gradient(120deg, rgba(7, 185, 253, 0.25), rgba(118, 73, 236, 0.25));
+      border: 1px dashed rgba(255, 255, 255, 0.4);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .report-cta p {
+      max-width: 620px;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      background: var(--cyan);
+      color: #0a0e26;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 20px rgba(7, 185, 253, 0.25);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 30px rgba(7, 185, 253, 0.25);
+    }
+
+    .proof-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .proof-item {
+      padding: 1.2rem 1.4rem;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .proof-item strong {
+      color: var(--cyan);
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .pricing {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .pricing .price {
+      font-size: clamp(2.5rem, 5vw, 3.7rem);
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .pricing .trial {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .pricing .note {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .hero-top {
+        position: static;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .hero {
+        min-height: 90vh;
+      }
+
+      .problem-card,
+      .how-it-works,
+      .report-cta,
+      .proof-section,
+      .pricing {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="wordmark"><span>⬡</span> LucraLab</div>
+        <div class="hero-brand">
+          <div class="product-name">Gleam</div>
+          <div class="product-subtitle">AI Review Autopilot for Dental Practices</div>
+        </div>
+      </div>
+      <div class="hero-content">
+        <h1>Every Unanswered Review Is Costing You Patients</h1>
+        <p>Gleam turns Google review management into a 10-second SMS conversation.</p>
+        <p class="hero-note">
+          <strong>Pain:</strong> Dentistry is one of the most review-researched professions in healthcare, so new patients weigh trust signals before they even walk in.
+          <strong>Dollar:</strong> A 3.8 vs 4.5-star gap and a single unanswered negative review can cost $33K+ per year and 22 potential patients who are worth $1.5K each.
+          <strong>Solution:</strong> Gleam watches your Google reviews, drafts professional replies, and lets you post or edit them via a 10-second SMS so your practice looks attentive and accountable whether or not you are at the front desk.
+        </p>
+      </div>
+    </section>
+
+    <main>
+      <section class="trust-section">
+      <div class="section-header">
+        <h2>Trust-first Dentistry</h2>
+      </div>
+      <p>
+        <strong>Pain:</strong> Dentistry is one of the most review-researched professions in healthcare, which means new patients evaluate your trust signals before they ever meet you.
+        <strong>Dollar:</strong> 94% of patients are checking reviews, and a single complaint about pain, billing, or bedside manner can ripple through search results the second it is posted.
+        <strong>Solution:</strong> Gleam converts every review into a reply-ready moment, proving you are attentive, professional, and accountable even when the front desk is busy.
+      </p>
+      <ul class="trust-list">
+        <li><strong>Trust reinforcement:</strong> Practices that respond to reviews are perceived as more trustworthy than those that do not, so your responsiveness is literally a trust signal.</li>
+        <li><strong>Negative reviews:</strong> Responding — even to a tough pain or billing comment — repositions your practice as calm, caring, and in control of the patient experience.</li>
+        <li><strong>Visibility:</strong> Google reviews show up before your website, so showing up there with a professional reply is the first handshake.</li>
+      </ul>
+      <p class="trust-note">Sources: PatientPop Patient Perspectives Survey 2021 · ReviewTrackers Annual Report 2022 · BrightLocal Local Consumer Review Survey 2024 · BrightLocal 2023</p>
+    </section>
+      <section class="problem-card">
+        <div class="section-header">
+          <h2>The Math Is Simple</h2>
+        </div>
+        <p>
+          <strong>Pain:</strong> Every unanswered review looks like indifference.
+          <strong>Dollar:</strong> That indifference costs around 22 potential patients per negative review and $33K+ per year while 94% of patients are review shopping.
+          <strong>Solution:</strong> Gleam ensures every review gets a reply so the math reverses before the next new patient call drops.
+        </p>
+        <div class="stat-grid">
+          <article class="stat-card">
+            <div class="stat-number">22</div>
+            <div class="stat-label">new patients lost per unanswered negative review per year</div>
+            <div class="stat-source">ReviewTrackers</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-number">94%</div>
+            <div class="stat-label">of patients check Google reviews before choosing a dentist</div>
+            <div class="stat-source">PatientPop</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-number">$33,000+</div>
+            <div class="stat-label">
+              annual revenue at risk for the average dental practice
+            </div>
+            <div class="stat-source">(22 patients × $1,500 LTV)</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="monthly-report-section">
+        <div class="section-header">
+          <h2>Monthly Reputation Report</h2>
+        </div>
+        <p>
+          <strong>Pain:</strong> Without visibility into how reviews land, the practice loses momentum and trust.
+          <strong>Dollar:</strong> 100% response rates and +0.2 stars per month translate to more clicks, calls, and new patients.
+          <strong>Solution:</strong> Gleam emails a summary card that shows your rating trend, GBP engagement, and themes so every leader can dial trust forward with data.
+        </p>
+        <div class="monthly-report-card">
+          <h3>Sample Metrics</h3>
+          <div class="report-row">
+            <span>⭐ Star rating trend</span>
+            <strong>4.8★ average, ↑0.2 from last month</strong>
+          </div>
+          <div class="report-row">
+            <span>💬 Reviews received</span>
+            <strong>9 new reviews</strong>
+          </div>
+          <div class="report-row">
+            <span>✅ Response rate</span>
+            <strong>100% (responded within 2 hours)</strong>
+          </div>
+          <div class="report-row">
+            <span>📊 GBP insights</span>
+            <strong>587 profile views · 31 call clicks · 22 direction requests</strong>
+          </div>
+          <div>
+            <div style="font-size:0.95rem; color:var(--muted); margin-bottom:0.4rem;">Top themes from reviews:</div>
+            <div class="report-topics">
+              <span class="topic-chip">Staff friendliness</span>
+              <span class="topic-chip">Pain-free experience</span>
+              <span class="topic-chip">Easy scheduling</span>
+            </div>
+          </div>
+          <p class="monthly-report-note">Preview based on the Gleam dental sample report · <a href="https://gleamreply.com/sample-report-dental.html" style="color:var(--cyan); text-decoration:none;">See the full report</a></p>
+        </div>
+      </section>
+
+      <section class="how-it-works">
+        <div class="section-header">
+          <h2>How It Works</h2>
+        </div>
+        <p>
+          <strong>Pain:</strong> Manual replies from the front desk are slow, inconsistent, and often forgotten.
+          <strong>Dollar:</strong> Those delays cost trust, local ranking, and the 5–9% of revenue tied to each star.
+          <strong>Solution:</strong> Gleam tracks every review, drafts on-brand replies, and keeps approval in a 10-second SMS so responses go live fast.
+        </p>
+        <div class="steps">
+          <article class="step-card">
+            <div class="step-icon">📲</div>
+            <div class="step-title">New review detected</div>
+            <div class="step-copy">
+              Gleam monitors your Google Business Profile 24/7. The moment a review lands, you get a text.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-icon">🤖</div>
+            <div class="step-title">AI response ready</div>
+            <div class="step-copy">
+              A professional, on-brand response is drafted automatically. You see the review and the reply — in one text.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-icon">✅</div>
+            <div class="step-title">You decide</div>
+            <div class="step-copy">
+              Reply APPROVE to post it. Reply EDIT with your own words. Reply IGNORE to skip. Nothing goes live without you.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="industry-section">
+        <div class="section-header">
+          <h2>YouTube Intelligence & Industry Insights</h2>
+        </div>
+        <p>
+          <strong>Pain:</strong> Review response falls through the cracks when front desk staff are already handling phones and scheduling.
+          <strong>Dollar:</strong> That leaves your Google listing at risk, keeps you below competitors in local SEO, and turns the #1 underutilized growth lever into a missed revenue stream.
+          <strong>Solution:</strong> Gleam automates monitoring so your team can engage with every review, proving accountability and making local ranking signals stronger.
+        </p>
+        <ul class="insight-list">
+          <li>Review response is the #1 underutilized growth lever for dental practices — a recurring headline on dental business YouTube. <em>(trust = ranking)</em></li>
+          <li>Most dental offices respond to less than 30% of their Google reviews, so answering every single one separates you from the pack.</li>
+          <li>Practices that engage with every review see measurable improvement in Google local ranking and referral traffic.</li>
+          <li>Front desk staff don't have time to monitor AND respond, which is why the work keeps slipping.</li>
+          <li>Your Google reviews ARE your online reputation — they show up before your website in search results, so visibility is trust.</li>
+        </ul>
+        <p class="industry-note">Sources: Dental business YouTube industry rundowns · Local SEO observations</p>
+      </section>
+
+      <section class="report-cta">
+        <div class="section-header">
+          <h2>Your Practice's Reputation. Delivered Monthly.</h2>
+        </div>
+        <div class="report-visual">Monthly reputation report preview</div>
+        <p>
+          <strong>Pain:</strong> The review backlog feels invisible without documented proof.
+          <strong>Dollar:</strong> That silence costs trust when patients hunt for a responsive dentist.
+          <strong>Solution:</strong> The monthly report bundles ratings, trends, response rate, and AI insights so leadership can double down on review response every month.
+        </p>
+        <p>
+          A full reputation report lands in your inbox the 1st of every month — ratings, trends, response rate, AI insights.
+        </p>
+        <a class="button" href="https://gleamreply.com/sample-report-dental.html">
+          View Sample Report →
+        </a>
+      </section>
+
+      <section class="proof-section">
+        <div class="section-header">
+          <h2>The Numbers Don't Lie</h2>
+        </div>
+        <p>
+          <strong>Pain:</strong> Gut-feel reputation management misses real risk.
+          <strong>Dollar:</strong> Data shows direct revenue impact from star ratings and response behavior.
+          <strong>Solution:</strong> Gleam runs your review operations against proven benchmarks from dental and local search research.
+        </p>
+        <div class="proof-grid">
+          <div class="proof-item">
+            <strong>94% of patients use online reviews to evaluate dental providers</strong>
+            PatientPop Patient Perspectives Survey, 2021
+          </div>
+          <div class="proof-item">
+            <strong>72% say reviews are their first step when finding a new dentist</strong>
+            PatientPop Patient Perspectives Survey, 2021
+          </div>
+          <div class="proof-item">
+            <strong>88% of patients choose dentists who respond to reviews</strong>
+            PatientPop Patient Perspectives Survey, 2021
+          </div>
+          <div class="proof-item">
+            <strong>81% of consumers use Google to evaluate local businesses</strong>
+            BrightLocal Local Consumer Review Survey, 2024
+          </div>
+          <div class="proof-item">
+            <strong>Dental practices rank among the top 5 most-reviewed local services on Google</strong>
+            BrightLocal, 2023
+          </div>
+          <div class="proof-item">
+            <strong>One unanswered negative review costs ~22 potential new patients per year</strong>
+            ReviewTrackers Annual Report, 2022
+          </div>
+          <div class="proof-item">
+            <strong>5–9% revenue increase per additional star rating</strong>
+            Harvard Business School, Michael Luca, Working Paper 12-016, 2016
+          </div>
+        </div>
+      </section>
+
+      <section class="pricing">
+        <div class="section-header">
+          <h2>Pricing + CTA</h2>
+        </div>
+        <div class="price">$49<span style="font-size:1rem; font-weight:500;">/month</span></div>
+        <div class="trial">14-day free trial · No contracts. Cancel anytime.</div>
+        <a class="button" href="https://gleamreply.com/dental">
+          Start Free Trial at gleamreply.com/dental
+        </a>
+        <p class="note">
+          <strong>Pain:</strong> Reviews that go unanswered look indifferent.
+          <strong>Dollar:</strong> That indifference costs trust, ranking, and 5–9% of revenue per star.
+          <strong>Solution:</strong> Gleam for $49/mo keeps you responsive without new apps. Setup takes 5 minutes. No app. No dashboard. Just SMS.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">
+    Powered by LucraLab · gleamreply.com · © 2026
+  </footer>
+</body>
+</html>
