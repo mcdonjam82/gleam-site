@@ -41,6 +41,10 @@
     .logo{font-size:20px;font-weight:900;letter-spacing:4px;text-transform:uppercase;background:var(--grad-h);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .nav-cta{background:var(--grad-h);color:#fff;text-decoration:none;padding:10px 28px;border-radius:100px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;transition:opacity .2s,box-shadow .25s}
     .nav-cta:hover{opacity:.88;box-shadow:0 0 24px rgba(7,185,253,.45)}
+    .nav-examples{color:var(--gray);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;margin-right:8px}
+    .nav-examples:hover{color:var(--cyan)}
+    .btn-examples{display:inline-block;background:transparent;color:var(--cyan);text-decoration:none;padding:16px 42px;border-radius:100px;font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;border:1.5px solid rgba(7,185,253,.45);transition:background .2s,border-color .2s,box-shadow .25s,transform .25s}
+    .btn-examples:hover{background:rgba(7,185,253,.08);border-color:var(--cyan);box-shadow:0 4px 28px rgba(7,185,253,.25);transform:translateY(-2px)}
 
     /* HERO */
     .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:148px 24px 100px;position:relative;overflow:hidden}
@@ -258,6 +262,7 @@
     <a href="/" style="text-decoration:none;display:flex;align-items:center;">
       <img src="/logo.svg" alt="Gleam" height="36" style="display:block;">
     </a>
+    <a href="/examples.html" class="nav-examples">See Examples</a>
     <a href="#get-started" class="nav-cta">Start Free Trial</a>
   </nav>
 
@@ -524,6 +529,11 @@
           <h3>You Approve Negatives</h3>
           <p>Low-star reviews get texted to your phone with a suggested reply. Reply APPROVE and it's posted. Takes 10 seconds.</p>
         </div>
+      </div>
+      <div class="examples-cta fade-in" style="text-align:center;margin-top:56px;">
+        <p style="font-size:14px;color:var(--gray);margin-bottom:18px;letter-spacing:1px;text-transform:uppercase;font-weight:600;">See it in action</p>
+        <a href="/examples.html" class="btn-examples">Browse 60 Real AI Responses →</a>
+        <p style="font-size:12px;color:#475569;margin-top:14px;">6 industries · 1-star to 5-star · exactly what your customers see</p>
       </div>
     </div>
   </section>
