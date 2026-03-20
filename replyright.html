@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReplyRight — Every email. Every industry. Done right.</title>
+  <meta name="description" content="ReplyRight drafts professional, on-brand email replies the moment a message arrives — tailored to your industry, ready to send in seconds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== CSS CUSTOM PROPERTIES ===== */
+    :root {
+      --white: #ffffff;
+      --off-white: #f8f7f4;
+      --cream: #fdf6ec;
+      --charcoal: #1c1917;
+      --slate: #44403c;
+      --gray: #78716c;
+      --light-gray: #e7e5e0;
+      --emerald: #059669;
+      --emerald-light: #d1fae5;
+      --emerald-dark: #047857;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --shadow: rgba(28, 25, 23, 0.08);
+      --shadow-md: rgba(28, 25, 23, 0.12);
+      --shadow-lg: rgba(28, 25, 23, 0.16);
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--charcoal);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      height: 3px;
+      background: var(--emerald);
+      width: 100%;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--light-gray);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-center a {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--slate);
+      transition: color 0.2s;
+    }
+
+    .nav-center a:hover {
+      color: var(--emerald);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--emerald);
+      color: var(--white) !important;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .nav-cta:hover {
+      background: var(--emerald-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--off-white);
+      padding: 80px 24px 96px;
+    }
+
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .hero-left {
+      flex: 0 0 55%;
+      max-width: 55%;
+    }
+
+    .hero-right {
+      flex: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--emerald-light);
+      color: var(--emerald-dark);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 span {
+      color: var(--emerald);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--slate);
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--emerald);
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 10px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--emerald-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--slate);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 4px;
+      border-radius: 10px;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--emerald);
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      color: var(--slate);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 100px;
+    }
+
+    .badge::before {
+      content: '✓';
+      color: var(--emerald);
+      font-weight: 800;
+    }
+
+    /* ===== EMAIL MOCKUP ===== */
+    .email-mockup {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(28, 25, 23, 0.14), 0 2px 8px rgba(28, 25, 23, 0.08);
+      overflow: hidden;
+      animation: float 4s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .mockup-titlebar {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28c840; }
+
+    .mockup-label {
+      margin-left: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray);
+    }
+
+    .email-section {
+      padding: 20px 20px 16px;
+    }
+
+    .email-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a78bfa, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .email-meta {
+      flex: 1;
+    }
+
+    .email-from {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .email-subject {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+
+    .email-timestamp {
+      font-size: 11px;
+      color: var(--gray);
+      flex-shrink: 0;
+    }
+
+    .email-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--slate);
+      padding-left: 48px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .ai-divider {
+      background: var(--off-white);
+      border-top: 1px solid var(--light-gray);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--emerald-dark);
+    }
+
+    .ai-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .timing-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--amber);
+      background: var(--amber-light);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .reply-section {
+      padding: 16px 20px 0;
+    }
+
+    .reply-body {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--slate);
+      margin-top: 10px;
+      padding-left: 2px;
+    }
+
+    .approve-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: calc(100% - 40px);
+      margin: 16px 20px 20px;
+      background: var(--emerald);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .approve-btn:hover {
+      background: var(--emerald-dark);
+    }
+
+    /* ===== SOCIAL PROOF BAR ===== */
+    .social-proof {
+      background: var(--white);
+      border-top: 1px solid var(--light-gray);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 28px 24px;
+    }
+
+    .social-proof-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .proof-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .industry-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .industry-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      color: var(--slate);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    .pill-icon {
+      font-size: 15px;
+    }
+
+    /* ===== SECTION COMMON ===== */
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--charcoal);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: var(--slate);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== PROBLEM SECTION ===== */
+    .problem {
+      background: var(--white);
+      padding: 96px 24px;
+    }
+
+    .problem-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .problem-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-left: 4px solid var(--emerald);
+      border-radius: 12px;
+      padding: 32px 28px;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px var(--shadow-md);
+    }
+
+    .problem-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--emerald-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .problem-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .problem-card p {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      background: var(--off-white);
+      padding: 96px 24px;
+    }
+
+    .how-it-works-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(16.666% + 28px);
+      right: calc(16.666% + 28px);
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--emerald) 0, var(--emerald) 8px, transparent 8px, transparent 18px);
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--emerald);
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 4px 16px rgba(5, 150, 105, 0.35);
+    }
+
+    .step h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    /* ===== INDUSTRY VERTICALS ===== */
+    .verticals {
+      background: var(--charcoal);
+      padding: 96px 24px;
+    }
+
+    .verticals-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .verticals .section-tag {
+      color: var(--emerald-light);
+    }
+
+    .verticals .section-header h2 {
+      color: var(--white);
+    }
+
+    .verticals .section-header p {
+      color: #a8a29e;
+    }
+
+    .verticals-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .vertical-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 28px 22px;
+      transition: background 0.2s, transform 0.2s, border-color 0.2s;
+    }
+
+    .vertical-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(5, 150, 105, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .vertical-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .vertical-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .vertical-card .email-type {
+      font-size: 12px;
+      color: #a8a29e;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .sample-snippet {
+      font-size: 12px;
+      color: var(--emerald-light);
+      font-style: italic;
+      line-height: 1.5;
+      border-left: 2px solid var(--emerald);
+      padding-left: 10px;
+    }
+
+    /* ===== FEATURES ===== */
+    .features {
+      background: var(--white);
+      padding: 96px 24px;
+    }
+
+    .features-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: 16px;
+      padding: 36px 28px;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--shadow-md);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .icon-emerald { background: var(--emerald-light); }
+    .icon-amber { background: var(--amber-light); }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .diff-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--emerald-dark);
+      background: var(--emerald-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials {
+      background: var(--cream);
+      padding: 96px 24px;
+    }
+
+    .testimonials-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 32px var(--shadow-md);
+    }
+
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 18px;
+    }
+
+    .star {
+      color: var(--amber);
+      font-size: 16px;
+    }
+
+    .industry-chip {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      background: var(--amber-light);
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .testimonial-quote {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--slate);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      font-size: 48px;
+      line-height: 0;
+      vertical-align: -20px;
+      color: var(--emerald-light);
+      font-style: normal;
+      font-weight: 800;
+      margin-right: 4px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--light-gray);
+      padding-top: 20px;
+    }
+
+    .author-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .av-green { background: linear-gradient(135deg, #059669, #047857); }
+    .av-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .av-amber { background: linear-gradient(135deg, #d97706, #b45309); }
+
+    .author-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .author-title {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: var(--emerald);
+      padding: 96px 24px;
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cta-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.75);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .cta-section h2 {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .cta-sub {
+      font-size: 22px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 24px;
+    }
+
+    .cta-offer {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--emerald-dark);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 10px;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-trust {
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--charcoal);
+      padding: 56px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-logo svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: #78716c;
+    }
+
+    .footer-attribution {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--emerald);
+      margin-top: 4px;
+    }
+
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #78716c;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #a8a29e;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #57534e;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .verticals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner {
+        flex-direction: column;
+        gap: 48px;
+      }
+
+      .hero-left {
+        flex: none;
+        max-width: 100%;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero-sub {
+        font-size: 16px;
+      }
+
+      .problem-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .steps-row::before {
+        display: none;
+      }
+
+      .step {
+        text-align: left;
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 0;
+      }
+
+      .step-circle {
+        margin: 0;
+        flex-shrink: 0;
+      }
+
+      .verticals-grid {
+        grid-template-columns: repeat(2, 1fr);
+        overflow-x: auto;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-section h2 {
+        font-size: 30px;
+      }
+
+      .cta-sub {
+        font-size: 18px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-right {
+        align-items: flex-start;
+      }
+
+      .section-header h2 {
+        font-size: 30px;
+      }
+
+      .social-proof-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 56px 20px 72px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .problem {
+        padding: 64px 20px;
+      }
+
+      .how-it-works {
+        padding: 64px 20px;
+      }
+
+      .verticals {
+        padding: 64px 20px;
+      }
+
+      .verticals-grid {
+        grid-template-columns: 1fr 1fr;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        display: flex;
+        padding-bottom: 16px;
+      }
+
+      .vertical-card {
+        min-width: 200px;
+      }
+
+      .features {
+        padding: 64px 20px;
+      }
+
+      .testimonials {
+        padding: 64px 20px;
+      }
+
+      .cta-section {
+        padding: 64px 20px;
+      }
+
+      .cta-section h2 {
+        font-size: 26px;
+      }
+
+      nav .nav-center {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <!-- Email + Checkmark icon -->
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="7" fill="#d1fae5"/>
+          <path d="M5 9.5C5 8.67 5.67 8 6.5 8h15c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5h-15C5.67 20 5 19.33 5 18.5v-9z" stroke="#059669" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M5 10l8.29 5.53a1.5 1.5 0 001.72 0L23 10" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="20" cy="8" r="4" fill="#059669"/>
+          <path d="M17.5 8l2 2 3-3" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        REPLYRIGHT
+      </a>
+      <div class="nav-center">
+        <a href="#how-it-works">How It Works</a>
+      </div>
+      <a href="#cta" class="nav-cta">Start Free Trial</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="eyebrow">Email replies — handled.</div>
+        <h1>Your inbox,<br /><span>finally under control.</span></h1>
+        <p class="hero-sub">Your front desk spends hours every day writing the same emails. ReplyRight drafts professional, on-brand replies the moment a message arrives — tailored to your industry, ready to send in seconds. Less time in the inbox. More time doing the work that pays.</p>
+        <div class="hero-ctas">
+          <a href="#cta" class="btn-primary">
+            Start Your Free 14-Day Trial
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#how-it-works" class="btn-ghost">See a Demo →</a>
+        </div>
+        <div class="trust-badges">
+          <span class="badge">HIPAA-Aware</span>
+          <span class="badge">No Contracts</span>
+          <span class="badge">Setup in 48 Hours</span>
+          <span class="badge">SOC 2 in Progress</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="email-mockup">
+          <!-- Mac-style title bar -->
+          <div class="mockup-titlebar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="mockup-label">Inbox — Office Mail</span>
+          </div>
+
+          <!-- Incoming email -->
+          <div class="email-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <span class="section-label">Incoming</span>
+              <span style="font-size:11px; color:var(--gray);">just now</span>
+            </div>
+            <div class="email-header">
+              <div class="avatar">SM</div>
+              <div class="email-meta">
+                <div class="email-from">Sarah M. &lt;sarah@patient.com&gt;</div>
+                <div class="email-subject">Question about my upcoming crown</div>
+              </div>
+            </div>
+            <div class="email-body">
+              Hi, I wanted to check if my Delta Dental insurance will cover the crown procedure we talked about. Also, is there any way to move my Thursday appointment to the morning? Thanks!
+            </div>
+          </div>
+
+          <!-- AI Divider -->
+          <div class="ai-divider">
+            <div class="ai-badge">
+              <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7" cy="7" r="6.5" stroke="#059669" stroke-width="1.2"/>
+                <path d="M4 7l2.5 2.5L10 4.5" stroke="#059669" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              ReplyRight ✓ Draft ready in 4 seconds
+            </div>
+            <span class="timing-pill">⚡ 4 sec</span>
+          </div>
+
+          <!-- Draft Reply -->
+          <div class="reply-section">
+            <span class="section-label">Draft Reply</span>
+            <p class="reply-body">
+              Hi Sarah! Great question — Delta Dental PPO plans typically cover 50% of crown procedures after your deductible is met. We'll verify your specific benefits before your appointment and have a cost estimate ready for you.<br/><br/>
+              As for Thursday, we have an 8:30 AM opening — shall I move you over? Just reply and we'll take care of it.
+            </p>
+          </div>
+
+          <!-- Approve Button -->
+          <div class="approve-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Approve &amp; Send
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF BAR -->
+  <section class="social-proof">
+    <div class="social-proof-inner">
+      <span class="proof-label">Trusted by practices and firms across the Pacific Northwest:</span>
+      <div class="industry-pills">
+        <span class="industry-pill"><span class="pill-icon">🦷</span> Dental Practices</span>
+        <span class="industry-pill"><span class="pill-icon">⚖️</span> Law Firms</span>
+        <span class="industry-pill"><span class="pill-icon">🔧</span> HVAC Companies</span>
+        <span class="industry-pill"><span class="pill-icon">🏠</span> Real Estate Teams</span>
+        <span class="industry-pill"><span class="pill-icon">🩺</span> Medical Clinics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION -->
+  <section class="problem">
+    <div class="problem-inner">
+      <div class="section-header">
+        <span class="section-tag">The Real Cost of a Buried Inbox</span>
+        <h2>Routine emails shouldn't<br />take all day.</h2>
+        <p>They do anyway — and it's costing you more than time.</p>
+      </div>
+      <div class="problem-cards">
+        <div class="problem-card">
+          <div class="problem-icon">⏱️</div>
+          <h3>Hours lost to copy-paste replies</h3>
+          <p>Your front desk rewrites the same answers dozens of times a week — appointment confirmations, insurance questions, quote follow-ups. Every hour spent on routine email is an hour not spent on patients, clients, or actual work.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">⚠️</div>
+          <h3>Inconsistent replies hurt your brand</h3>
+          <p>When three different staff members answer the same question three different ways, your practice or firm looks disorganized. One wrong word in a legal or medical context can do real damage.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">💸</div>
+          <h3>Slow responses cost you business</h3>
+          <p>A prospect who emails your firm at 2pm and hears back at 9am the next day has already called your competitor. Speed is trust — and a buried inbox means someone else wins the client.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="how-it-works-inner">
+      <div class="section-header">
+        <span class="section-tag">Simple Setup. Real Results.</span>
+        <h2>Up and running in three steps.</h2>
+      </div>
+      <div class="steps-row">
+        <div class="step">
+          <div class="step-circle">1</div>
+          <div>
+            <h3>Connect</h3>
+            <p>Link your existing email inbox — Gmail, Outlook, or any IMAP account. No migration. No disruption. Takes about 5 minutes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-circle">2</div>
+          <div>
+            <h3>Train</h3>
+            <p>Tell ReplyRight your industry, your tone, and how you handle common questions. Upload your FAQs or let it learn from your sent history. It becomes yours.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-circle">3</div>
+          <div>
+            <h3>Reply</h3>
+            <p>Every incoming email gets a draft reply — ready for your approval or auto-sent for low-risk messages. You stay in control. Your inbox stays clean.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRY VERTICALS -->
+  <section class="verticals">
+    <div class="verticals-inner">
+      <div class="section-header">
+        <span class="section-tag">Built for Your Industry</span>
+        <h2>We speak your language —<br />not just email.</h2>
+        <p>Generic AI tools write generic emails. ReplyRight knows the difference between a dental intake form and a legal retainer question — your terminology, your compliance, your voice.</p>
+      </div>
+      <div class="verticals-grid">
+        <div class="vertical-card">
+          <div class="vertical-icon">🦷</div>
+          <h3>Dental Practices</h3>
+          <p class="email-type">Insurance coverage questions, appointment requests, billing inquiries</p>
+          <p class="sample-snippet">"We'll verify your Delta Dental benefits before your visit and have a full cost breakdown ready at check-in."</p>
+        </div>
+        <div class="vertical-card">
+          <div class="vertical-icon">⚖️</div>
+          <h3>Law Firms</h3>
+          <p class="email-type">New client intake, case status requests, consultation scheduling</p>
+          <p class="sample-snippet">"Our intake team will follow up within one business day — please note that this email does not establish an attorney-client relationship."</p>
+        </div>
+        <div class="vertical-card">
+          <div class="vertical-icon">🔧</div>
+          <h3>HVAC &amp; Plumbing</h3>
+          <p class="email-type">Quote requests, emergency service calls, maintenance follow-ups</p>
+          <p class="sample-snippet">"We have a technician available Thursday between 10–2 — I'll send a confirmation with a 30-minute heads-up before arrival."</p>
+        </div>
+        <div class="vertical-card">
+          <div class="vertical-icon">🏠</div>
+          <h3>Real Estate Teams</h3>
+          <p class="email-type">Showing requests, offer inquiries, buyer pre-qualification questions</p>
+          <p class="sample-snippet">"That property is still active — I can get you in for a showing this weekend, Saturday or Sunday morning. What works for you?"</p>
+        </div>
+        <div class="vertical-card">
+          <div class="vertical-icon">🩺</div>
+          <h3>Medical Clinics</h3>
+          <p class="email-type">Referral coordination, prescription refill requests, appointment reminders</p>
+          <p class="sample-snippet">"Your refill request has been sent to the provider for review — please allow 2 business days and check with your pharmacy directly."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="features-inner">
+      <div class="section-header">
+        <span class="section-tag">What Makes ReplyRight Different</span>
+        <h2>Not a generic email tool.<br />Something better.</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon icon-emerald">🌐</div>
+          <h3>Industry-Specific by Default</h3>
+          <p>ReplyRight doesn't just write emails — it writes the right emails. Each industry vertical comes pre-trained with terminology, tone, and compliance considerations baked in. A dental reply sounds like a dental office. A legal reply sounds like a law firm. No prompting required.</p>
+          <span class="diff-tag">Vertical-native intelligence</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon icon-amber">✅</div>
+          <h3>You Approve. You're Always in Control.</h3>
+          <p>Every draft sits in your approval queue before it sends — unless you've flagged certain message types as low-risk for auto-send. You decide the rules. ReplyRight follows them. Full audit trail included.</p>
+          <span class="diff-tag">Approval-first workflow</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon icon-emerald">🧠</div>
+          <h3>Gets Smarter the Longer You Use It</h3>
+          <p>ReplyRight learns from every approved reply, every edit you make, and every piece of feedback you give it. After 30 days, it knows your business well enough to draft like your best staff member — consistently, every time.</p>
+          <span class="diff-tag">Adaptive learning</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials-inner">
+      <div class="section-header">
+        <span class="section-tag">From practices and firms just like yours</span>
+        <h2>Real results. Real people.<br />Less email.</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <span class="industry-chip">Dental</span>
+          <p class="testimonial-quote">Our front desk was spending the first two hours of every morning just getting through email. Now it takes 20 minutes. ReplyRight drafts everything — insurance questions, appointment changes, billing stuff — and it actually sounds like us. Patients keep telling us we're so responsive.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar av-green">MT</div>
+            <div>
+              <div class="author-name">Dr. Melissa Tran</div>
+              <div class="author-title">Owner, Family Dental of Renton</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <span class="industry-chip">Legal</span>
+          <p class="testimonial-quote">I was skeptical. I didn't want some robot emailing potential clients on behalf of my firm. But ReplyRight keeps it professional and compliant — it even adds the right intake disclaimers automatically. New client response time went from 18 hours to under 30 minutes.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar av-blue">MH</div>
+            <div>
+              <div class="author-name">Marcus Holloway</div>
+              <div class="author-title">Managing Partner, Holloway &amp; Reeves Law</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <span class="industry-chip">HVAC / Home Services</span>
+          <p class="testimonial-quote">We're a small operation — just me and two techs. I used to answer emails from job sites, which was a nightmare. Now quote requests and scheduling emails just get handled. It even knows to ask if it's an emergency versus a routine call. Saves me probably an hour a day.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar av-amber">TS</div>
+            <div>
+              <div class="author-name">Tyler Sorensen</div>
+              <div class="author-title">Owner, Sorensen Heating &amp; Air</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section" id="cta">
+    <div class="cta-inner">
+      <span class="cta-label">Simple Pricing</span>
+      <h2>Your staff spends 2–3 hours a day on routine emails.</h2>
+      <p class="cta-sub">At $20/hour, that's $1,200/month in time — just for email.</p>
+      <p class="cta-offer">ReplyRight pays for itself in the first week. Start with a full-featured 14-day free trial — no credit card required. See the difference before you spend a dollar.</p>
+      <a href="#" class="btn-white">
+        Start My Free Trial
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="cta-trust">No contracts. No setup fees. Cancel anytime. HIPAA-aware infrastructure.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="7" fill="#064e3b"/>
+            <path d="M5 9.5C5 8.67 5.67 8 6.5 8h15c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5h-15C5.67 20 5 19.33 5 18.5v-9z" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M5 10l8.29 5.53a1.5 1.5 0 001.72 0L23 10" stroke="#34d399" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="20" cy="8" r="4" fill="#059669"/>
+            <path d="M17.5 8l2 2 3-3" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          REPLYRIGHT
+        </div>
+        <span class="footer-tagline">Every email. Every industry. Done right.</span>
+        <span class="footer-attribution">✦ A LucraLab Product</span>
+      </div>
+      <div class="footer-right">
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+        <span class="footer-copy">© 2026 LucraLab. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+{
+  "product": "ReplyRight",
+  "tagline": "Every email. Every industry. Done right.",
+  "version": "1.0",
+  "authored_by": "LucraLab Copywriter Agent",
+
+  "nav": {
+    "logo_text": "REPLYRIGHT",
+    "center_link": {
+      "label": "How It Works",
+      "anchor": "#how-it-works"
+    },
+    "cta_button": {
+      "label": "Start Free Trial",
+      "style": "primary"
+    }
+  },
+
+  "hero": {
+    "layout": "left-aligned",
+    "eyebrow": "Email replies — handled.",
+    "h1_line1": "Your inbox,",
+    "h1_line2": "finally under control.",
+    "subheadline": "Your front desk spends hours every day writing the same emails. ReplyRight drafts professional, on-brand replies the moment a message arrives — tailored to your industry, ready to send in seconds. Less time in the inbox. More time doing the work that pays.",
+    "cta_primary": {
+      "label": "Start Your Free 14-Day Trial",
+      "style": "primary"
+    },
+    "cta_secondary": {
+      "label": "See a Demo →",
+      "style": "ghost"
+    },
+    "trust_badges": [
+      "HIPAA-Aware",
+      "No Contracts",
+      "Setup in 48 Hours",
+      "SOC 2 in Progress"
+    ],
+    "email_mockup": {
+      "position": "right",
+      "incoming_email": {
+        "label": "Incoming",
+        "sender": "Sarah M.",
+        "subject": "Question about my upcoming crown",
+        "snippet": "Hi, I wanted to check if my Delta Dental insurance will cover the crown procedure we talked about. Also, is there any way to move my Thursday appointment to the morning? Thanks!"
+      },
+      "ai_draft_reply": {
+        "label": "Draft Reply",
+        "body": "Hi Sarah! Great question — Delta Dental PPO plans typically cover 50% of crown procedures after your deductible is met. We'll verify your specific benefits before your appointment and have a cost estimate ready for you. As for Thursday, we have an 8:30 AM opening — shall I move you over? Just reply and we'll take care of it."
+      },
+      "timing_label": "Draft ready in 4 seconds",
+      "industry_tag": "Dental"
+    }
+  },
+
+  "social_proof_bar": {
+    "label": "Trusted by practices and firms across the Pacific Northwest",
+    "industry_logos": [
+      { "label": "Dental Practices", "icon_hint": "tooth" },
+      { "label": "Law Firms", "icon_hint": "scales" },
+      { "label": "HVAC Companies", "icon_hint": "wrench" },
+      { "label": "Real Estate Teams", "icon_hint": "house" },
+      { "label": "Medical Clinics", "icon_hint": "stethoscope" }
+    ]
+  },
+
+  "problem_section": {
+    "label": "The Real Cost of a Buried Inbox",
+    "headline": "Routine emails shouldn't take all day.",
+    "subheadline": "They do anyway — and it's costing you more than time.",
+    "pain_cards": [
+      {
+        "title": "Hours lost to copy-paste replies",
+        "body": "Your front desk rewrites the same answers dozens of times a week — appointment confirmations, insurance questions, quote follow-ups. Every hour spent on routine email is an hour not spent on patients, clients, or actual work."
+      },
+      {
+        "title": "Inconsistent replies hurt your brand",
+        "body": "When three different staff members answer the same question three different ways, your practice or firm looks disorganized. One wrong word in a legal or medical context can do real damage."
+      },
+      {
+        "title": "Slow responses cost you business",
+        "body": "A prospect who emails your firm at 2pm and hears back at 9am the next day has already called your competitor. Speed is trust — and a buried inbox means someone else wins the client."
+      }
+    ]
+  },
+
+  "how_it_works": {
+    "section_id": "how-it-works",
+    "label": "Simple Setup. Real Results.",
+    "headline": "Up and running in three steps.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Connect",
+        "description": "Link your existing email inbox — Gmail, Outlook, or any IMAP account. No migration. No disruption. Takes about 5 minutes."
+      },
+      {
+        "number": "02",
+        "title": "Train",
+        "description": "Tell ReplyRight your industry, your tone, and how you handle common questions. Upload your FAQs or let it learn from your sent history. It becomes yours."
+      },
+      {
+        "number": "03",
+        "title": "Reply",
+        "description": "Every incoming email gets a draft reply — ready for your approval or auto-sent for low-risk messages. You stay in control. Your inbox stays clean."
+      }
+    ]
+  },
+
+  "industry_verticals": {
+    "label": "Built for Your Industry",
+    "headline": "We speak your language — not just email.",
+    "intro": "Generic AI tools write generic emails. ReplyRight knows the difference between a dental intake form and a legal retainer question. It knows your terminology, your compliance constraints, and your client expectations.",
+    "industries": [
+      {
+        "icon_hint": "tooth",
+        "name": "Dental Practices",
+        "example_email_type": "Insurance coverage questions, appointment requests, billing inquiries",
+        "sample_reply_snippet": "\"We'll verify your Delta Dental benefits before your visit and have a full cost breakdown ready at check-in.\""
+      },
+      {
+        "icon_hint": "scales",
+        "name": "Law Firms",
+        "example_email_type": "New client intake, case status requests, consultation scheduling",
+        "sample_reply_snippet": "\"Our intake team will follow up within one business day — please note that this email does not establish an attorney-client relationship.\""
+      },
+      {
+        "icon_hint": "wrench",
+        "name": "HVAC & Plumbing",
+        "example_email_type": "Quote requests, emergency service calls, maintenance follow-ups",
+        "sample_reply_snippet": "\"We have a technician available Thursday between 10–2 — I'll send a confirmation with a 30-minute heads-up before arrival.\""
+      },
+      {
+        "icon_hint": "house",
+        "name": "Real Estate Teams",
+        "example_email_type": "Showing requests, offer inquiries, buyer pre-qualification questions",
+        "sample_reply_snippet": "\"That property is still active — I can get you in for a showing this weekend, Saturday or Sunday morning. What works for you?\""
+      },
+      {
+        "icon_hint": "stethoscope",
+        "name": "Medical Clinics",
+        "example_email_type": "Referral coordination, prescription refill requests, appointment reminders",
+        "sample_reply_snippet": "\"Your refill request has been sent to the provider for review — please allow 2 business days and check with your pharmacy directly.\""
+      }
+    ]
+  },
+
+  "features": {
+    "label": "What Makes ReplyRight Different",
+    "headline": "Not a generic email tool. Something better.",
+    "features_list": [
+      {
+        "icon_hint": "language",
+        "title": "Industry-Specific by Default",
+        "description": "ReplyRight doesn't just write emails — it writes the right emails. Each industry vertical comes pre-trained with terminology, tone, and compliance considerations baked in. A dental reply sounds like a dental office. A legal reply sounds like a law firm. No prompting required.",
+        "differentiator_tag": "Vertical-native intelligence"
+      },
+      {
+        "icon_hint": "checkmark",
+        "title": "You Approve. You're Always in Control.",
+        "description": "Every draft sits in your approval queue before it sends — unless you've flagged certain message types as low-risk for auto-send. You decide the rules. ReplyRight follows them. Full audit trail included.",
+        "differentiator_tag": "Approval-first workflow"
+      },
+      {
+        "icon_hint": "brain",
+        "title": "Gets Smarter the Longer You Use It",
+        "description": "ReplyRight learns from every approved reply, every edit you make, and every piece of feedback you give it. After 30 days, it knows your business well enough to draft like your best staff member — consistently, every time.",
+        "differentiator_tag": "Adaptive learning"
+      }
+    ]
+  },
+
+  "testimonials": {
+    "label": "From practices and firms just like yours",
+    "headline": "Real results. Real people. Less email.",
+    "cards": [
+      {
+        "industry": "Dental",
+        "quote": "Our front desk was spending the first two hours of every morning just getting through email. Now it takes 20 minutes. ReplyRight drafts everything — insurance questions, appointment changes, billing stuff — and it actually sounds like us. Patients keep telling us we're so responsive.",
+        "name": "Dr. Melissa Tran",
+        "title": "Owner, Family Dental of Renton",
+        "star_rating": 5
+      },
+      {
+        "industry": "Legal",
+        "quote": "I was skeptical. I didn't want some robot emailing potential clients on behalf of my firm. But ReplyRight keeps it professional and compliant — it even adds the right intake disclaimers automatically. New client response time went from 18 hours to under 30 minutes.",
+        "name": "Marcus Holloway",
+        "title": "Managing Partner, Holloway & Reeves Law",
+        "star_rating": 5
+      },
+      {
+        "industry": "HVAC / Home Services",
+        "quote": "We're a small operation — just me and two techs. I used to answer emails from job sites, which was a nightmare. Now quote requests and scheduling emails just get handled. It even knows to ask if it's an emergency versus a routine call. Saves me probably an hour a day.",
+        "name": "Tyler Sorensen",
+        "title": "Owner, Sorensen Heating & Air",
+        "star_rating": 5
+      }
+    ]
+  },
+
+  "pricing_cta": {
+    "label": "Simple Pricing",
+    "headline_anchor": "Your staff spends 2–3 hours a day on routine emails.",
+    "headline_sub": "At $20/hour, that's $1,200/month in time — just for email.",
+    "offer_description": "ReplyRight pays for itself in the first week. Start with a full-featured 14-day free trial — no credit card required. See the difference before you spend a dollar.",
+    "trial_details": "14 days free. Full access. Cancel anytime.",
+    "cta_button": {
+      "label": "Start My Free Trial",
+      "style": "primary"
+    },
+    "trust_line": "No contracts. No setup fees. Cancel anytime. HIPAA-aware infrastructure."
+  },
+
+  "footer": {
+    "logo_text": "REPLYRIGHT",
+    "tagline": "Every email. Every industry. Done right.",
+    "brand_attribution": "A LucraLab Product",
+    "links": [
+      { "label": "Privacy Policy", "href": "/privacy" },
+      { "label": "Terms of Service", "href": "/terms" }
+    ],
+    "copyright": "© 2026 LucraLab. All rights reserved."
+  }
+}
