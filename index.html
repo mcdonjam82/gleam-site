@@ -1113,6 +1113,10 @@
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
+    .hero-citations{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+    .hero-cite{font-size:11px;color:#475569;text-decoration:none;letter-spacing:.5px;transition:color .2s}
+    .hero-cite:hover{color:var(--cyan)}
+    .hero-cite-sep{font-size:11px;color:#334155}
   </style>
 </head>
 <body>
@@ -1146,14 +1150,20 @@
       <div class="hero-content">
         <div class="hero-eyebrow">
           <span class="hero-eyebrow-dot"></span>
-          Done For You · No App · No Dashboard · Just Results
+          "Businesses that respond to reviews average 0.4 stars higher on Google" — ReviewTrackers, 48,000 locations
         </div>
         <h1 class="hero-h1">
-          Every Unanswered Review<br>Is a Customer Who<br><span class="gradient-text">Chose Someone Else.</span>
+          <div class="h1-glow"></div>
+          Your Google Reviews<br>Are Either Working<br><span>For You. Or Not.</span>
         </h1>
         <p class="hero-sub">
-          Every review your business gets on Google receives a professional, on-brand response — automatically. You approve the sensitive ones with one text. Everything else is handled for you.
+          Every additional star on Google translates to 5–9% more revenue. Businesses that respond to reviews consistently average 0.4 stars higher than those that don't. Most local businesses respond to fewer than 1 in 10 reviews — not because they don't care, but because nobody has time. Gleam responds to every one. Automatically. In your voice.
         </p>
+        <div class="hero-citations">
+          <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1928601" target="_blank" rel="noopener" class="hero-cite">Revenue per star: Harvard Business School</a>
+          <span class="hero-cite-sep">·</span>
+          <a href="https://www.reviewtrackers.com/reports/online-reviews-survey/" target="_blank" rel="noopener" class="hero-cite">Ratings data: ReviewTrackers</a>
+        </div>
         <div class="hero-ctas">
           <a href="#cta" class="btn btn-primary">Start Free Trial</a>
           <a href="#how" class="btn btn-ghost">See How It Works</a>
