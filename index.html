@@ -3,1616 +3,1062 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gleam — Done-For-You Google Review Management</title>
-  <meta name="description" content="Every Google review your business gets receives a professional, on-brand response — automatically. You approve the sensitive ones with one text. Everything else is handled for you." />
+  <title>Gleam — Automated Reputation Management via SMS</title>
+  <meta name="description" content="Gleam monitors your Google reviews 24/7, drafts AI responses in your voice, and texts you for approval. No app. No dashboard. Just your phone." />
+  <!-- Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Gleam",
+    "url": "https://gleamreply.com",
+    "logo": "https://gleamreply.com/branding/gleam_logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hello@gleamreply.com",
+      "contactType": "customer support"
+    },
+    "sameAs": []
+  }
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I respond to Google reviews without logging in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gleam monitors your Google Business Profile 24/7 and texts you when a new review arrives — along with a ready-to-post AI-written response in your voice. Reply A to approve. It posts instantly. No login, no dashboard, no app required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best review management tool for home services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gleam is built for busy home service businesses — plumbers, HVAC technicians, electricians, and contractors — who need their Google reviews handled without adding software to their workflow. Everything runs by text message. No new app to learn."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How quickly should I respond to a Google review?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "According to BrightLocal's 2025 Consumer Review Survey, 88% of consumers are more likely to choose a business whose owner responds to every review. Gleam responds within seconds of a review arriving — day or night — so you never miss one."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does Google review management cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gleam costs $47/month for one location with everything included — unlimited review monitoring, AI response drafting, direct Google Business Profile posting, rating alerts, and monthly reputation reports. 14-day free trial, no credit card required to start."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" /></noscript>
-
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ─── Design Tokens ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg:                #0d0b1e;
-      --surface:           #151327;
-      --surface-high:      #1f1d31;
-      --surface-bright:    #2a283c;
-      --primary:           #87d1ff;
-      --primary-vivid:     #07b9fd;
-      --secondary:         #5317c9;
-      --on-bg:             #e4dffb;
-      --on-muted:          #bdc8d2;
-      --outline:           #3d4850;
-
-      --grad-cta:          linear-gradient(135deg, #87d1ff 0%, #07b9fd 100%);
-      --grad-text:         linear-gradient(135deg, #87d1ff 0%, #ffffff 100%);
-      --grad-card-top:     linear-gradient(90deg, rgba(135,209,255,0.30) 0%, rgba(7,185,253,0.30) 100%);
-
-      --shadow-ambient:    0 12px 48px rgba(135,209,255,0.06);
-      --radius-card:       16px;
-      --radius-pill:       999px;
+      --teal:   #14B8A6;
+      --teal-d: #0D9481;
+      --navy:   #0F172A;
+      --night:  #060F1C;
+      --slate:  #64748B;
+      --steel:  #94A3B8;
+      --mist:   #F1F5F9;
+      --border: #E2E8F0;
+      --gold:   #F59E0B;
+      --white:  #FFFFFF;
     }
 
-    /* ─── Reset ─────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Roboto', sans-serif;
-      background: var(--bg);
-      color: var(--on-bg);
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--white);
+      color: var(--navy);
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-
-    /* ─── Typography helpers ─────────────────────────────── */
-    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
-
-    .gradient-text {
-      background: var(--grad-text);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .section-label {
-      font-family: 'Roboto', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--primary-vivid);
-      display: inline-block;
-      margin-bottom: 0.75rem;
-    }
+    /* ── SPARKLE MARK ── */
+    .mark { display: inline-block; flex-shrink: 0; }
 
-    /* ─── Layout helpers ─────────────────────────────────── */
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    section { position: relative; }
-
-    /* ─── Buttons ─────────────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      border-radius: var(--radius-pill);
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn-primary {
-      background: var(--grad-cta);
-      color: #0a0818;
-      padding: 0.75rem 1.75rem;
-      box-shadow: 0 4px 24px rgba(7,185,253,0.35);
-    }
-    .btn-primary:hover {
-      box-shadow: 0 8px 32px rgba(7,185,253,0.50);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--on-bg);
-      padding: 0.75rem 1.75rem;
-      border: 1px solid rgba(61,72,80,0.5);
-    }
-    .btn-ghost:hover {
-      border-color: rgba(135,209,255,0.35);
-      color: var(--primary);
-      background: rgba(135,209,255,0.04);
-    }
-
-    .btn-outline-primary {
-      background: transparent;
-      color: var(--primary);
-      padding: 0.65rem 1.4rem;
-      border: 1px solid rgba(135,209,255,0.35);
-      font-size: 0.85rem;
-    }
-    .btn-outline-primary:hover {
-      background: rgba(135,209,255,0.08);
-      box-shadow: 0 4px 20px rgba(135,209,255,0.15);
-    }
-
-    /* ─── NAV ─────────────────────────────────────────────── */
-    #nav {
+    /* ─────────────────────────────────────
+       NAV
+    ───────────────────────────────────── */
+    nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 1rem 0;
-      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
-    }
-    #nav.scrolled {
-      background: rgba(19,17,36,0.80);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 rgba(135,209,255,0.06);
-    }
-    .nav-inner {
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 2rem;
     }
     .nav-logo {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 800;
-      font-size: 1.5rem;
-      letter-spacing: -0.02em;
-      background: var(--grad-cta);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.25rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--on-muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--on-bg); }
-    .nav-cta { margin-left: auto; }
-
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-toggle span {
-      width: 22px;
-      height: 2px;
-      background: var(--on-bg);
-      border-radius: 2px;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-
-    /* ─── HERO ────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 8rem 0 5rem;
-      overflow: hidden;
+      gap: 10px;
+      text-decoration: none;
     }
+    .nav-logo img { height: 28px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--navy); }
+    .nav-cta {
+      background: var(--teal);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--teal-d); }
 
-    .hero-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -58%);
-      width: 900px;
-      height: 700px;
-      background: radial-gradient(ellipse at center, rgba(135,209,255,0.13) 0%, rgba(83,23,201,0.07) 45%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-glow-2 {
-      position: absolute;
-      top: 20%;
-      right: -10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(ellipse at center, rgba(7,185,253,0.07) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      text-align: center;
-      max-width: 860px;
+    /* ─────────────────────────────────────
+       HERO
+    ───────────────────────────────────── */
+    .hero {
+      padding: 148px 48px 96px;
+      max-width: 920px;
       margin: 0 auto;
+      text-align: center;
     }
-
-    .hero-eyebrow {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(135,209,255,0.08);
-      border: 1px solid rgba(135,209,255,0.20);
-      border-radius: var(--radius-pill);
-      padding: 0.35rem 1rem;
-      font-size: 0.7rem;
+      gap: 8px;
+      background: rgba(20,184,166,0.08);
+      border: 1px solid rgba(20,184,166,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-d);
+      margin-bottom: 36px;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+    .hero h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: clamp(44px, 7vw, 80px);
+      line-height: 1.04;
+      letter-spacing: -2px;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+    .hero h1 .accent { color: var(--teal); }
+    .hero p {
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--slate);
+      max-width: 580px;
+      margin: 0 auto 52px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
       font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 1.75rem;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      display: inline-block;
     }
-    .hero-eyebrow-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--primary-vivid);
-      animation: pulse 2s infinite;
+    .btn-primary:hover { background: var(--teal-d); transform: translateY(-1px); }
+    .hero-seo {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--teal-d);
+      margin-bottom: 12px !important;
+      letter-spacing: 0.2px;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+    .hero-note {
+      font-size: 13px;
+      color: var(--steel);
+      margin-top: 16px;
     }
 
-    .hero-h1 {
-      font-size: clamp(2.6rem, 6vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.09;
-      letter-spacing: -0.03em;
-      color: var(--on-bg);
-      margin-bottom: 1.5rem;
+    /* ─────────────────────────────────────
+       PROOF BAR
+    ───────────────────────────────────── */
+    .proof-bar {
+      background: var(--mist);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 48px;
     }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.175rem);
-      line-height: 1.7;
-      color: var(--on-muted);
+    .proof-bar-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 52px;
+      flex-wrap: wrap;
+    }
+    .proof-stat { text-align: center; }
+    .proof-stat .num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 30px;
+      color: var(--navy);
+      letter-spacing: -1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .proof-stat .num .star { color: var(--gold); font-size: 22px; }
+    .proof-stat .label { font-size: 13px; color: var(--slate); margin-top: 3px; }
+    .proof-divider { width: 1px; height: 36px; background: var(--border); }
+
+    /* ─────────────────────────────────────
+       PROBLEM SECTION
+    ───────────────────────────────────── */
+    .problem-section {
+      padding: 96px 48px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .problem-section h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 20px;
       max-width: 620px;
-      margin: 0 auto 2.5rem;
     }
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 3.5rem;
-    }
-
-    .stats-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      flex-wrap: wrap;
-    }
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 2rem;
-    }
-    .stat-item + .stat-item {
-      border-left: 1px solid rgba(61,72,80,0.6);
-    }
-    .stat-value {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      background: var(--grad-text);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--on-muted);
-      margin-top: 0.2rem;
-      letter-spacing: 0.04em;
-    }
-
-    /* ─── INTEGRATION BAR ─────────────────────────────────── */
-    #integrations {
-      padding: 2.5rem 0;
-      border-top: 1px solid rgba(61,72,80,0.3);
-      border-bottom: 1px solid rgba(61,72,80,0.3);
-    }
-    .integrations-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .integrations-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--on-muted);
-      opacity: 0.6;
-    }
-    .integrations-logos {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .integration-name {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-      color: var(--on-muted);
-      opacity: 0.45;
-      transition: opacity 0.25s;
-    }
-    .integration-name:hover { opacity: 0.75; }
-
-    /* ─── PROBLEM SECTION ─────────────────────────────────── */
-    #problem {
-      background: var(--surface);
-      padding: 6rem 0;
-    }
-    .problem-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-    .problem-header h2 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-    }
-    .problem-header p {
-      margin-top: 1rem;
-      color: var(--on-muted);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+    .problem-section .sub {
+      font-size: 17px;
+      color: var(--slate);
+      line-height: 1.65;
+      max-width: 540px;
+      margin-bottom: 56px;
     }
     .problem-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 16px;
     }
     .problem-card {
-      background: var(--surface-high);
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-ambient);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      background: var(--mist);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 24px;
     }
-    .problem-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--grad-card-top);
+    .problem-card .problem-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 36px;
+      color: var(--navy);
+      letter-spacing: -1px;
+      margin-bottom: 8px;
     }
-    .problem-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(135,209,255,0.10);
-    }
-    .problem-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .problem-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
-    }
+    .problem-card .problem-num .pct { color: var(--teal); }
     .problem-card p {
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--on-muted);
+      font-size: 14.5px;
+      color: var(--slate);
+      line-height: 1.6;
     }
 
-    /* ─── HOW IT WORKS ────────────────────────────────────── */
-    #how {
-      padding: 6rem 0;
+    /* ─────────────────────────────────────
+       HOW IT WORKS
+    ───────────────────────────────────── */
+    .section {
+      padding: 96px 48px;
+      max-width: 880px;
+      margin: 0 auto;
     }
-    .how-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-    .how-header h2 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
+    .section h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 16px;
     }
-    .how-steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      position: relative;
+    .section .sub {
+      font-size: 17px;
+      color: var(--slate);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 56px;
     }
-    .how-steps::before {
-      content: '';
-      position: absolute;
-      top: 2.8rem;
-      left: calc(16.66% + 1rem);
-      right: calc(16.66% + 1rem);
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(135,209,255,0.25), rgba(135,209,255,0.25), transparent);
-    }
+    .steps { display: flex; flex-direction: column; }
     .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1.25rem;
-      position: relative;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 0 24px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
     }
-    .step-number {
-      width: 5rem;
-      height: 5rem;
-      border-radius: 50%;
-      background: var(--surface-high);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.04em;
-      color: var(--primary-vivid);
-      border: 1px solid rgba(135,209,255,0.2);
-      box-shadow: 0 0 0 8px rgba(135,209,255,0.04);
-      position: relative;
-      z-index: 1;
-      transition: box-shadow 0.25s;
+      font-size: 13px;
+      color: var(--teal);
+      padding-top: 3px;
+      letter-spacing: 0.5px;
     }
-    .step:hover .step-number {
-      box-shadow: 0 0 0 12px rgba(7,185,253,0.08), 0 0 30px rgba(7,185,253,0.2);
-    }
-    .step h3 {
-      font-size: 1.1rem;
+    .step-content h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
+      font-size: 20px;
+      color: var(--navy);
+      margin-bottom: 6px;
     }
-    .step p {
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--on-muted);
-      max-width: 260px;
+    .step-content p { font-size: 16px; color: var(--slate); line-height: 1.65; }
+    .sms-demo {
+      margin-top: 14px;
+      background: var(--mist);
+      border: 1px solid var(--border);
+      border-radius: 14px 14px 14px 4px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--navy);
+      line-height: 1.6;
+      max-width: 400px;
+    }
+    .sms-demo .sender {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .sms-reply {
+      margin-top: 10px;
+      background: var(--teal);
+      border-radius: 14px 14px 4px 14px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--white);
+      max-width: 120px;
+      margin-left: auto;
+      text-align: right;
     }
 
-    /* ─── FEATURES ────────────────────────────────────────── */
-    #features {
-      background: var(--surface-high);
-      padding: 6rem 0;
+    /* ─────────────────────────────────────
+       FEATURES GRID
+    ───────────────────────────────────── */
+    .features-section {
+      background: var(--mist);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 96px 48px;
     }
-    .features-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-    .features-header h2 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
+    .features-inner { max-width: 880px; margin: 0 auto; }
+    .features-inner h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 16px;
     }
-    .features-header p {
-      margin-top: 1rem;
-      color: var(--on-muted);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+    .features-inner .sub {
+      font-size: 17px;
+      color: var(--slate);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 52px;
     }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 16px;
     }
     .feature-card {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      padding: 2.25rem 2rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-ambient);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--grad-card-top);
-      opacity: 0.7;
-    }
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 24px 64px rgba(135,209,255,0.12);
+      background: var(--white);
+      padding: 28px 24px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
     }
     .feature-icon {
-      width: 3rem;
-      height: 3rem;
-      background: rgba(135,209,255,0.08);
-      border-radius: 12px;
+      width: 40px; height: 40px;
+      background: rgba(20,184,166,0.1);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 18px;
     }
     .feature-card h3 {
-      font-size: 1.05rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
-      margin-bottom: 0.6rem;
+      font-size: 17px;
+      color: var(--navy);
+      margin-bottom: 8px;
     }
-    .feature-card p {
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--on-muted);
-    }
+    .feature-card p { font-size: 14px; color: var(--slate); line-height: 1.65; }
 
-    /* ─── PRICING ─────────────────────────────────────────── */
-    #pricing {
-      background: var(--surface);
-      padding: 6rem 0;
+    /* ─────────────────────────────────────
+       VOICE SECTION (dark)
+    ───────────────────────────────────── */
+    .voice-section {
+      background: var(--night);
+      padding: 96px 48px;
     }
-    .pricing-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
+    .voice-inner {
+      max-width: 880px;
+      margin: 0 auto;
     }
-    .pricing-header h2 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
+    .voice-inner .section-label { color: var(--teal); }
+    .voice-inner h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 16px;
     }
-    .pricing-header p {
-      margin-top: 1rem;
-      color: var(--on-muted);
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
+    .voice-inner .sub {
+      font-size: 17px;
+      color: var(--steel);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 52px;
     }
-    .pricing-grid {
+    .compare-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      align-items: start;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .compare-card {
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .compare-card.bad {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .compare-card.good {
+      background: rgba(20,184,166,0.08);
+      border: 1px solid rgba(20,184,166,0.2);
+    }
+    .compare-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .compare-card.bad .compare-label { color: var(--steel); }
+    .compare-card.good .compare-label { color: var(--teal); }
+    .compare-card blockquote {
+      font-size: 15px;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    .compare-card.bad blockquote { color: var(--steel); }
+    .compare-card.good blockquote { color: var(--white); }
+
+    /* ─────────────────────────────────────
+       PRICING
+    ───────────────────────────────────── */
+    .pricing-section {
+      padding: 96px 48px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .pricing-section h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing: -1.5px;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .pricing-section .sub {
+      font-size: 17px;
+      color: var(--slate);
+      margin-bottom: 44px;
     }
     .pricing-card {
-      background: var(--surface-high);
-      border-radius: var(--radius-card);
-      padding: 2.25rem 2rem;
+      background: var(--night);
+      border-radius: 20px;
+      padding: 52px 44px;
       position: relative;
       overflow: hidden;
-      box-shadow: var(--shadow-ambient);
-      transition: transform 0.25s ease;
+      text-align: left;
     }
     .pricing-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--grad-card-top);
-      opacity: 0.35;
-    }
-    .pricing-card:hover { transform: translateY(-4px); }
-
-    /* Pro card highlight */
-    .pricing-card.pro {
-      background: linear-gradient(160deg, #2a283c 0%, #1d1a30 100%);
-      border: 1px solid rgba(7,185,253,0.25);
-      box-shadow: 0 0 60px rgba(7,185,253,0.12), var(--shadow-ambient);
-    }
-    .pricing-card.pro::before {
-      background: var(--grad-cta);
-      opacity: 1;
-      height: 2px;
-    }
-    .pricing-card.pro:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 80px rgba(7,185,253,0.20), 0 24px 64px rgba(135,209,255,0.12);
-    }
-
-    .best-value-badge {
-      display: inline-flex;
-      align-items: center;
-      background: linear-gradient(135deg, var(--primary-vivid), var(--secondary));
-      color: #fff;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.85rem;
-      border-radius: var(--radius-pill);
-      margin-bottom: 1rem;
-    }
-
-    .pricing-tier {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--on-muted);
-      margin-bottom: 0.5rem;
-    }
-    .pro .pricing-tier { color: var(--primary-vivid); }
-
-    .pricing-price {
-      display: flex;
-      align-items: flex-end;
-      gap: 0.3rem;
-      margin-bottom: 0.5rem;
-    }
-    .price-amount {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: var(--on-bg);
-    }
-    .pro .price-amount {
-      background: var(--grad-text);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .price-period {
-      font-size: 0.875rem;
-      color: var(--on-muted);
-      padding-bottom: 0.4rem;
-    }
-    .pricing-tagline {
-      font-size: 0.8rem;
-      color: var(--on-muted);
-      margin-bottom: 1.75rem;
-      line-height: 1.5;
-    }
-
-    .pricing-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-    }
-    .pricing-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      font-size: 0.875rem;
-      color: var(--on-muted);
-      line-height: 1.4;
-    }
-    .pricing-features li::before {
-      content: '✓';
-      color: var(--primary-vivid);
-      font-weight: 700;
-      font-size: 0.8rem;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-    .pricing-card .btn {
-      width: 100%;
-      justify-content: center;
-    }
-
-    /* ─── TESTIMONIALS ────────────────────────────────────── */
-    #testimonials {
-      padding: 6rem 0;
-      background: var(--bg);
-    }
-    .testimonials-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-    .testimonials-header h2 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-    }
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .testimonial-card {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-ambient);
-      transition: transform 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .testimonial-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--grad-card-top);
-      opacity: 0.5;
-    }
-    .testimonial-card:hover { transform: translateY(-4px); }
-
-    .quote-mark {
-      font-size: 3rem;
-      line-height: 0.8;
-      color: var(--primary-vivid);
-      opacity: 0.4;
-      font-family: Georgia, serif;
-    }
-    .testimonial-text {
-      font-size: 0.975rem;
-      line-height: 1.7;
-      color: var(--on-bg);
-      flex: 1;
-    }
-    .testimonial-author {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      border-top: 1px solid rgba(61,72,80,0.4);
-      padding-top: 1.25rem;
-    }
-    .author-name {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--on-bg);
-    }
-    .author-role {
-      font-size: 0.78rem;
-      color: var(--on-muted);
-    }
-    .stars {
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      color: #fbbf24;
-      margin-bottom: 0.25rem;
-    }
-
-    /* ─── FINAL CTA ───────────────────────────────────────── */
-    #cta {
-      padding: 8rem 0;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-    .cta-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px;
-      height: 500px;
-      background: radial-gradient(ellipse at center, rgba(7,185,253,0.14) 0%, rgba(83,23,201,0.06) 45%, transparent 70%);
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: var(--teal);
+      opacity: 0.05;
+      border-radius: 50%;
       pointer-events: none;
     }
-    .cta-inner {
-      position: relative;
-      max-width: 660px;
-      margin: 0 auto;
+    .pricing-plan-name {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
     }
-    #cta h2 {
-      font-size: clamp(2rem, 4.5vw, 3.25rem);
+    .pricing-card h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 1.25rem;
+      font-size: 56px;
+      color: var(--white);
+      letter-spacing: -2px;
+      margin-bottom: 4px;
+      line-height: 1;
     }
-    #cta p {
-      font-size: 1.05rem;
-      color: var(--on-muted);
-      margin-bottom: 2.5rem;
-      line-height: 1.65;
+    .pricing-card h3 sup {
+      font-size: 28px;
+      vertical-align: super;
+      letter-spacing: -1px;
     }
-    .cta-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+    .pricing-card h3 sub {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--steel);
     }
-    .cta-secondary-link {
-      font-size: 0.875rem;
-      color: var(--on-muted);
-      transition: color 0.2s;
+    .pricing-trial {
+      font-size: 14px;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 36px;
+      margin-top: 8px;
     }
-    .cta-secondary-link:hover { color: var(--primary); }
-    .cta-actions .btn-primary {
-      font-size: 1rem;
-      padding: 1rem 2.5rem;
+    .price-features {
+      list-style: none;
+      margin-bottom: 36px;
     }
-
-    /* ─── FOOTER ──────────────────────────────────────────── */
-    #footer {
-      background: var(--surface);
-      padding: 3rem 0 2rem;
-      border-top: 1px solid rgba(61,72,80,0.3);
-    }
-    .footer-inner {
-      display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-    }
-    .footer-top {
+    .price-features li {
       display: flex;
       align-items: flex-start;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--steel);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      line-height: 1.4;
     }
-    .footer-brand {}
-    .footer-logo {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 800;
-      font-size: 1.3rem;
-      background: var(--grad-cta);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
+    .price-features li:last-child { border-bottom: none; }
+    .price-features li .check { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+    .btn-pricing {
+      display: block;
+      background: var(--teal);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.15s;
     }
-    .footer-tagline {
-      font-size: 0.8rem;
-      color: var(--on-muted);
+    .btn-pricing:hover { background: var(--teal-d); }
+    .pricing-footnote {
+      font-size: 13px;
+      color: var(--steel);
+      margin-top: 16px;
+      text-align: center;
       opacity: 0.7;
-      max-width: 280px;
-    }
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      align-items: center;
-    }
-    .footer-links a {
-      font-size: 0.825rem;
-      color: var(--on-muted);
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-    .footer-links a:hover { opacity: 1; }
-    .footer-bottom {
-      border-top: 1px solid rgba(61,72,80,0.3);
-      padding-top: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .footer-copy {
-      font-size: 0.78rem;
-      color: var(--on-muted);
-      opacity: 0.45;
     }
 
-    /* ─── RESPONSIVE ──────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .problem-cards,
-      .features-grid,
-      .pricing-grid,
-      .testimonials-grid {
-        grid-template-columns: 1fr;
-      }
-      .how-steps {
-        grid-template-columns: 1fr;
-      }
-      .how-steps::before { display: none; }
+    /* ─────────────────────────────────────
+       SIGNUP FORM
+    ───────────────────────────────────── */
+    .signup-section {
+      background: var(--mist);
+      border-top: 1px solid var(--border);
+      padding: 96px 48px;
     }
-
-    @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
-      .nav-toggle { display: flex; }
-
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(19,17,36,0.97);
-        backdrop-filter: blur(20px);
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        z-index: 99;
-      }
-      .nav-links.open a {
-        font-size: 1.5rem;
-      }
-      .nav-cta.open {
-        display: flex;
-        position: fixed;
-        bottom: 3rem;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-      }
-
-      .stat-item { padding: 0 1rem; }
-      .stat-value { font-size: 1.3rem; }
-
-      .integrations-logos { gap: 1.5rem; }
-
-      .footer-top { flex-direction: column; }
-    }
-
-    @media (max-width: 480px) {
-      .container { padding: 0 1.25rem; }
-
-      #hero { padding: 7rem 0 4rem; min-height: unset; }
-      .hero-h1 { font-size: 2.1rem; }
-      .hero-ctas { flex-direction: column; align-items: stretch; }
-      .hero-ctas .btn { justify-content: center; }
-
-      .stats-row { gap: 0.25rem; }
-      .stat-item { padding: 0 0.75rem; }
-      .stat-item + .stat-item { border-left-color: transparent; }
-      .stat-value { font-size: 1.2rem; }
-
-      #problem, #how, #features, #pricing, #testimonials { padding: 4rem 0; }
-      #cta { padding: 5rem 0; }
-
-      .pricing-card.pro { transform: none; }
-    }
-
-    /* ─── DFY SECTION ────────────────────────────────────── */
-    .dfy-section {
-      padding: 6rem 0;
-      background: var(--bg);
-    }
-    .dfy-inner {
+    .signup-inner {
+      max-width: 600px;
+      margin: 0 auto;
       text-align: center;
     }
-    .section-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
+    .signup-inner h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      color: var(--on-bg);
-      margin-bottom: 1rem;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -1.5px;
+      color: var(--navy);
+      margin-bottom: 12px;
     }
-    .section-sub {
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--on-muted);
-      max-width: 580px;
-      margin: 0 auto 3rem;
+    .signup-inner .sub {
+      font-size: 17px;
+      color: var(--slate);
+      line-height: 1.6;
+      margin-bottom: 44px;
     }
-    .dfy-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+    .signup-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
       text-align: left;
     }
-    .dfy-card {
-      background: var(--surface-high);
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-ambient);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .dfy-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--grad-card-top);
-    }
-    .dfy-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(135,209,255,0.10);
-    }
-    .dfy-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .dfy-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
-      color: var(--on-bg);
-    }
-    .dfy-card p {
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--on-muted);
-    }
-
-    /* ─── VOICE SECTION ───────────────────────────────────── */
-    .voice-section {
-      padding: 6rem 0;
-      background: var(--surface);
-    }
-    .voice-inner {
-      text-align: center;
-    }
-    .voice-compare {
+    .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-      text-align: left;
+      gap: 16px;
     }
-    .voice-bad,
-    .voice-good {
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .voice-bad {
-      background: rgba(239, 68, 68, 0.06);
-      border: 1px solid rgba(239, 68, 68, 0.20);
-    }
-    .voice-good {
-      background: rgba(7, 185, 253, 0.06);
-      border: 1px solid rgba(7, 185, 253, 0.22);
-    }
-    .voice-label {
-      display: inline-flex;
-      align-items: center;
-      font-size: 0.75rem;
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: var(--radius-pill);
-      padding: 0.3rem 0.9rem;
-      margin-bottom: 1.25rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
     }
-    .voice-label-bad {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
+    .form-group input {
+      width: 100%;
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 15px;
+      color: var(--navy);
+      background: var(--white);
+      transition: border-color 0.15s;
+      outline: none;
     }
-    .voice-label-good {
-      background: rgba(7, 185, 253, 0.15);
-      color: var(--primary-vivid);
+    .form-group input:focus { border-color: var(--teal); }
+    .form-group input::placeholder { color: var(--steel); }
+    .consent-group {
+      margin-top: 8px;
+      margin-bottom: 24px;
     }
-    .voice-bad p,
-    .voice-good p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--on-muted);
-      font-style: italic;
+    .consent-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
     }
-    .voice-good p {
-      color: var(--on-bg);
+    .consent-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--teal);
+    }
+    .consent-item label {
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+    .form-submit {
+      width: 100%;
+      background: var(--teal);
+      color: var(--white);
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 15px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .form-submit:hover { background: var(--teal-d); }
+    .form-footnote {
+      font-size: 12px;
+      color: var(--steel);
+      text-align: center;
+      margin-top: 14px;
     }
 
-    @media (max-width: 900px) {
-      .dfy-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .voice-compare {
-        grid-template-columns: 1fr;
-      }
+    /* ─────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────── */
+    footer {
+      background: var(--night);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
     }
-    @media (max-width: 480px) {
-      .dfy-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-logo img { height: 24px; width: auto; }
+    .footer-right { font-size: 13px; color: var(--steel); }
+    .footer-right a { color: var(--steel); text-decoration: none; transition: color 0.15s; }
+    .footer-right a:hover { color: var(--teal); }
 
-    /* ─── Scroll fade-in ─────────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 720px) {
+      nav { padding: 0 20px; }
+      .nav-link { display: none; }
+      .hero { padding: 120px 20px 72px; }
+      .proof-bar { padding: 24px 20px; }
+      .proof-bar-inner { gap: 24px; }
+      .proof-divider { display: none; }
+      .problem-section, .section { padding: 72px 20px; }
+      .problem-cards { grid-template-columns: 1fr; }
+      .features-section { padding: 72px 20px; }
+      .features-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .voice-section { padding: 72px 20px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .pricing-section { padding: 72px 20px; }
+      .pricing-card { padding: 36px 24px; }
+      .signup-section { padding: 72px 20px; }
+      .signup-form { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-    .hero-citations{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px;flex-wrap:wrap}
-    .hero-cite{font-size:11px;color:#475569;text-decoration:none;letter-spacing:.5px;transition:color .2s}
-    .hero-cite:hover{color:var(--cyan)}
-    .hero-cite-sep{font-size:11px;color:#334155}
   </style>
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════ NAV -->
-  <nav id="nav">
-    <div class="container">
-      <div class="nav-inner">
-        <a class="nav-logo" href="/">GLEAM</a>
-        <ul class="nav-links" id="nav-links">
-          <li><a href="#how">How It Works</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
-          <li><a href="/examples.html">See Examples</a></li>
-        </ul>
-        <div class="nav-cta" id="nav-cta">
-          <a href="#cta" class="btn btn-primary">Start Free Trial</a>
-        </div>
-        <div class="nav-toggle" id="nav-toggle" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
+  <!-- ── NAV ── -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <img src="branding/gleam_logo.png" alt="Gleam" />
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="#how-it-works">How it works</a>
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
+      <a class="nav-cta" href="#signup">Start Free Trial</a>
     </div>
   </nav>
 
-  <!-- ═══════════════════════════════════════════ HERO -->
-  <section id="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-glow-2"></div>
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="hero-eyebrow-dot"></span>
-          One extra star on Google = 5–9% more revenue. — Harvard Business School
-        </div>
-        <h1 class="hero-h1">
-          <div class="h1-glow"></div>
-          Your Google Reviews<br>Are Either Working<br><span>For You. Or Not.</span>
-        </h1>
-        <p class="hero-sub">
-          Most local businesses respond to fewer than 1 in 10 reviews — not because they don't care, but because nobody has time. When a customer reads an unanswered review, most of them move on. They don't call back. Gleam makes sure that never happens.
-        </p>
-        <div class="hero-citations">
-          <a href="https://www.reviewtrackers.com/reports/online-reviews-survey/" target="_blank" rel="noopener" class="hero-cite">Response rate data: ReviewTrackers</a>
-        </div>
-        <div class="hero-ctas">
-          <a href="#cta" class="btn btn-primary">Start Free Trial</a>
-          <a href="#how" class="btn btn-ghost">See How It Works</a>
-        </div>
-        <div class="stats-row">
-          <div class="stat-item">
-            <span class="stat-value">&lt; 30 min</span>
-            <span class="stat-label">Avg Response Time</span>
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Automated reputation management · SMS-first
+    </div>
+    <h1>Stop losing jobs to businesses<br><span class="accent">with better Google reviews.</span></h1>
+    <p class="hero-seo">Automated Google review management for local businesses — by text.</p>
+    <p>Gleam monitors your reviews 24/7, writes a reply in your voice, and texts you to approve it. You reply A. It posts. No app. No dashboard. Just your phone.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#signup">Start My Free 14-Day Trial</a>
+    </div>
+    <p class="hero-note">$47/month after trial · Gleam Solo · Cancel any time</p>
+  </section>
+
+  <!-- ── PROOF BAR ── -->
+  <div class="proof-bar">
+    <div class="proof-bar-inner">
+      <div class="proof-stat">
+        <div class="num">4.9 <span class="star">★</span></div>
+        <div class="label">Avg. Google rating on Gleam</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <div class="num">&lt;10s</div>
+        <div class="label">Average response workflow</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <div class="num">24/7</div>
+        <div class="label">Review monitoring</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <div class="num">0</div>
+        <div class="label">New logins required</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ── -->
+  <section class="problem-section">
+    <div class="section-label">The problem</div>
+    <h2>Most businesses lose customers before anyone notices.</h2>
+    <p class="sub">A 1-star review without a response tells the next customer everything they need to know. Most businesses see the review days later — and reply with something generic. Or nothing at all.</p>
+    <div class="problem-cards">
+      <div class="problem-card">
+        <div class="problem-num"><span class="pct">97%</span></div>
+        <p>of consumers read reviews before choosing a local business. Your rating is your first impression.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num"><span class="pct">88%</span></div>
+        <p>of consumers are more likely to choose a business whose owner responds to every review.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num"><span class="pct">1</span></div>
+        <p>new customer from better reviews pays for a full year of Gleam. The math is not complicated.</p>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--steel);margin-top:24px;">Source: <a href="https://www.brightlocal.com/research/local-consumer-review-survey/" style="color:var(--steel);">BrightLocal Local Consumer Review Survey 2025/2026</a></p>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section" id="how-it-works" style="border-top: 1px solid var(--border);">
+    <div class="section-label">How it works</div>
+    <h2>Four steps.<br>Completely handled.</h2>
+    <p class="sub">The entire workflow happens in SMS. Your team already knows how to use it.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>A new Google review arrives.</h3>
+          <p>Gleam detects it instantly and texts your manager with the review text, star rating, and a ready-to-send AI draft in your voice.</p>
+          <div class="sms-demo">
+            <div class="sender">Gleam Reviews · +1 888 394 4345</div>
+            New 5★ from Sarah M. — "Amazing staff, so kind and professional. Will definitely be back!" Reply APPROVE to post our draft, or EDIT [your text] to customize.
           </div>
-          <div class="stat-item">
-            <span class="stat-value">100%</span>
-            <span class="stat-label">Reviews Responded To</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>We draft a reply in your voice.</h3>
+          <p>AI reads the review and writes a warm, specific response — not a template. You read it. You decide.</p>
+          <div class="sms-demo">
+            <div class="sender">Gleam Reviews · +1 888 394 4345</div>
+            Draft: "Sarah, thank you so much — our team genuinely loves what they do, and hearing that means everything. We can't wait to see you again soon!"
+            <div class="sms-reply">APPROVE</div>
           </div>
-          <div class="stat-item">
-            <span class="stat-value">Zero</span>
-            <span class="stat-label">Logins Required</span>
-          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Posted. Done.</h3>
+          <p>Gleam posts the response directly to your Google Business Profile. 5-star reviews are handled automatically by default — you only get texted for reviews that need your judgment.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Gleam keeps watching.</h3>
+          <p>Rating drops, review velocity spikes, repeated complaints — Gleam alerts you by text before they become problems. Monthly reports arrive in your inbox automatically.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ INTEGRATIONS -->
-  <section id="integrations">
-    <div class="container">
-      <div class="integrations-inner">
-        <span class="integrations-label">Trusted by businesses across every industry</span>
-        <div class="integrations-logos">
-          <span class="integration-name">Dental</span>
-          <span class="integration-name">Home Services</span>
-          <span class="integration-name">Restaurants</span>
-          <span class="integration-name">Med Spas</span>
-          <span class="integration-name">Auto Repair</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ DFY SECTION -->
-  <section class="dfy-section">
-    <div class="container">
-      <div class="dfy-inner">
-        <div class="section-label">What Done For You Means</div>
-        <h2 class="section-title">Your Only Job Is<br>Running Your Business.</h2>
-        <p class="section-sub">Most owners think managing reviews takes time they don't have. Gleam owners spend less than 5 minutes a week on reviews — because Gleam handles the rest.</p>
-        <div class="dfy-grid">
-          <div class="dfy-card reveal reveal-delay-1">
-            <div class="dfy-icon">⏱️</div>
-            <h3>Zero Hours Per Week</h3>
-            <p>No checking Google. No writing responses. No logging into dashboards. Gleam monitors your reviews 24/7 and responds automatically — while you sleep, work, and take weekends off.</p>
-          </div>
-          <div class="dfy-card reveal reveal-delay-2">
-            <div class="dfy-icon">🎯</div>
-            <h3>Responses That Sound Like You</h3>
-            <p>We analyze your website copy and existing responses before we write a single word. Your Gleam responses will sound like you wrote them — not a copy-paste template. Customers won't know the difference.</p>
-          </div>
-          <div class="dfy-card reveal reveal-delay-3">
-            <div class="dfy-icon">📱</div>
-            <h3>10 Seconds When It Matters</h3>
-            <p>You only hear from Gleam when a negative review needs your personal touch. We text you a draft. You reply APPROVE. It's live. That's your entire involvement for sensitive reviews.</p>
-          </div>
-          <div class="dfy-card reveal reveal-delay-4">
-            <div class="dfy-icon">📊</div>
-            <h3>Your Reputation, Delivered Monthly</h3>
-            <p>On the 1st of every month, a full reputation report lands in your inbox — no login required. See your rating trend, response rate, and what customers keep saying about you.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ PROBLEM -->
-  <section id="problem">
-    <div class="container">
-      <div class="problem-header reveal">
-        <span class="section-label">The Reality</span>
-        <h2>Your Reputation Is Being<br /><span class="gradient-text">Shaped Right Now</span></h2>
-        <p>While you're running your business, your online reputation is either growing or eroding — with or without your involvement.</p>
-      </div>
-      <div class="problem-cards">
-        <div class="problem-card reveal reveal-delay-1">
-          <span class="problem-icon">📞</span>
-          <h3>Unanswered Reviews Are Costing You New Customers Right Now</h3>
-          <p>Every time someone Googles your business and sees a 1-star review with no reply, some of them move on. They don't call. They don't ask questions. They just pick the other guy. You'll never know how many — because they never showed up.</p>
-        </div>
-        <div class="problem-card reveal reveal-delay-2">
-          <span class="problem-icon">⭐</span>
-          <h3>1-Star Reviews Go Unanswered for Days</h3>
-          <p>Slow or no response to negative reviews signals indifference to prospective customers. Every day you wait, more people see an unaddressed complaint — and choose your competitor.</p>
-        </div>
-        <div class="problem-card reveal reveal-delay-3">
-          <span class="problem-icon">📉</span>
-          <h3>Competitors Are Getting 10x More Reviews</h3>
-          <p>Businesses that systematically respond to reviews dominate local search. While you're not responding, competitors are accumulating the social proof that wins new customers.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ HOW IT WORKS -->
-  <section id="how">
-    <div class="container">
-      <div class="how-header reveal">
-        <span class="section-label">How It Works</span>
-        <h2>Set Up Once. <span class="gradient-text">Runs Forever.</span></h2>
-      </div>
-      <div class="how-steps">
-        <div class="step reveal reveal-delay-1">
-          <div class="step-number">01</div>
-          <h3>Connect in 5 Minutes</h3>
-          <p>Sign up, connect your Google Business Profile, and enter your mobile number. No software to install. No IT help needed. You're live in under 5 minutes.</p>
-        </div>
-        <div class="step reveal reveal-delay-2">
-          <div class="step-number">02</div>
-          <h3>Every Review Gets Answered</h3>
-          <p>New review detected within 30 minutes. A voice-tuned response is drafted automatically. 4 &amp; 5-star reviews post without you lifting a finger. Negative reviews come to you via text — reply APPROVE to post.</p>
-        </div>
-        <div class="step reveal reveal-delay-3">
-          <div class="step-number">03</div>
-          <h3>Know Your Reputation Monthly</h3>
-          <p>On the 1st of every month, your full reputation report lands in your inbox — new reviews, rating trend, response rate, and a plain-English breakdown of what customers keep saying. 30-second read.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ FEATURES -->
-  <section id="features">
-    <div class="container">
-      <div class="features-header reveal">
-        <span class="section-label">Product</span>
-        <h2>Built for Owners Who <span class="gradient-text">Don't Have Time for This.</span></h2>
-        <p>Purpose-built for local business owners who don't have time to manage their reputation manually.</p>
-      </div>
+  <!-- ── FEATURES ── -->
+  <div class="features-section" id="features">
+    <div class="features-inner">
+      <div class="section-label">What's included</div>
+      <h2>Everything you're too busy<br>to handle.</h2>
+      <p class="sub">Gleam Solo includes every feature. No add-ons, no tiers, no surprises.</p>
       <div class="features-grid">
-        <div class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon">🤖</div>
-          <h3>Responses That Sound Like You</h3>
-          <p>We analyze your website and existing responses to learn your tone. Every reply sounds like you wrote it — not a generic bot. Customers won't know the difference.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>SMS approval workflow</h3>
+          <p>Every review alert, draft, and action lives in your SMS app. Nothing new to learn. Nothing new to open.</p>
         </div>
-        <div class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon">📊</div>
-          <h3>Monthly Reputation Reports</h3>
-          <p>On the 1st of every month, a full report lands in your inbox — new reviews, average rating, response rate, and a plain-English breakdown of what customers keep saying.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>AI response drafting</h3>
+          <p>Every reply is written for that specific review — warm, specific, in your voice. Never generic, never off-brand.</p>
         </div>
-        <div class="feature-card reveal reveal-delay-3">
-          <div class="feature-icon">📱</div>
-          <h3>Text-Based Approval</h3>
-          <p>No app. No dashboard. No login. When a sensitive review needs your touch, we text you the draft. Reply APPROVE. It posts. Done in 10 seconds.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Direct GBP posting</h3>
+          <p>Approved replies post instantly to your Google Business Profile. No copy-paste, no browser, no logins.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Auto-post modes</h3>
+          <p>Text AUTO 5 to auto-post 5-star replies instantly. AUTO ALL handles every review automatically. You stay in control.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>Rating &amp; velocity alerts</h3>
+          <p>Gleam texts you when your 30-day rating drops below 4.0 or when review volume spikes — before it becomes a problem.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h3>Monthly reputation reports</h3>
+          <p>A clear AI-generated summary of your review trends, top complaints, and top praise — sent to your inbox every month.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
+          <h3>ReplyResurrect</h3>
+          <p>When a reviewer edits their review and Google wipes your response, Gleam detects it and sends you a fresh draft automatically.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3>Sentiment alerts</h3>
+          <p>When the same complaint — response time, pricing, workmanship — appears in 3+ reviews in 7 days, Gleam flags it before it becomes a pattern.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>No software to manage</h3>
+          <p>Nothing to install. Nothing to update. Gleam runs in the background. Your team texts. That's the entire job.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ═══════════════════════════════════════════ PRICING -->
-  <section id="pricing">
-    <div class="container">
-      <div class="pricing-header reveal">
-        <span class="section-label">Pricing</span>
-        <h2>Simple Pricing.<br><span class="gradient-text">Done For You.</span></h2>
-        <p>No setup fees. No contracts. Cancel anytime. Your reputation runs on autopilot from day one.</p>
-      </div>
-      <div class="pricing-grid" style="max-width: 780px; margin: 0 auto;">
-
-        <!-- Starter -->
-        <div class="pricing-card reveal reveal-delay-1">
-          <div class="pricing-tier">STARTER</div>
-          <div class="pricing-price">
-            <span class="price-amount">$49</span>
-            <span class="price-period">/mo</span>
-          </div>
-          <p class="pricing-tagline">For single-location businesses</p>
-          <ul class="pricing-features">
-            <li>1 Google Business location</li>
-            <li>4 &amp; 5-star reviews responded to automatically</li>
-            <li>Text approval for 1, 2 &amp; 3-star reviews</li>
-            <li>Voice-tuned from day one (we analyze your website + existing responses)</li>
-            <li>Monthly reputation report emailed automatically</li>
-            <li>Email support</li>
-          </ul>
-          <a href="#get-started" class="btn btn-outline-primary">Start Free Trial</a>
+  <!-- ── VOICE COMPARISON ── -->
+  <div class="voice-section">
+    <div class="voice-inner">
+      <div class="section-label">Your voice, not a template</div>
+      <h2>Replies that sound<br>like you wrote them.</h2>
+      <p class="sub">Gleam writes in your business's voice. Every response feels personal — because it is.</p>
+      <div class="compare-grid">
+        <div class="compare-card bad">
+          <div class="compare-label">Generic template</div>
+          <blockquote>"Thank you for your feedback. We strive to provide excellent service to all our customers and appreciate you taking the time to share your experience."</blockquote>
         </div>
-
-        <!-- Business -->
-        <div class="pricing-card pro reveal reveal-delay-2">
-          <div class="best-value-badge">✦ Most Popular</div>
-          <div class="pricing-tier">BUSINESS</div>
-          <div class="pricing-price">
-            <span class="price-amount">$149</span>
-            <span class="price-period">/mo</span>
-          </div>
-          <p class="pricing-tagline">For multi-location or high-volume businesses</p>
-          <ul class="pricing-features">
-            <li>Up to 3 Google Business locations</li>
-            <li>Everything in Starter</li>
-            <li>White-label monthly reports (your business branding)</li>
-            <li>Priority SMS support line</li>
-            <li>Review backfill on signup — we catch up on unanswered reviews</li>
-            <li>Dedicated account manager</li>
-          </ul>
-          <a href="#get-started" class="btn btn-primary">Start Free Trial</a>
+        <div class="compare-card good">
+          <div class="compare-label">Gleam response</div>
+          <blockquote>"Sarah, thank you so much — our team genuinely loves what they do, and hearing that means everything. We'd love to work with you again!"</blockquote>
         </div>
-
       </div>
+    </div>
+  </div>
+
+  <!-- ── PRICING ── -->
+  <section class="pricing-section" id="pricing">
+    <div class="section-label" style="text-align:center;">Pricing</div>
+    <h2>Simple. One plan.</h2>
+    <p class="sub">Everything included. No per-review fees. No add-ons.</p>
+    <div class="pricing-card">
+      <!-- ghost sparkle -->
+      <svg style="position:absolute;top:-10px;right:20px;opacity:0.05;pointer-events:none" width="200" height="200" viewBox="-1 -1 2 2">
+        <path d="M0,-1 C0,-0.48 0.48,0 1,0 C0.48,0 0,0.48 0,1 C0,0.48 -0.48,0 -1,0 C-0.48,0 0,-0.48 0,-1 Z" fill="#14B8A6"/>
+      </svg>
+      <div class="pricing-plan-name">Gleam Solo · 1 location</div>
+      <h3><sup>$</sup>47<sub>/mo</sub></h3>
+      <p class="pricing-trial">14-day free trial · No credit card required to start</p>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Unlimited review monitoring &amp; SMS alerts</li>
+        <li><span class="check">✓</span> AI response drafting for every review</li>
+        <li><span class="check">✓</span> Direct Google Business Profile posting</li>
+        <li><span class="check">✓</span> Auto-post modes (AUTO 5, AUTO ALL, or manual)</li>
+        <li><span class="check">✓</span> Rating drop &amp; review velocity alerts</li>
+        <li><span class="check">✓</span> Sentiment &amp; topic cluster alerts</li>
+        <li><span class="check">✓</span> ReplyResurrect — auto-recovery when responses are wiped</li>
+        <li><span class="check">✓</span> Monthly reputation report to your inbox</li>
+        <li><span class="check">✓</span> Cancel any time · No contracts</li>
+      </ul>
+      <a class="btn-pricing" href="#signup">Start My Free 14-Day Trial →</a>
+      <p class="pricing-footnote">One new customer from better reviews pays for a full year of Gleam.</p>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ TESTIMONIALS -->
-  <section id="testimonials">
-    <div class="container">
-      <div class="testimonials-header reveal">
-        <span class="section-label">What Business Owners Say</span>
-        <h2>Real Results. <span class="gradient-text">Real Business Owners.</span></h2>
-      </div>
-      <div class="testimonials-grid">
-
-        <div class="testimonial-card reveal reveal-delay-1">
-          <div class="stars">★★★★★</div>
-          <div class="quote-mark">"</div>
-          <p class="testimonial-text">I had 23 unanswered Google reviews when I signed up. Gleam caught up on all of them in 48 hours and now handles every new one automatically. I haven't logged into Google Business in months.</p>
-          <div class="testimonial-author">
-            <span class="author-name">Marcus Webb</span>
-            <span class="author-role">Owner, Pacific Coast HVAC · Portland, OR</span>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal reveal-delay-2">
-          <div class="stars">★★★★★</div>
-          <div class="quote-mark">"</div>
-          <p class="testimonial-text">The responses sound exactly like me — my team even thought I was writing them. We got a 4.8-star average now after being stuck at 4.1 for two years. Gleam handles everything.</p>
-          <div class="testimonial-author">
-            <span class="author-name">Sarah Chen</span>
-            <span class="author-role">Owner, Bloom Med Spa · Bellevue, WA</span>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal reveal-delay-3">
-          <div class="stars">★★★★★</div>
-          <div class="quote-mark">"</div>
-          <p class="testimonial-text">A 1-star review came in on a Saturday. Gleam texted me a draft, I replied APPROVE, and it was live in seconds. The customer followed up saying they appreciated the response. That's never happened before.</p>
-          <div class="testimonial-author">
-            <span class="author-name">Jamie Liu</span>
-            <span class="author-role">Owner, Sunrise Auto Repair · Tacoma, WA</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ VOICE SECTION -->
-  <section class="voice-section">
-    <div class="container">
-      <div class="voice-inner">
-        <div class="section-label">Every Response Sounds Like You Wrote It.</div>
-        <h2 class="section-title">Responses That Sound<br>Like Your Business.</h2>
-        <p class="section-sub">When you connect Gleam, we analyze your website copy and any existing responses you've written — learning your tone, your phrases, your personality. The result: responses that sound like you wrote them.</p>
-        <div class="voice-compare reveal">
-          <div class="voice-bad">
-            <div class="voice-label voice-label-bad">❌ Generic Template</div>
-            <p>"Thank you so much for taking the time to share your experience with us! We truly appreciate your valuable feedback and we strive to ensure every customer has an exceptional experience. Rest assured we will use your input to continuously improve our services."</p>
-          </div>
-          <div class="voice-good">
-            <div class="voice-label voice-label-good">✅ Gleam (voice-tuned)</div>
-            <p>"Thanks Sandra — so glad Dr. Patel and the team made your daughter feel at ease. That's exactly what we're here for. Looking forward to seeing you both at the next visit!"</p>
-          </div>
-        </div>
-        <p style="text-align:center;margin-top:32px;font-size:14px;color:var(--on-muted)">See 60 real responses across 6 industries → <a href="/examples.html" style="color:var(--primary-vivid);text-decoration:none;font-weight:700;">Browse Examples</a></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ FINAL CTA -->
-  <a id="get-started" style="display:block;position:relative;top:-80px;visibility:hidden;"></a>
-  <section id="cta">
-    <div class="cta-glow"></div>
-    <div class="container">
-      <div class="cta-inner reveal">
-        <span class="section-label">Get Started</span>
-        <h2>Stop Leaving Reviews<br /><span class="gradient-text">Unanswered.</span></h2>
-        <p>Start your 14-day free trial today. No contracts. No setup fees. Cancel anytime.</p>
-        <div class="cta-form" id="cta-form-wrap">
-          <form id="cta-signup-form" style="display:flex;flex-direction:column;gap:1rem;max-width:440px;margin:0 auto;">
-            <div id="cta-step-1">
-              <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-                <input type="email" id="cta-email" placeholder="your@email.com" required
-                  style="flex:1;min-width:200px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(135,209,255,0.2);border-radius:50px;padding:0.85rem 1.4rem;color:#e4dffb;font-size:0.95rem;font-family:'Roboto',sans-serif;outline:none;transition:border-color .2s;"
-                  onfocus="this.style.borderColor='rgba(135,209,255,0.55)'" onblur="this.style.borderColor='rgba(135,209,255,0.2)'" />
-                <button type="button" id="cta-next-btn" class="btn btn-primary" style="flex-shrink:0;white-space:nowrap;">
-                  Get Started →
-                </button>
-              </div>
+  <!-- ── SIGNUP FORM ── -->
+  <div class="signup-section" id="signup">
+    <div class="signup-inner">
+      <div class="section-label" style="text-align:center;">Get started</div>
+      <h2>Start your free trial.</h2>
+      <p class="sub">14 days free. Three steps, five minutes, and you're live.</p>
+      <div class="signup-form">
+        <form action="/signup" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
             </div>
-            <div id="cta-step-2" style="display:none;flex-direction:column;gap:0.85rem;">
-              <input type="text" name="name" placeholder="Your name" required
-                style="background:rgba(255,255,255,0.06);border:1.5px solid rgba(135,209,255,0.2);border-radius:50px;padding:0.85rem 1.4rem;color:#e4dffb;font-size:0.95rem;font-family:'Roboto',sans-serif;outline:none;width:100%;transition:border-color .2s;"
-                onfocus="this.style.borderColor='rgba(135,209,255,0.55)'" onblur="this.style.borderColor='rgba(135,209,255,0.2)'" />
-              <input type="text" name="practice_display_name" placeholder="Business name" required
-                style="background:rgba(255,255,255,0.06);border:1.5px solid rgba(135,209,255,0.2);border-radius:50px;padding:0.85rem 1.4rem;color:#e4dffb;font-size:0.95rem;font-family:'Roboto',sans-serif;outline:none;width:100%;transition:border-color .2s;"
-                onfocus="this.style.borderColor='rgba(135,209,255,0.55)'" onblur="this.style.borderColor='rgba(135,209,255,0.2)'" />
-              <input type="tel" name="phone" placeholder="Mobile number (for review alerts)"
-                style="background:rgba(255,255,255,0.06);border:1.5px solid rgba(135,209,255,0.2);border-radius:50px;padding:0.85rem 1.4rem;color:#e4dffb;font-size:0.95rem;font-family:'Roboto',sans-serif;outline:none;width:100%;transition:border-color .2s;"
-                onfocus="this.style.borderColor='rgba(135,209,255,0.55)'" onblur="this.style.borderColor='rgba(135,209,255,0.2)'" />
-              <div style="display:flex;align-items:flex-start;gap:10px;text-align:left;padding:0 0.25rem;">
-                <input type="checkbox" id="cta-sms-consent" name="sms_consent" required style="margin-top:3px;accent-color:#07b9fd;width:15px;height:15px;flex-shrink:0;">
-                <label for="cta-sms-consent" style="font-size:11px;color:#64748b;line-height:1.5;cursor:pointer;">
-                  I agree to receive SMS review alerts from Gleam. Reply STOP to opt out. Msg &amp; data rates may apply.
-                  <a href="/privacy.html" style="color:#07b9fd;">Privacy</a> &amp; <a href="/terms.html" style="color:#07b9fd;">Terms</a>.
-                </label>
-              </div>
-              <button type="submit" class="btn btn-primary" id="cta-submit-btn" style="width:100%;justify-content:center;font-size:1rem;padding:1rem 2rem;">
-                Start My Free 14-Day Trial
-              </button>
+            <div class="form-group">
+              <label for="business">Business name</label>
+              <input type="text" id="business" name="business" placeholder="Pacific Home Services" required />
             </div>
-            <div id="cta-error" style="display:none;color:#f87171;font-size:13px;text-align:center;padding:10px;background:rgba(248,113,113,.08);border-radius:12px;border:1px solid rgba(248,113,113,.2);"></div>
-          </form>
-          <p style="margin-top:1rem;font-size:0.8rem;color:#475569;">No contracts. No setup fees. Cancel anytime.</p>
-          <p style="margin-top:0.5rem;"><a href="https://cal.gleamreply.com" class="cta-secondary-link">Questions? Book a 15-min call →</a></p>
-        </div>
-        <div id="cta-success" style="display:none;text-align:center;padding:2rem;background:rgba(7,185,253,0.06);border:1px solid rgba(7,185,253,0.2);border-radius:16px;max-width:440px;margin:0 auto;">
-          <div style="font-size:2rem;margin-bottom:0.75rem;">✅</div>
-          <p style="color:#07b9fd;font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;">You're in!</p>
-          <p style="color:#94a3b8;font-size:0.9rem;">Check your email — your onboarding link is on its way.</p>
-        </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="jane@pacificplumbing.com" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Mobile number for SMS alerts</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 (253) 555-0100" required />
+          </div>
+          <div class="consent-group">
+            <div class="consent-item">
+              <input type="checkbox" id="sms-consent" name="sms_consent" required />
+              <label for="sms-consent">I consent to receive SMS review alerts. Reply STOP to cancel anytime. Standard message rates apply.</label>
+            </div>
+            <div class="consent-item">
+              <input type="checkbox" id="tips-consent" name="tips_consent" />
+              <label for="tips-consent">Send me occasional tips on getting more 5-star reviews and Gleam product updates (via email).</label>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">Start My Free 14-Day Trial →</button>
+          <p class="form-footnote">No credit card required · $47/month after trial · Cancel any time</p>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ═══════════════════════════════════════════ FOOTER -->
-  <footer id="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-top">
-          <div class="footer-brand">
-            <div class="footer-logo">GLEAM</div>
-            <p class="footer-tagline">Done-for-you Google review management for local businesses.</p>
-          </div>
-          <ul class="footer-links">
-            <li><a href="/privacy.html">Privacy</a></li>
-            <li><a href="/terms.html">Terms</a></li>
-            <li><a href="mailto:hello@gleamreply.com">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-bottom">
-          <span class="footer-copy">© 2026 Gleam by LucraLab. All rights reserved.</span>
-          <span class="footer-copy">gleamreply.com</span>
-        </div>
-      </div>
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-logo">
+      <img src="branding/gleam_logo_dark.png" alt="Gleam" />
+    </div>
+    <div class="footer-right">
+      A <a href="https://lucralab.com">LucraLab</a> product &nbsp;·&nbsp;
+      <a href="mailto:hello@gleamreply.com">hello@gleamreply.com</a> &nbsp;·&nbsp;
+      <a href="/help">Help &amp; Commands</a>
     </div>
   </footer>
 
-  <script>
-    // ── Nav scroll glass ──────────────────────────────────
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 20);
-    }, { passive: true });
-
-    // ── Mobile nav toggle ─────────────────────────────────
-    const toggle = document.getElementById('nav-toggle');
-    const links  = document.getElementById('nav-links');
-    const cta    = document.getElementById('nav-cta');
-    let menuOpen = false;
-
-    toggle.addEventListener('click', () => {
-      menuOpen = !menuOpen;
-      links.classList.toggle('open', menuOpen);
-      cta.classList.toggle('open', menuOpen);
-      document.body.style.overflow = menuOpen ? 'hidden' : '';
-      // Animate hamburger → X
-      const spans = toggle.querySelectorAll('span');
-      if (menuOpen) {
-        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-      } else {
-        spans[0].style.transform = '';
-        spans[1].style.opacity = '';
-        spans[2].style.transform = '';
-      }
-    });
-
-    // Close menu on nav link click
-    links.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        if (menuOpen) toggle.click();
-      });
-    });
-
-    // ── CTA inline form ───────────────────────────────────
-    var ctaNextBtn = document.getElementById('cta-next-btn');
-    if (ctaNextBtn) {
-      ctaNextBtn.addEventListener('click', function() {
-        var email = document.getElementById('cta-email');
-        if (!email.value || !/^[^@]+@[^@]+\.[^@]+$/.test(email.value)) {
-          email.style.borderColor = 'rgba(248,113,113,0.6)';
-          email.focus();
-          return;
-        }
-        document.getElementById('cta-step-1').style.display = 'none';
-        var step2 = document.getElementById('cta-step-2');
-        step2.style.display = 'flex';
-        step2.style.flexDirection = 'column';
-        step2.style.gap = '0.85rem';
-        var firstInput = step2.querySelector('input');
-        if (firstInput) firstInput.focus();
-      });
-    }
-    var ctaForm = document.getElementById('cta-signup-form');
-    if (ctaForm) {
-      ctaForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var btn = document.getElementById('cta-submit-btn');
-        btn.textContent = 'Setting up…';
-        btn.disabled = true;
-        var data = { billing: 'monthly' };
-        new FormData(ctaForm).forEach(function(v, k) { data[k] = v; });
-        data.email = document.getElementById('cta-email').value;
-        ctaForm.querySelectorAll('input[type=checkbox]').forEach(function(cb) { data[cb.name] = cb.checked; });
-        fetch('https://api.gleamreply.com/signup', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(function(r) { return r.json(); })
-          .then(function(d) {
-            if (d.checkout_url) {
-              window.location.href = d.checkout_url;
-            } else { throw new Error('No URL'); }
-          }).catch(function() {
-            btn.textContent = 'Start My Free 14-Day Trial';
-            btn.disabled = false;
-            var errEl = document.getElementById('cta-error');
-            errEl.textContent = 'Something went wrong. Please try again or email hello@gleamreply.com';
-            errEl.style.display = 'block';
-          });
-      });
-    }
-
-    // ── Scroll reveal ─────────────────────────────────────
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    revealEls.forEach(el => observer.observe(el));
-  </script>
 </body>
 </html>
