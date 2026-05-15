@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMS Commands — Gleam Help</title>
+  <meta name="description" content="Complete reference for Gleam SMS commands. Reply to any Gleam text using these keywords to approve reviews, set auto-response rules, check your status, and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal: #14B8A6;
+      --teal-d: #0D9481;
+      --navy: #0F172A;
+      --night: #060F1C;
+      --slate: #64748B;
+      --steel: #94A3B8;
+      --mist: #F1F5F9;
+      --border: #E2E8F0;
+      --gold: #F59E0B;
+      --white: #FFFFFF;
+      --font-headline: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'Instrument Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--navy);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-logo-wordmark {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--navy);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-cta {
+      background: var(--teal);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover { background: var(--teal-d); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--mist);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+
+    .page-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .page-header h1 {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: clamp(32px, 5vw, 52px);
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--slate);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    /* ── PHONE EXAMPLE ── */
+    .phone-note {
+      background: var(--mist);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .phone-note-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .phone-note-text {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .phone-note-text strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .gleam-number {
+      display: inline-block;
+      background: var(--teal);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SECTION ── */
+    .cmd-section {
+      margin-bottom: 56px;
+    }
+
+    .cmd-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--teal);
+    }
+
+    .cmd-section-header h2 {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--navy);
+    }
+
+    .section-icon {
+      font-size: 20px;
+    }
+
+    /* ── COMMAND CARDS ── */
+    .cmd-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cmd-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .cmd-card:hover {
+      border-color: var(--teal);
+      box-shadow: 0 2px 8px rgba(20, 184, 166, 0.12);
+    }
+
+    .cmd-keyword {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--navy);
+      padding: 4px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+      display: inline-block;
+      line-height: 1.5;
+    }
+
+    .cmd-keyword.teal {
+      background: var(--teal);
+    }
+
+    .cmd-body {
+      padding-top: 2px;
+    }
+
+    .cmd-desc {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+
+    .cmd-alias {
+      font-size: 13px;
+      color: var(--steel);
+    }
+
+    .cmd-alias code {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--mist);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--slate);
+    }
+
+    /* ── AUTO GROUP ── */
+    .auto-group {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .auto-group .cmd-card {
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .auto-group .cmd-card:last-child {
+      border-bottom: none;
+    }
+
+    .auto-group .cmd-card:hover {
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    .auto-group-header {
+      background: var(--mist);
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--slate);
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: linear-gradient(135deg, rgba(20,184,166,0.08), rgba(20,184,166,0.04));
+      border: 1px solid rgba(20,184,166,0.25);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 48px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .callout-icon { font-size: 22px; flex-shrink: 0; }
+
+    .callout-text { font-size: 15px; color: var(--slate); line-height: 1.6; }
+
+    .callout-text strong { color: var(--navy); font-weight: 600; }
+
+    .callout-text a {
+      color: var(--teal);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .callout-text a:hover { text-decoration: underline; }
+
+    /* ── QUICK REF TABLE ── */
+    .quick-ref {
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .quick-ref h2 {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .ref-table th {
+      text-align: left;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--steel);
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .ref-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--slate);
+      vertical-align: top;
+    }
+
+    .ref-table td:first-child {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .ref-table tr:last-child td { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--night);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      text-decoration: none;
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--white);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--steel);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--steel);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .cmd-card { grid-template-columns: 1fr; gap: 8px; }
+      .ref-table { font-size: 13px; }
+      .ref-table th, .ref-table td { padding: 8px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://gleamreply.com/" class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,-1 C0,-0.48 0.48,0 1,0 C0.48,0 0,0.48 0,1 C0,0.48 -0.48,0 -1,0 C-0.48,0 0,-0.48 0,-1 Z" fill="#14B8A6"/>
+    </svg>
+    <span class="nav-logo-wordmark">Gleam</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://gleamreply.com/#how">How It Works</a></li>
+    <li><a href="https://gleamreply.com/#pricing">Pricing</a></li>
+    <li><a href="https://gleamreply.com/examples.html">Examples</a></li>
+    <li><a href="https://gleamreply.com/help.html" style="color: var(--teal); font-weight: 600;">Help</a></li>
+  </ul>
+  <a href="https://gleamreply.com/#cta" class="nav-cta">Start Free Trial</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <span class="page-label">SMS Command Reference</span>
+  <h1>What to Text Gleam</h1>
+  <p>Every command you can send from your phone — no app, no login, no guesswork.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- HOW IT WORKS NOTE -->
+  <div class="phone-note">
+    <div class="phone-note-icon">📱</div>
+    <div class="phone-note-text">
+      All commands are texted to your Gleam number: <span class="gleam-number">+1 (888) 394-4345</span>. Save it as <strong>Gleam Reviews</strong> so it's easy to find. Commands are <strong>not case-sensitive</strong> — APPROVE and approve both work.
+    </div>
+  </div>
+
+  <!-- SECTION: REVIEW ACTIONS -->
+  <div class="cmd-section">
+    <div class="cmd-section-header">
+      <span class="section-icon">⭐</span>
+      <h2>Approving & Handling Reviews</h2>
+    </div>
+    <div class="cmd-list">
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">APPROVE</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Post the drafted response exactly as written. Gleam sends it live to Google immediately.</p>
+          <p class="cmd-alias">Shortcut: <code>A</code></p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">EDIT</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Reply EDIT followed by your revised response text. Gleam posts your version instead of the draft.</p>
+          <p class="cmd-alias">Example: <code>EDIT Thanks for the feedback — we'll make it right.</code></p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">IGNORE</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Skip this review and take no action. No response will be posted. The review stays on Google unanswered.</p>
+          <p class="cmd-alias">Shortcut: <code>I</code></p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">PENDING</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Snooze this review for later. Gleam will remind you about it in 24 hours if you haven't acted on it.</p>
+          <p class="cmd-alias">Shortcut: <code>P</code></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION: AUTO-RESPONSE MODE -->
+  <div class="cmd-section">
+    <div class="cmd-section-header">
+      <span class="section-icon">🤖</span>
+      <h2>Auto-Response Settings</h2>
+    </div>
+    <p style="font-size:15px; color:var(--slate); margin-bottom:16px; line-height:1.6;">
+      Choose which reviews Gleam posts automatically — without texting you first. All others still come to you for approval.
+    </p>
+    <div class="auto-group">
+      <div class="auto-group-header">Send one of these to change your auto-post rule</div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">AUTO 5</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Auto-post responses to 5-star reviews only. 1–4 star reviews come to you for approval.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">AUTO 4+</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Auto-post responses to 4 and 5-star reviews. 1–3 star reviews come to you for approval.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">AUTO ALL</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Auto-post responses to every review — Gleam handles everything. You won't be texted unless a review triggers a sentiment alert.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">AUTO NONE</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Send every review to you for approval before posting. Nothing goes live without your say-so.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION: STATUS & MENU -->
+  <div class="cmd-section">
+    <div class="cmd-section-header">
+      <span class="section-icon">📊</span>
+      <h2>Status & Navigation</h2>
+    </div>
+    <div class="cmd-list">
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">STATUS</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Get a quick summary of your current setup — auto-response rule, pending reviews, and your current average rating.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">MENU</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Receive a short list of all available commands by text. Useful if you forget a keyword while on the go.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION: ALERTS & PREFERENCES -->
+  <div class="cmd-section">
+    <div class="cmd-section-header">
+      <span class="section-icon">🔔</span>
+      <h2>Alerts & Preferences</h2>
+    </div>
+    <div class="cmd-list">
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">SENTIMENT ON</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Turn on sentiment alerts. Gleam texts you when multiple reviews mention the same issue — pricing, response time, workmanship — so you can spot patterns early.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">SENTIMENT OFF</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Turn off sentiment alerts. You'll still receive individual review notifications — just no pattern summaries.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword teal">REMINDERS ON</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Turn on reminder texts for pending reviews. If you haven't acted on a review in 24 hours, Gleam will follow up once.</p>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <span class="cmd-keyword">REMINDERS OFF</span>
+        <div class="cmd-body">
+          <p class="cmd-desc">Turn off reminder texts. Pending reviews stay in your queue — Gleam just won't nudge you again.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NEED HELP CALLOUT -->
+  <div class="callout">
+    <div class="callout-icon">💬</div>
+    <div class="callout-text">
+      <strong>Command not working?</strong> Text <code style="font-family:monospace; background:rgba(255,255,255,0.6); padding:1px 6px; border-radius:4px; font-size:13px;">MENU</code> to get a list of valid commands sent back to your phone. For anything else, email us at <a href="mailto:hello@gleamreply.com">hello@gleamreply.com</a> and we'll sort it out same day.
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE TABLE -->
+  <div class="quick-ref">
+    <h2>Quick Reference</h2>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Command</th>
+          <th>What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>APPROVE (or A)</td><td>Post the drafted response to Google</td></tr>
+        <tr><td>EDIT [text]</td><td>Post your own custom response instead</td></tr>
+        <tr><td>IGNORE (or I)</td><td>Skip this review — no response posted</td></tr>
+        <tr><td>PENDING (or P)</td><td>Snooze review — reminds you in 24h</td></tr>
+        <tr><td>AUTO 5</td><td>Auto-post 5-star responses</td></tr>
+        <tr><td>AUTO 4+</td><td>Auto-post 4 and 5-star responses</td></tr>
+        <tr><td>AUTO ALL</td><td>Auto-post all responses</td></tr>
+        <tr><td>AUTO NONE</td><td>Approve every response manually</td></tr>
+        <tr><td>STATUS</td><td>See your current setup + pending count</td></tr>
+        <tr><td>MENU</td><td>Get this list by text</td></tr>
+        <tr><td>SENTIMENT ON / OFF</td><td>Toggle pattern alert texts</td></tr>
+        <tr><td>REMINDERS ON / OFF</td><td>Toggle 24h pending reminders</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://gleamreply.com/" class="footer-logo">
+    <svg width="22" height="22" viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,-1 C0,-0.48 0.48,0 1,0 C0.48,0 0,0.48 0,1 C0,0.48 -0.48,0 -1,0 C-0.48,0 0,-0.48 0,-1 Z" fill="#14B8A6"/>
+    </svg>
+    <span class="footer-wordmark">Gleam</span>
+  </a>
+  <ul class="footer-links">
+    <li><a href="https://gleamreply.com/privacy.html">Privacy</a></li>
+    <li><a href="https://gleamreply.com/terms.html">Terms</a></li>
+    <li><a href="https://gleamreply.com/help.html">Help</a></li>
+    <li><a href="mailto:hello@gleamreply.com">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Gleam by LucraLab. All rights reserved. gleamreply.com</p>
+</footer>
+
+</body>
+</html>
