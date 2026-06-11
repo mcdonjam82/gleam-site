@@ -541,8 +541,8 @@
         </div>
         <div class="step fade-in">
           <div class="step-num">03</div>
-          <h3>Positives Auto-Posted</h3>
-          <p>4 and 5-star reviews receive an AI response automatically — warm, professional, and on-brand. No action needed.</p>
+          <h3>Positives — Your Call</h3>
+          <p>Switch on auto-posting for 4 and 5-star reviews with one text (AUTO 5 or AUTO ALL), or approve each one. Default is approve-each.</p>
         </div>
         <div class="step fade-in">
           <div class="step-num">04</div>
@@ -626,19 +626,7 @@
         </div>
         <div class="pricing-card fade-in">
           <div class="plan-name">Multi-Location Practice</div>
-          <div class="plan-price"><sup>$</sup><span id="multi-price">149</span></div>
-          <div class="plan-period" id="multi-period">per month, unlimited locations</div>
-          <div id="multi-note" style="display:none;color:#07b9fd;font-size:13px;margin-bottom:8px;">$1,490/year — save $298</div>
-          <ul class="plan-features">
-            <li>Everything in Solo Practice</li>
-            <li>All locations under one account</li>
-            <li>Per-location voice and automation settings</li>
-            <li>Consolidated monthly report across all locations</li>
-            <li>Priority historical catch-up</li>
-            <li>Dedicated onboarding support</li>
-          </ul>
-          <button type="button" class="plan-cta" onclick="selectPlan('multi')">Start Free Trial →</button>
-          <p style="font-size:12px;color:#64748b;text-align:center;margin-top:10px;">14-day free trial, no commitment</p>
+          <p style="color:#94a3b8;line-height:1.7;margin-top:24px;font-size:15px;">Coming soon. Email <a href="mailto:hello@gleamreply.com?subject=Multi-location%20waitlist" style="color:#07b9fd;text-decoration:none;font-weight:600;">hello@gleamreply.com</a> to join the waitlist and we'll set you up first.</p>
         </div>
       </div>
     </div>
@@ -652,18 +640,18 @@
       <div style="display:flex;flex-direction:column;gap:2px;">
 
         <details class="faq-item fade-in">
-          <summary>Is this HIPAA compliant?<span class="faq-icon">+</span></summary>
+          <summary>Is Gleam HIPAA-safe?<span class="faq-icon">+</span></summary>
           <div class="faq-body"><p>Yes — Gleam is designed from the ground up to be HIPAA-safe for dental practices. Here's what that means in practice: Gleam never connects to your practice management software, EHR, scheduling system, or any internal patient data — ever. It only reads text that patients have already chosen to make public on Google. More importantly, the AI is explicitly instructed never to confirm, reference, or acknowledge any treatment details, diagnoses, procedures, or health information — even if a reviewer mentions specifics. If a reviewer writes "Dr. Smith fixed my root canal," the response will thank them warmly without touching the clinical content. Because Gleam only reads and responds to public reviews — never patient records or internal systems — we are not a Business Associate under HIPAA and no BAA is required.</p></div>
         </details>
 
         <details class="faq-item fade-in">
           <summary>What if the AI says something wrong or embarrassing?<span class="faq-icon">+</span></summary>
-          <div class="faq-body"><p>For 4 and 5-star reviews, Gleam posts responses automatically — but only after generating something professional, warm, and appropriate. The responses are deliberately crafted: no medical claims, no specific treatment references, no patient information — nothing that could create a liability or embarrass your practice. If a review contains no text (just a star rating), Gleam writes a brief, gracious acknowledgment rather than trying to be clever about nothing. The AI prompt has been carefully developed to ensure responses feel human, stay safe, and reflect well on the practice. And for negative reviews, <strong style="color:#fff;">you always approve before anything is posted</strong> — Gleam texts you the AI draft, and waits for your explicit "APPROVE" before it touches Google. You stay in control of anything sensitive.</p></div>
+          <div class="faq-body"><p>If you've turned on an AUTO setting, Gleam posts 4 and 5-star responses automatically — but only after generating something professional, warm, and appropriate. The responses are deliberately crafted: no medical claims, no specific treatment references, no patient information — nothing that could create a liability or embarrass your practice. If a review contains no text (just a star rating), Gleam writes a brief, gracious acknowledgment rather than trying to be clever about nothing. The AI prompt has been carefully developed to ensure responses feel human, stay safe, and reflect well on the practice. And for negative reviews, <strong style="color:#fff;">you always approve before anything is posted</strong> — Gleam texts you the AI draft, and waits for your explicit "APPROVE" before it touches Google. You stay in control of anything sensitive.</p></div>
         </details>
 
         <details class="faq-item fade-in">
           <summary>Can I see what it posts before it goes live?<span class="faq-icon">+</span></summary>
-          <div class="faq-body"><p>For negative reviews (1–3 stars), yes — always, without exception. Gleam texts you the AI-generated draft, along with the original review text so you have full context. You reply with one of three commands: <strong style="color:#fff;">APPROVE</strong> to post as written, <strong style="color:#fff;">EDIT [your text]</strong> to post a custom response instead, or <strong style="color:#fff;">IGNORE</strong> to leave it unanswered. Nothing goes live until you act. For positive reviews (4–5 stars), Gleam posts automatically by default — most practices prefer this since it keeps response times fast. But if you'd rather personally review everything before it goes live, we can configure your account to require approval on all reviews. Just mention it when you sign up or contact support.</p></div>
+          <div class="faq-body"><p>For negative reviews (1–3 stars), yes — always, without exception. Gleam texts you the AI-generated draft, along with the original review text so you have full context. You reply with one of three commands: <strong style="color:#fff;">APPROVE</strong> to post as written, <strong style="color:#fff;">EDIT [your text]</strong> to post a custom response instead, or <strong style="color:#fff;">IGNORE</strong> to leave it unanswered. Nothing goes live until you act. You can switch on automatic posting for positive reviews; by default, you approve each one before it goes live. If you'd rather automate the positive ones, just text AUTO 5 or AUTO ALL anytime.</p></div>
         </details>
 
         <details class="faq-item fade-in">
@@ -773,10 +761,9 @@
             </div>
             <div class="form-group">
               <label>Number of Locations</label>
-              <select name="locations">
+              <select name="locations" onchange="if(this.value==='Multiple — join waitlist'){window.location.href='mailto:hello@gleamreply.com?subject=Multi-location%20waitlist';}">
                 <option>1 location</option>
-                <option>2–3 locations</option>
-                <option>4+ locations</option>
+                <option>Multiple — join waitlist</option>
               </select>
             </div>
             <div class="form-group" style="display:flex;align-items:flex-start;gap:12px;margin-top:8px;">
@@ -839,19 +826,12 @@
       document.getElementById('lbl-annual').style.fontWeight = isAnnual ? '700' : '400';
       document.getElementById('solo-price').textContent = isAnnual ? '40.83' : '49';
       document.getElementById('solo-period').textContent = isAnnual ? 'billed $490/year' : 'per month, per location';
-      document.getElementById('multi-price').textContent = isAnnual ? '124' : '149';
-      document.getElementById('multi-period').textContent = isAnnual ? 'billed $1,490/year' : 'per month, unlimited locations';
       document.getElementById('solo-note').style.display = isAnnual ? 'block' : 'none';
-      document.getElementById('multi-note').style.display = isAnnual ? 'block' : 'none';
     }
 
     // ── Form logic ──────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function () {
       window.selectPlan = function(plan) {
-        var locSelect = document.querySelector('select[name="locations"]');
-        if (locSelect && plan === 'multi') {
-          locSelect.value = '2–3 locations';
-        }
         var formWrap = document.getElementById('contact-form-wrap');
         if (formWrap) formWrap.scrollIntoView({behavior: 'smooth', block: 'center'});
       };
